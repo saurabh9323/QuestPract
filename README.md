@@ -62,7 +62,17 @@ System design covers 80 high-level scenarios, 10 OOP low-level exercises, and 10
 
 `public/sql-practice.sql` creates a separate disposable PostgreSQL schema with nine tables and sample rows. Use `SET search_path = quest90_practice, public;` before exercises. Some questions explicitly ask for schema extensions. IDs in the fixture are supplied integers. There is no in-browser SQL or DSA execution engine.
 
-## Screenshots
+## Flexible schedule and submissions
+
+Use **Manage my schedule** to edit a mission or personal task: choose a due date, active/deferred/skipped status, reason, priority, and estimated minutes. Personal task titles can be edited too. Skipping is recoverable using Active / restore, never counts as completed, and does not award mastery. Each change keeps a dated history. Original schedule restores the date derived from the current start-date setting. Explicit task dates stay fixed if you later change the overall start date.
+
+Set a daily time budget to see workload warnings and a small priority-based suggestion. Move unfinished due tasks to tomorrow when short on time, or shift all unfinished, non-skipped work by 1–90 days for a break. These actions keep answers, completion records, and memory-review dates unchanged. Overdue tasks remain overdue after their new date passes. The dashboard uses adjusted task dates, while the 90-day curriculum order remains intact.
+
+Inside **Daily quest**, use **Submit session** to record completed, partial, or could-not-start work, actual minutes, and a reason/next step. Complete requires every checklist step. Partial and could-not-start require a reason; could-not-start is unavailable when there is existing work. Every submission keeps the answer/feedback/notes snapshot from that moment. Later edits never replace it. Submission is a saved learning record, not an AI assessment. The footer confirms persistence or shows a save error. Practice-bank answers use **Submit answer**.
+
+Planning and submission data are included in progress backups and the existing Supabase JSONB record, so existing users do not need a new SQL migration. Old backups without these optional fields remain compatible.
+
+## Screenshot handling
 
 PNG, JPEG, and WebP images up to 2 MB and 25 megapixels are saved as base64, with up to ten attachments per question or quest in the upload interface. Preview, download, and delete are available. Screenshots are question-level references, separate from answer attempts and progress saves. When connecting Supabase, use Copy guest screenshots to account as well as Import guest progress. Keep a separate media backup. Large image collections use browser/database quota; save errors are shown rather than silently discarding images.
 
@@ -95,3 +105,4 @@ The optional WebMCP tools `get_training_progress` and `open_training_day` expose
 - `public/supabase-setup.sql`: database setup and ownership policies.
 
 To host elsewhere, deploy `out/` and preserve absolute asset paths from the domain root. Sites registration metadata in `.openai/hosting.json` belongs to the original deployment; remove that file before registering a separate Site.
+
