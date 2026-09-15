@@ -1,11 +1,21 @@
 {
-  "description": "90-day course with 100 assigned DSA questions; choose your own start date in the app.",
+  "description": "90-day full-stack interview course with 100 assigned DSA questions, 90 course missions, and 90 communication reps; choose your own start date in the app.",
   "days": [
     {
       "day": 1,
       "course": "The broken shopping cart",
       "chapter": "JavaScript foundations",
       "mission": "Implement calculateTotal(items) for price strings and integer quantities; reject invalid prices.",
+      "communication": {
+        "day": 1,
+        "title": "Mirror explain",
+        "prompt": "Record a 60-second explanation of today's concept in English. Use: \"Today I learned..., the tricky part is..., one example is...\"",
+        "audience": "Private",
+        "skill": "Fluency",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-arrays-01",
@@ -62,6 +72,16 @@
       "course": "A counter with a secret",
       "chapter": "JavaScript foundations",
       "mission": "Write createCounter() with increment and read methods; prove two counters are independent.",
+      "communication": {
+        "day": 2,
+        "title": "Rubber-duck debug",
+        "prompt": "Explain one bug or edge case aloud as if guiding a junior developer. End with the next test you would run.",
+        "audience": "Private",
+        "skill": "Technical clarity",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-arrays-02",
@@ -118,6 +138,16 @@
       "course": "The object that changed twice",
       "chapter": "JavaScript foundations",
       "mission": "Update a nested application record without mutating the original; test the old and new values.",
+      "communication": {
+        "day": 3,
+        "title": "Written standup",
+        "prompt": "Write a three-line standup: yesterday, today, blocker. Keep each line under 18 words.",
+        "audience": "Private",
+        "skill": "Concise updates",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-arrays-03",
@@ -174,6 +204,16 @@
       "course": "Race the event loop",
       "chapter": "JavaScript foundations",
       "mission": "Predict and run sync logs, Promise.resolve().then logs, and setTimeout logs in a browser.",
+      "communication": {
+        "day": 4,
+        "title": "Voice note",
+        "prompt": "Send or save a two-minute voice note explaining your solution approach. Listen once and write one improvement.",
+        "audience": "Private",
+        "skill": "Self-review",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-arrays-04",
@@ -230,6 +270,16 @@
       "course": "The request that never finishes",
       "chapter": "JavaScript foundations",
       "mission": "Write a fetch wrapper with response.ok checking, an AbortController timeout, and a finally cleanup.",
+      "communication": {
+        "day": 5,
+        "title": "Peer DM",
+        "prompt": "Message one developer friend or classmate: \"I am practicing interview communication. Can I explain one concept in 2 minutes and get one question?\"",
+        "audience": "Known person",
+        "skill": "Initiating",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-arrays-05",
@@ -286,6 +336,16 @@
       "course": "Find the disappearing commit",
       "chapter": "JavaScript foundations",
       "mission": "Create a practice repository, introduce a bug, use git diff and git log to locate it, and revert the bad commit.",
+      "communication": {
+        "day": 6,
+        "title": "Ask for feedback",
+        "prompt": "Share a short answer with a known person and ask: \"Which part sounded unclear or too long?\"",
+        "audience": "Known person",
+        "skill": "Feedback",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-hash-01",
@@ -342,6 +402,16 @@
       "course": "Boss battle: repair the cart",
       "chapter": "JavaScript foundations",
       "mission": "Build a cart summary with loading, error, empty, and success states; record a five-minute explanation.",
+      "communication": {
+        "day": 7,
+        "title": "Small disagreement",
+        "prompt": "Practice a respectful technical disagreement: \"I see that point. My concern is..., because...\"",
+        "audience": "Known person",
+        "skill": "Diplomacy",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-hash-02",
@@ -398,6 +468,16 @@
       "course": "Make illegal states harder to write",
       "chapter": "React & TypeScript",
       "mission": "Model loading, success, and error as a discriminated union; render every state without any.",
+      "communication": {
+        "day": 8,
+        "title": "Question-first habit",
+        "prompt": "In one conversation, ask two follow-up questions before giving your own opinion.",
+        "audience": "Known person",
+        "skill": "Listening",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-hash-03",
@@ -454,6 +534,16 @@
       "course": "The render is a snapshot",
       "chapter": "React & TypeScript",
       "mission": "Implement an add-three button using functional state updates and contrast it with three direct updates.",
+      "communication": {
+        "day": 9,
+        "title": "Public micro-post",
+        "prompt": "Post or draft a short learning note: problem, insight, mistake, correction. Keep it honest and simple.",
+        "audience": "Public online",
+        "skill": "Public clarity",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-hash-04",
@@ -534,6 +624,16 @@
       "course": "Stop the endless effect",
       "chapter": "React & TypeScript",
       "mission": "Repair a subscription that duplicates listeners; add cleanup and verify unmounting removes it.",
+      "communication": {
+        "day": 10,
+        "title": "Comment with value",
+        "prompt": "Leave one helpful comment on a developer post: add an example, tradeoff, or question.",
+        "audience": "Public online",
+        "skill": "Contribution",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-pointers-01",
@@ -590,6 +690,16 @@
       "course": "The search result from the past",
       "chapter": "React & TypeScript",
       "mission": "Build a debounced search using controlled input and abort or ignore stale requests.",
+      "communication": {
+        "day": 11,
+        "title": "Stranger warm-up",
+        "prompt": "Ask a shopkeeper, receptionist, or event attendee one simple English question and thank them clearly.",
+        "audience": "Public offline",
+        "skill": "Confidence",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-pointers-02",
@@ -646,6 +756,16 @@
       "course": "Follow the server/client boundary",
       "chapter": "React & TypeScript",
       "mission": "Build a Next.js page with a server-rendered list and a small client-side filter; keep secrets on the server.",
+      "communication": {
+        "day": 12,
+        "title": "Stranger tech intro",
+        "prompt": "At a meetup, online community, or professional setting, introduce yourself: \"I work in full stack. I am preparing for interviews and practicing clearer explanations.\"",
+        "audience": "Public/professional",
+        "skill": "Presence",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-pointers-03",
@@ -702,6 +822,16 @@
       "course": "A form everyone can finish",
       "chapter": "React & TypeScript",
       "mission": "Build a job-application form with labels, field errors, keyboard navigation, and a submission state.",
+      "communication": {
+        "day": 13,
+        "title": "Mock interviewer",
+        "prompt": "Ask someone to interrupt your answer once. Practice pausing, clarifying, and continuing calmly.",
+        "audience": "Known person",
+        "skill": "Interview control",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-pointers-04",
@@ -758,6 +888,16 @@
       "course": "Boss battle: fix the frontend",
       "chapter": "React & TypeScript",
       "mission": "Build a searchable application list with controlled inputs and four UI states; test it without a mouse.",
+      "communication": {
+        "day": 14,
+        "title": "Story drill",
+        "prompt": "Tell a STAR story from work: situation, task, action, result, what you learned.",
+        "audience": "Private or peer",
+        "skill": "Behavioral stories",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-pointers-05",
@@ -814,6 +954,16 @@
       "course": "Read an HTTP conversation",
       "chapter": "Node.js & API design",
       "mission": "Specify GET /applications and POST /applications with examples for success and invalid input.",
+      "communication": {
+        "day": 15,
+        "title": "Role intro",
+        "prompt": "Practice a confident role intro: experience, strengths, target role, current focus.",
+        "audience": "Private or peer",
+        "skill": "Professional intro",
+        "phase": "Foundation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-window-01",
@@ -870,6 +1020,16 @@
       "course": "Build the first Express endpoint",
       "chapter": "Node.js & API design",
       "mission": "Implement a health endpoint and an in-memory applications endpoint with a documented response shape.",
+      "communication": {
+        "day": 16,
+        "title": "Mirror explain",
+        "prompt": "Record a 60-second explanation of today's concept in English. Use: \"Today I learned..., the tricky part is..., one example is...\"",
+        "audience": "Private",
+        "skill": "Fluency",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-window-02",
@@ -926,6 +1086,16 @@
       "course": "Guard the API boundary",
       "chapter": "Node.js & API design",
       "mission": "Validate company, role, stage, and application date; return field-specific errors.",
+      "communication": {
+        "day": 17,
+        "title": "Rubber-duck debug",
+        "prompt": "Explain one bug or edge case aloud as if guiding a junior developer. End with the next test you would run.",
+        "audience": "Private",
+        "skill": "Technical clarity",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-window-03",
@@ -982,6 +1152,16 @@
       "course": "One error path, useful evidence",
       "chapter": "Node.js & API design",
       "mission": "Add error middleware with a request ID and map validation, missing record, and internal errors.",
+      "communication": {
+        "day": 18,
+        "title": "Written standup",
+        "prompt": "Write a three-line standup: yesterday, today, blocker. Keep each line under 18 words.",
+        "audience": "Private",
+        "skill": "Concise updates",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-window-04",
@@ -1062,6 +1242,16 @@
       "course": "Keep the event loop moving",
       "chapter": "Node.js & API design",
       "mission": "Compare a CPU-heavy route with a lightweight route; measure their latency under simultaneous requests.",
+      "communication": {
+        "day": 19,
+        "title": "Voice note",
+        "prompt": "Send or save a two-minute voice note explaining your solution approach. Listen once and write one improvement.",
+        "audience": "Private",
+        "skill": "Self-review",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-prefix-01",
@@ -1118,6 +1308,16 @@
       "course": "A list that stays navigable",
       "chapter": "Node.js & API design",
       "mission": "Add bounded page size, stage filtering, and a stable createdAt/id ordering to the list API.",
+      "communication": {
+        "day": 20,
+        "title": "Peer DM",
+        "prompt": "Message one developer friend or classmate: \"I am practicing interview communication. Can I explain one concept in 2 minutes and get one question?\"",
+        "audience": "Known person",
+        "skill": "Initiating",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-prefix-02",
@@ -1174,6 +1374,16 @@
       "course": "Boss battle: defend your API",
       "chapter": "Node.js & API design",
       "mission": "Implement create/list/detail endpoints with validation and tests for malformed JSON, empty results, and missing IDs.",
+      "communication": {
+        "day": 21,
+        "title": "Ask for feedback",
+        "prompt": "Share a short answer with a known person and ask: \"Which part sounded unclear or too long?\"",
+        "audience": "Known person",
+        "skill": "Feedback",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-prefix-03",
@@ -1230,6 +1440,16 @@
       "course": "Model the application record",
       "chapter": "MongoDB & security",
       "mission": "Design application documents with ownerId, company, stage, timestamps, and bounded notes.",
+      "communication": {
+        "day": 22,
+        "title": "Small disagreement",
+        "prompt": "Practice a respectful technical disagreement: \"I see that point. My concern is..., because...\"",
+        "audience": "Known person",
+        "skill": "Diplomacy",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-prefix-04",
@@ -1286,6 +1506,16 @@
       "course": "Queries deserve indexes",
       "chapter": "MongoDB & security",
       "mission": "Create an ownerId/stage/createdAt index for the list query and inspect explain output.",
+      "communication": {
+        "day": 23,
+        "title": "Question-first habit",
+        "prompt": "In one conversation, ask two follow-up questions before giving your own opinion.",
+        "audience": "Known person",
+        "skill": "Listening",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-prefix-05",
@@ -1342,6 +1572,16 @@
       "course": "Turn records into a funnel",
       "chapter": "MongoDB & security",
       "mission": "Count applications per stage for one owner and produce a dashboard summary.",
+      "communication": {
+        "day": 24,
+        "title": "Public micro-post",
+        "prompt": "Post or draft a short learning note: problem, insight, mistake, correction. Keep it honest and simple.",
+        "audience": "Public online",
+        "skill": "Public clarity",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-search-01",
@@ -1398,6 +1638,16 @@
       "course": "Identity is not permission",
       "chapter": "MongoDB & security",
       "mission": "Protect application routes with authenticated identity and owner-scoped queries.",
+      "communication": {
+        "day": 25,
+        "title": "Comment with value",
+        "prompt": "Leave one helpful comment on a developer post: add an example, tradeoff, or question.",
+        "audience": "Public online",
+        "skill": "Contribution",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-search-02",
@@ -1454,6 +1704,16 @@
       "course": "Sessions without secret leaks",
       "chapter": "MongoDB & security",
       "mission": "Write a session threat model and implement logout, expiration handling, and a protected route.",
+      "communication": {
+        "day": 26,
+        "title": "Stranger warm-up",
+        "prompt": "Ask a shopkeeper, receptionist, or event attendee one simple English question and thank them clearly.",
+        "audience": "Public offline",
+        "skill": "Confidence",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-search-03",
@@ -1510,6 +1770,16 @@
       "course": "Keep hostile input out",
       "chapter": "MongoDB & security",
       "mission": "Test unexpected MongoDB operators, oversized input, and repeated login attempts in a local test environment.",
+      "communication": {
+        "day": 27,
+        "title": "Stranger tech intro",
+        "prompt": "At a meetup, online community, or professional setting, introduce yourself: \"I work in full stack. I am preparing for interviews and practicing clearer explanations.\"",
+        "audience": "Public/professional",
+        "skill": "Presence",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-search-04",
@@ -1590,6 +1860,16 @@
       "course": "Boss battle: two users, zero leaks",
       "chapter": "MongoDB & security",
       "mission": "Create two test users and verify neither can access or modify the other’s application records.",
+      "communication": {
+        "day": 28,
+        "title": "Mock interviewer",
+        "prompt": "Ask someone to interrupt your answer once. Practice pausing, clarifying, and continuing calmly.",
+        "audience": "Known person",
+        "skill": "Interview control",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-stack-01",
@@ -1646,6 +1926,16 @@
       "course": "Think in relationships",
       "chapter": "SQL & data modeling",
       "mission": "Create users, applications, and notes tables with foreign keys and sensible uniqueness constraints.",
+      "communication": {
+        "day": 29,
+        "title": "Story drill",
+        "prompt": "Tell a STAR story from work: situation, task, action, result, what you learned.",
+        "audience": "Private or peer",
+        "skill": "Behavioral stories",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-stack-02",
@@ -1702,6 +1992,16 @@
       "course": "Join without losing the empty rows",
       "chapter": "SQL & data modeling",
       "mission": "List every application with its note count, including applications with no notes.",
+      "communication": {
+        "day": 30,
+        "title": "Role intro",
+        "prompt": "Practice a confident role intro: experience, strengths, target role, current focus.",
+        "audience": "Private or peer",
+        "skill": "Professional intro",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-stack-03",
@@ -1758,6 +2058,16 @@
       "course": "Group the interview funnel",
       "chapter": "SQL & data modeling",
       "mission": "Report weekly application counts and stages with at least three applications.",
+      "communication": {
+        "day": 31,
+        "title": "Mirror explain",
+        "prompt": "Record a 60-second explanation of today's concept in English. Use: \"Today I learned..., the tricky part is..., one example is...\"",
+        "audience": "Private",
+        "skill": "Fluency",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-stack-04",
@@ -1814,6 +2124,16 @@
       "course": "All or nothing",
       "chapter": "SQL & data modeling",
       "mission": "Create an application and its first audit note in one transaction; intentionally fail the second insert.",
+      "communication": {
+        "day": 32,
+        "title": "Rubber-duck debug",
+        "prompt": "Explain one bug or edge case aloud as if guiding a junior developer. End with the next test you would run.",
+        "audience": "Private",
+        "skill": "Technical clarity",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-stack-05",
@@ -1870,6 +2190,16 @@
       "course": "Read the query plan",
       "chapter": "SQL & data modeling",
       "mission": "Measure a SELECT on a realistic local dataset before and after an index; compare scan and row estimates.",
+      "communication": {
+        "day": 33,
+        "title": "Written standup",
+        "prompt": "Write a three-line standup: yesterday, today, blocker. Keep each line under 18 words.",
+        "audience": "Private",
+        "skill": "Concise updates",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-lists-01",
@@ -1926,6 +2256,16 @@
       "course": "Your progress belongs to you",
       "chapter": "SQL & data modeling",
       "mission": "Create a progress table keyed by user_id and policies that restrict select/insert/update/delete to auth.uid().",
+      "communication": {
+        "day": 34,
+        "title": "Voice note",
+        "prompt": "Send or save a two-minute voice note explaining your solution approach. Listen once and write one improvement.",
+        "audience": "Private",
+        "skill": "Self-review",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-lists-02",
@@ -1982,6 +2322,16 @@
       "course": "Boss battle: query clinic",
       "chapter": "SQL & data modeling",
       "mission": "Write five queries: stage totals, recent applications, zero-note applications, weekly totals, and latest note per application.",
+      "communication": {
+        "day": 35,
+        "title": "Peer DM",
+        "prompt": "Message one developer friend or classmate: \"I am practicing interview communication. Can I explain one concept in 2 minutes and get one question?\"",
+        "audience": "Known person",
+        "skill": "Initiating",
+        "phase": "Known people",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-lists-03",
@@ -2038,6 +2388,16 @@
       "course": "Connect the real user journey",
       "chapter": "Ship a full-stack feature",
       "mission": "Connect the tracker form to the API and refresh the list after a confirmed save.",
+      "communication": {
+        "day": 36,
+        "title": "Ask for feedback",
+        "prompt": "Share a short answer with a known person and ask: \"Which part sounded unclear or too long?\"",
+        "audience": "Known person",
+        "skill": "Feedback",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-lists-04",
@@ -2118,6 +2478,16 @@
       "course": "Filters worth bookmarking",
       "chapter": "Ship a full-stack feature",
       "mission": "Persist stage, search term, and page in the URL; restore them on reload and browser back.",
+      "communication": {
+        "day": 37,
+        "title": "Small disagreement",
+        "prompt": "Practice a respectful technical disagreement: \"I see that point. My concern is..., because...\"",
+        "audience": "Known person",
+        "skill": "Diplomacy",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-trees-01",
@@ -2174,6 +2544,16 @@
       "course": "Files need boundaries",
       "chapter": "Ship a full-stack feature",
       "mission": "Design a private resume upload flow with size limits and expiring download access.",
+      "communication": {
+        "day": 38,
+        "title": "Question-first habit",
+        "prompt": "In one conversation, ask two follow-up questions before giving your own opinion.",
+        "audience": "Known person",
+        "skill": "Listening",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-trees-02",
@@ -2230,6 +2610,16 @@
       "course": "Test behavior, not implementation",
       "chapter": "Ship a full-stack feature",
       "mission": "Write tests for form validation, owner-scoped API access, and a failed save preserving input.",
+      "communication": {
+        "day": 39,
+        "title": "Public micro-post",
+        "prompt": "Post or draft a short learning note: problem, insight, mistake, correction. Keep it honest and simple.",
+        "audience": "Public online",
+        "skill": "Public clarity",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-trees-03",
@@ -2286,6 +2676,16 @@
       "course": "Complete the keyboard journey",
       "chapter": "Ship a full-stack feature",
       "mission": "Complete the tracker journey using only a keyboard and at 200% zoom; fix the first three barriers.",
+      "communication": {
+        "day": 40,
+        "title": "Comment with value",
+        "prompt": "Leave one helpful comment on a developer post: add an example, tradeoff, or question.",
+        "audience": "Public online",
+        "skill": "Contribution",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-trees-04",
@@ -2342,6 +2742,16 @@
       "course": "Measure the slow screen",
       "chapter": "Ship a full-stack feature",
       "mission": "Profile a large application list and reduce one measured bottleneck; record before and after evidence.",
+      "communication": {
+        "day": 41,
+        "title": "Stranger warm-up",
+        "prompt": "Ask a shopkeeper, receptionist, or event attendee one simple English question and thank them clearly.",
+        "audience": "Public offline",
+        "skill": "Confidence",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-trees-05",
@@ -2398,6 +2808,16 @@
       "course": "Boss battle: release candidate",
       "chapter": "Ship a full-stack feature",
       "mission": "Run registration-to-application creation, filter, edit, and logout; write a release checklist and demo script.",
+      "communication": {
+        "day": 42,
+        "title": "Stranger tech intro",
+        "prompt": "At a meetup, online community, or professional setting, introduce yourself: \"I work in full stack. I am preparing for interviews and practicing clearer explanations.\"",
+        "audience": "Public/professional",
+        "skill": "Presence",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-bst-01",
@@ -2454,6 +2874,16 @@
       "course": "Python through familiar ideas",
       "chapter": "Python & FastAPI",
       "mission": "Transform application dictionaries into counts by stage using a loop and then a comprehension.",
+      "communication": {
+        "day": 43,
+        "title": "Mock interviewer",
+        "prompt": "Ask someone to interrupt your answer once. Practice pausing, clarifying, and continuing calmly.",
+        "audience": "Known person",
+        "skill": "Interview control",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-bst-02",
@@ -2510,6 +2940,16 @@
       "course": "The mutable default trap",
       "chapter": "Python & FastAPI",
       "mission": "Repair add_note(note, notes=[]) and prove separate calls no longer share a list.",
+      "communication": {
+        "day": 44,
+        "title": "Story drill",
+        "prompt": "Tell a STAR story from work: situation, task, action, result, what you learned.",
+        "audience": "Private or peer",
+        "skill": "Behavioral stories",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-bst-03",
@@ -2566,6 +3006,16 @@
       "course": "Errors with a useful boundary",
       "chapter": "Python & FastAPI",
       "mission": "Read a CSV with a context manager and report file errors separately from invalid rows.",
+      "communication": {
+        "day": 45,
+        "title": "Role intro",
+        "prompt": "Practice a confident role intro: experience, strengths, target role, current focus.",
+        "audience": "Private or peer",
+        "skill": "Professional intro",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-bst-04",
@@ -2646,6 +3096,16 @@
       "course": "From function to FastAPI route",
       "chapter": "Python & FastAPI",
       "mission": "Create GET /health and POST /imports/preview with validated request and response models.",
+      "communication": {
+        "day": 46,
+        "title": "Mirror explain",
+        "prompt": "Record a 60-second explanation of today's concept in English. Use: \"Today I learned..., the tricky part is..., one example is...\"",
+        "audience": "Private",
+        "skill": "Fluency",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-heaps-01",
@@ -2702,6 +3162,16 @@
       "course": "Parse the messy spreadsheet",
       "chapter": "Python & FastAPI",
       "mission": "Parse a CSV using the standard csv module and return accepted rows plus row-numbered errors.",
+      "communication": {
+        "day": 47,
+        "title": "Rubber-duck debug",
+        "prompt": "Explain one bug or edge case aloud as if guiding a junior developer. End with the next test you would run.",
+        "audience": "Private",
+        "skill": "Technical clarity",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-heaps-02",
@@ -2758,6 +3228,16 @@
       "course": "Test the importer contract",
       "chapter": "Python & FastAPI",
       "mission": "Test blank input, quoted commas, duplicate rows, missing columns, and a valid import preview.",
+      "communication": {
+        "day": 48,
+        "title": "Written standup",
+        "prompt": "Write a three-line standup: yesterday, today, blocker. Keep each line under 18 words.",
+        "audience": "Private",
+        "skill": "Concise updates",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-heaps-03",
@@ -2814,6 +3294,16 @@
       "course": "Boss battle: Python mini-service",
       "chapter": "Python & FastAPI",
       "mission": "Deliver a FastAPI CSV preview service with documented examples and a command that runs its tests.",
+      "communication": {
+        "day": 49,
+        "title": "Voice note",
+        "prompt": "Send or save a two-minute voice note explaining your solution approach. Listen once and write one improvement.",
+        "audience": "Private",
+        "skill": "Self-review",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-heaps-04",
@@ -2870,6 +3360,16 @@
       "course": "Persist the import safely",
       "chapter": "Reliable backend systems",
       "mission": "Persist validated applications into PostgreSQL in one transaction using a scoped database session.",
+      "communication": {
+        "day": 50,
+        "title": "Peer DM",
+        "prompt": "Message one developer friend or classmate: \"I am practicing interview communication. Can I explain one concept in 2 minutes and get one question?\"",
+        "audience": "Known person",
+        "skill": "Initiating",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-heaps-05",
@@ -2926,6 +3426,16 @@
       "course": "Two clicks, one import",
       "chapter": "Reliable backend systems",
       "mission": "Add an owner-scoped import idempotency key and return the previous result for an identical retry.",
+      "communication": {
+        "day": 51,
+        "title": "Ask for feedback",
+        "prompt": "Share a short answer with a known person and ask: \"Which part sounded unclear or too long?\"",
+        "audience": "Known person",
+        "skill": "Feedback",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-backtrack-01",
@@ -2982,6 +3492,16 @@
       "course": "The network beneath fetch",
       "chapter": "Reliable backend systems",
       "mission": "Draw the stages of loading your API and list a failure symptom for each stage.",
+      "communication": {
+        "day": 52,
+        "title": "Small disagreement",
+        "prompt": "Practice a respectful technical disagreement: \"I see that point. My concern is..., because...\"",
+        "audience": "Known person",
+        "skill": "Diplomacy",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-backtrack-02",
@@ -3038,6 +3558,16 @@
       "course": "Threads, tasks, and blocking work",
       "chapter": "Reliable backend systems",
       "mission": "Compare a blocking call inside an async route with a correctly isolated or asynchronous alternative.",
+      "communication": {
+        "day": 53,
+        "title": "Question-first habit",
+        "prompt": "In one conversation, ask two follow-up questions before giving your own opinion.",
+        "audience": "Known person",
+        "skill": "Listening",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-backtrack-03",
@@ -3094,6 +3624,16 @@
       "course": "Keep updates from disappearing",
       "chapter": "Reliable backend systems",
       "mission": "Add a version field to application updates and return a conflict when an old version is submitted.",
+      "communication": {
+        "day": 54,
+        "title": "Public micro-post",
+        "prompt": "Post or draft a short learning note: problem, insight, mistake, correction. Keep it honest and simple.",
+        "audience": "Public online",
+        "skill": "Public clarity",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-backtrack-04",
@@ -3174,6 +3714,16 @@
       "course": "Retry without a stampede",
       "chapter": "Reliable backend systems",
       "mission": "Write a bounded retry wrapper for a read request and simulate temporary versus permanent failures.",
+      "communication": {
+        "day": 55,
+        "title": "Comment with value",
+        "prompt": "Leave one helpful comment on a developer post: add an example, tradeoff, or question.",
+        "audience": "Public online",
+        "skill": "Contribution",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-graphs-01",
@@ -3230,6 +3780,16 @@
       "course": "Boss battle: failure lab",
       "chapter": "Reliable backend systems",
       "mission": "Simulate a database outage, duplicate import, and stale update; show what the user sees and how data remains consistent.",
+      "communication": {
+        "day": 56,
+        "title": "Stranger warm-up",
+        "prompt": "Ask a shopkeeper, receptionist, or event attendee one simple English question and thank them clearly.",
+        "audience": "Public offline",
+        "skill": "Confidence",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-graphs-02",
@@ -3286,6 +3846,16 @@
       "course": "Find your way around Linux",
       "chapter": "Docker & CI/CD",
       "mission": "Practice listing processes, inspecting a listening port, reading logs, and gracefully stopping a local service.",
+      "communication": {
+        "day": 57,
+        "title": "Stranger tech intro",
+        "prompt": "At a meetup, online community, or professional setting, introduce yourself: \"I work in full stack. I am preparing for interviews and practicing clearer explanations.\"",
+        "audience": "Public/professional",
+        "skill": "Presence",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-graphs-03",
@@ -3342,6 +3912,16 @@
       "course": "Package the application",
       "chapter": "Docker & CI/CD",
       "mission": "Write a Dockerfile with a locked dependency install and run the app as a non-root user.",
+      "communication": {
+        "day": 58,
+        "title": "Mock interviewer",
+        "prompt": "Ask someone to interrupt your answer once. Practice pausing, clarifying, and continuing calmly.",
+        "audience": "Known person",
+        "skill": "Interview control",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-graphs-04",
@@ -3398,6 +3978,16 @@
       "course": "Connect the containers",
       "chapter": "Docker & CI/CD",
       "mission": "Use Compose for the API and local PostgreSQL with a named database volume and health check.",
+      "communication": {
+        "day": 59,
+        "title": "Story drill",
+        "prompt": "Tell a STAR story from work: situation, task, action, result, what you learned.",
+        "audience": "Private or peer",
+        "skill": "Behavioral stories",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-graphs-05",
@@ -3454,6 +4044,16 @@
       "course": "A clean build every time",
       "chapter": "Docker & CI/CD",
       "mission": "Create a GitHub Actions workflow for pull requests with a locked install and failing checks that block success.",
+      "communication": {
+        "day": 60,
+        "title": "Role intro",
+        "prompt": "Practice a confident role intro: experience, strengths, target role, current focus.",
+        "audience": "Private or peer",
+        "skill": "Professional intro",
+        "phase": "Public practice",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-advanced-graphs-01",
@@ -3510,6 +4110,16 @@
       "course": "Keep credentials out of artifacts",
       "chapter": "Docker & CI/CD",
       "mission": "Inventory environment variables and classify public configuration, runtime secrets, and local-only values.",
+      "communication": {
+        "day": 61,
+        "title": "Mirror explain",
+        "prompt": "Record a 60-second explanation of today's concept in English. Use: \"Today I learned..., the tricky part is..., one example is...\"",
+        "audience": "Private",
+        "skill": "Fluency",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-advanced-graphs-02",
@@ -3566,6 +4176,16 @@
       "course": "Deploy one artifact deliberately",
       "chapter": "Docker & CI/CD",
       "mission": "Design a pipeline with test, build, deploy, health check, and rollback steps; rehearse locally.",
+      "communication": {
+        "day": 62,
+        "title": "Rubber-duck debug",
+        "prompt": "Explain one bug or edge case aloud as if guiding a junior developer. End with the next test you would run.",
+        "audience": "Private",
+        "skill": "Technical clarity",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-advanced-graphs-03",
@@ -3622,6 +4242,16 @@
       "course": "Boss battle: broken pipeline",
       "chapter": "Docker & CI/CD",
       "mission": "Introduce and repair a missing environment variable, failing test, and incompatible dependency lockfile.",
+      "communication": {
+        "day": 63,
+        "title": "Written standup",
+        "prompt": "Write a three-line standup: yesterday, today, blocker. Keep each line under 18 words.",
+        "audience": "Private",
+        "skill": "Concise updates",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-advanced-graphs-04",
@@ -3702,6 +4332,16 @@
       "course": "Map the AWS boundaries",
       "chapter": "AWS & operations",
       "mission": "Draw a small AWS architecture and write a least-privilege policy proposal before creating resources.",
+      "communication": {
+        "day": 64,
+        "title": "Voice note",
+        "prompt": "Send or save a two-minute voice note explaining your solution approach. Listen once and write one improvement.",
+        "audience": "Private",
+        "skill": "Self-review",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-dp1-01",
@@ -3758,6 +4398,16 @@
       "course": "Launch with a rollback plan",
       "chapter": "AWS & operations",
       "mission": "Prepare an EC2 deployment runbook with startup, health verification, restart, rollback, and teardown commands.",
+      "communication": {
+        "day": 65,
+        "title": "Peer DM",
+        "prompt": "Message one developer friend or classmate: \"I am practicing interview communication. Can I explain one concept in 2 minutes and get one question?\"",
+        "audience": "Known person",
+        "skill": "Initiating",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-dp1-02",
@@ -3814,6 +4464,16 @@
       "course": "Store objects privately",
       "chapter": "AWS & operations",
       "mission": "Design private resume storage with short-lived signed access and a deletion policy.",
+      "communication": {
+        "day": 66,
+        "title": "Ask for feedback",
+        "prompt": "Share a short answer with a known person and ask: \"Which part sounded unclear or too long?\"",
+        "audience": "Known person",
+        "skill": "Feedback",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-dp1-03",
@@ -3870,6 +4530,16 @@
       "course": "See the failure before guessing",
       "chapter": "AWS & operations",
       "mission": "Define latency, error-rate, and availability signals; write a troubleshooting flow using structured logs.",
+      "communication": {
+        "day": 67,
+        "title": "Small disagreement",
+        "prompt": "Practice a respectful technical disagreement: \"I see that point. My concern is..., because...\"",
+        "audience": "Known person",
+        "skill": "Diplomacy",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-dp1-04",
@@ -3926,6 +4596,16 @@
       "course": "Short-lived deployment identity",
       "chapter": "AWS & operations",
       "mission": "Draft a GitHub-to-AWS OIDC role trust policy scoped to your repository and deployment environment.",
+      "communication": {
+        "day": 68,
+        "title": "Question-first habit",
+        "prompt": "In one conversation, ask two follow-up questions before giving your own opinion.",
+        "audience": "Known person",
+        "skill": "Listening",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-dp1-05",
@@ -3982,6 +4662,16 @@
       "course": "Spend deliberately, clean up fully",
       "chapter": "AWS & operations",
       "mission": "Create a resource inventory, estimate your experiment cost, and rehearse teardown without provisioning paid resources yet.",
+      "communication": {
+        "day": 69,
+        "title": "Public micro-post",
+        "prompt": "Post or draft a short learning note: problem, insight, mistake, correction. Keep it honest and simple.",
+        "audience": "Public online",
+        "skill": "Public clarity",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-dp2-01",
@@ -4038,6 +4728,16 @@
       "course": "Boss battle: deployment incident",
       "chapter": "AWS & operations",
       "mission": "Run a deployment exercise within an agreed budget or simulate locally; break configuration, inspect logs, roll back, and clean up.",
+      "communication": {
+        "day": 70,
+        "title": "Comment with value",
+        "prompt": "Leave one helpful comment on a developer post: add an example, tradeoff, or question.",
+        "audience": "Public online",
+        "skill": "Contribution",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-dp2-02",
@@ -4094,6 +4794,16 @@
       "course": "Ask before drawing boxes",
       "chapter": "System design",
       "mission": "Clarify a URL-shortener brief and write functional and nonfunctional requirements plus explicit exclusions.",
+      "communication": {
+        "day": 71,
+        "title": "Stranger warm-up",
+        "prompt": "Ask a shopkeeper, receptionist, or event attendee one simple English question and thank them clearly.",
+        "audience": "Public offline",
+        "skill": "Confidence",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-dp2-03",
@@ -4151,6 +4861,16 @@
       "course": "Estimate the shape of the load",
       "chapter": "System design",
       "mission": "Estimate reads per second and yearly storage for a shortener with one million new links per day.",
+      "communication": {
+        "day": 72,
+        "title": "Stranger tech intro",
+        "prompt": "At a meetup, online community, or professional setting, introduce yourself: \"I work in full stack. I am preparing for interviews and practicing clearer explanations.\"",
+        "audience": "Public/professional",
+        "skill": "Presence",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-dp2-04",
@@ -4232,6 +4952,16 @@
       "course": "Design the short link",
       "chapter": "System design",
       "mission": "Draw the write and redirect paths with a data model and collision strategy.",
+      "communication": {
+        "day": 73,
+        "title": "Mock interviewer",
+        "prompt": "Ask someone to interrupt your answer once. Practice pausing, clarifying, and continuing calmly.",
+        "audience": "Known person",
+        "skill": "Interview control",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-greedy-01",
@@ -4289,6 +5019,16 @@
       "course": "A cache can be wrong",
       "chapter": "System design",
       "mission": "Add a cache-aside design to the shortener and trace a miss, hit, expired value, and origin outage.",
+      "communication": {
+        "day": 74,
+        "title": "Story drill",
+        "prompt": "Tell a STAR story from work: situation, task, action, result, what you learned.",
+        "audience": "Private or peer",
+        "skill": "Behavioral stories",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-greedy-02",
@@ -4346,6 +5086,16 @@
       "course": "Queues move the waiting",
       "chapter": "System design",
       "mission": "Design application-reminder notifications with a queue, worker, retry limit, and dead-letter handling.",
+      "communication": {
+        "day": 75,
+        "title": "Role intro",
+        "prompt": "Practice a confident role intro: experience, strengths, target role, current focus.",
+        "audience": "Private or peer",
+        "skill": "Professional intro",
+        "phase": "Interview simulation",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-greedy-03",
@@ -4403,6 +5153,16 @@
       "course": "Choose consistency consciously",
       "chapter": "System design",
       "mission": "Scale the tracker to many users and compare replica reads with primary reads for freshly saved applications.",
+      "communication": {
+        "day": 76,
+        "title": "Mirror explain",
+        "prompt": "Record a 60-second explanation of today's concept in English. Use: \"Today I learned..., the tricky part is..., one example is...\"",
+        "audience": "Private",
+        "skill": "Fluency",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-greedy-04",
@@ -4460,6 +5220,16 @@
       "course": "Boss battle: design under pressure",
       "chapter": "System design",
       "mission": "Spend 40 minutes designing a notification service; introduce a worker outage halfway through and revise the design.",
+      "communication": {
+        "day": 77,
+        "title": "Rubber-duck debug",
+        "prompt": "Explain one bug or edge case aloud as if guiding a junior developer. End with the next test you would run.",
+        "audience": "Private",
+        "skill": "Technical clarity",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-greedy-05",
@@ -4517,6 +5287,16 @@
       "course": "Tell the story of your work",
       "chapter": "Interview arena",
       "mission": "Prepare a two-minute tracker walkthrough and a deeper explanation of one technical tradeoff.",
+      "communication": {
+        "day": 78,
+        "title": "Written standup",
+        "prompt": "Write a three-line standup: yesterday, today, blocker. Keep each line under 18 words.",
+        "audience": "Private",
+        "skill": "Concise updates",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-strings-01",
@@ -4573,6 +5353,16 @@
       "course": "Frontend interview simulation",
       "chapter": "Interview arena",
       "mission": "Build a searchable list in 45 minutes, then spend 15 minutes testing and explaining it.",
+      "communication": {
+        "day": 79,
+        "title": "Voice note",
+        "prompt": "Send or save a two-minute voice note explaining your solution approach. Listen once and write one improvement.",
+        "audience": "Private",
+        "skill": "Self-review",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-strings-02",
@@ -4629,6 +5419,16 @@
       "course": "Backend interview simulation",
       "chapter": "Interview arena",
       "mission": "Build a validated create/list API in 45 minutes and demonstrate invalid input and unauthorized access tests.",
+      "communication": {
+        "day": 80,
+        "title": "Peer DM",
+        "prompt": "Message one developer friend or classmate: \"I am practicing interview communication. Can I explain one concept in 2 minutes and get one question?\"",
+        "audience": "Known person",
+        "skill": "Initiating",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-strings-03",
@@ -4685,6 +5485,16 @@
       "course": "Coding interview simulation",
       "chapter": "Interview arena",
       "mission": "Solve one unseen easy and one unseen medium problem in 60 minutes without solutions.",
+      "communication": {
+        "day": 81,
+        "title": "Ask for feedback",
+        "prompt": "Share a short answer with a known person and ask: \"Which part sounded unclear or too long?\"",
+        "audience": "Known person",
+        "skill": "Feedback",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-strings-04",
@@ -4765,6 +5575,16 @@
       "course": "Behavioral answers with evidence",
       "chapter": "Interview arena",
       "mission": "Write stories about a bug, disagreement, deadline, mistake, and learning challenge using real experience.",
+      "communication": {
+        "day": 82,
+        "title": "Small disagreement",
+        "prompt": "Practice a respectful technical disagreement: \"I see that point. My concern is..., because...\"",
+        "audience": "Known person",
+        "skill": "Diplomacy",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-bits-01",
@@ -4821,6 +5641,16 @@
       "course": "A resume that survives follow-ups",
       "chapter": "Interview arena",
       "mission": "Rewrite three bullets as action plus technical detail plus observed outcome; link to a clean project README.",
+      "communication": {
+        "day": 83,
+        "title": "Question-first habit",
+        "prompt": "In one conversation, ask two follow-up questions before giving your own opinion.",
+        "audience": "Known person",
+        "skill": "Listening",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-bits-02",
@@ -4877,6 +5707,16 @@
       "course": "Boss battle: the full loop",
       "chapter": "Interview arena",
       "mission": "Run a 150-minute mock loop with breaks and record a rubric score plus three targeted improvements.",
+      "communication": {
+        "day": 84,
+        "title": "Public micro-post",
+        "prompt": "Post or draft a short learning note: problem, insight, mistake, correction. Keep it honest and simple.",
+        "audience": "Public online",
+        "skill": "Public clarity",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-bits-03",
@@ -4933,6 +5773,16 @@
       "course": "Repair the weakest link",
       "chapter": "Launch your next chapter",
       "mission": "Choose your two lowest-scoring skills and solve new tasks that exercise the same underlying concepts.",
+      "communication": {
+        "day": 85,
+        "title": "Comment with value",
+        "prompt": "Leave one helpful comment on a developer post: add an example, tradeoff, or question.",
+        "audience": "Public online",
+        "skill": "Contribution",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-bits-04",
@@ -4989,6 +5839,16 @@
       "course": "Make the project reviewable",
       "chapter": "Launch your next chapter",
       "mission": "Audit your README, screenshots, environment example, tests, and deployment instructions from a fresh checkout.",
+      "communication": {
+        "day": 86,
+        "title": "Stranger warm-up",
+        "prompt": "Ask a shopkeeper, receptionist, or event attendee one simple English question and thank them clearly.",
+        "audience": "Public offline",
+        "skill": "Confidence",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-bits-05",
@@ -5045,6 +5905,16 @@
       "course": "Apply with intent",
       "chapter": "Launch your next chapter",
       "mission": "Shortlist ten roles, note requirements and gaps, and prepare tailored applications for the best matches.",
+      "communication": {
+        "day": 87,
+        "title": "Stranger tech intro",
+        "prompt": "At a meetup, online community, or professional setting, introduce yourself: \"I work in full stack. I am preparing for interviews and practicing clearer explanations.\"",
+        "audience": "Public/professional",
+        "skill": "Presence",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-structures-01",
@@ -5101,6 +5971,16 @@
       "course": "Final readiness check",
       "chapter": "Launch your next chapter",
       "mission": "Complete coding, protected API, project explanation, and a 40-minute design task; score with the saved rubric.",
+      "communication": {
+        "day": 88,
+        "title": "Mock interviewer",
+        "prompt": "Ask someone to interrupt your answer once. Practice pausing, clarifying, and continuing calmly.",
+        "audience": "Known person",
+        "skill": "Interview control",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-structures-02",
@@ -5157,6 +6037,16 @@
       "course": "Practice the follow-up",
       "chapter": "Launch your next chapter",
       "mission": "Simulate an interviewer changing requirements mid-solution; revise your approach and explain the tradeoff.",
+      "communication": {
+        "day": 89,
+        "title": "Story drill",
+        "prompt": "Tell a STAR story from work: situation, task, action, result, what you learned.",
+        "audience": "Private or peer",
+        "skill": "Behavioral stories",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-structures-03",
@@ -5213,6 +6103,16 @@
       "course": "Your next chapter starts here",
       "chapter": "Launch your next chapter",
       "mission": "Export your progress, write a four-week maintenance plan, and record a final project walkthrough.",
+      "communication": {
+        "day": 90,
+        "title": "Role intro",
+        "prompt": "Practice a confident role intro: experience, strengths, target role, current focus.",
+        "audience": "Private or peer",
+        "skill": "Professional intro",
+        "phase": "Polish and confidence",
+        "script": "Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?",
+        "reflection": "What did I say clearly? Where did I pause? What will I say shorter next time?"
+      },
       "dsa": [
         {
           "id": "dsa-structures-04",
