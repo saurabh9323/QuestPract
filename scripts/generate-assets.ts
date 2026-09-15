@@ -1,5 +1,6 @@
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {chapters,quests,curriculumVersion} from '../lib/curriculum';
+import {dayAssignments} from '../lib/course';
 import {questionBank,theory} from '../lib/bank';
 const esc=(s:string)=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 mkdirSync('public/diagrams',{recursive:true});
@@ -7,3 +8,5 @@ for(const c of chapters){const blocks=c.diagram.map((label,i)=>{const x=30+(i%2)
 writeFileSync('public/curriculum.json',JSON.stringify({version:curriculumVersion,chapters,quests},null,2));
 writeFileSync('public/question-bank.json',JSON.stringify({questions:questionBank,theory},null,2));
 console.log(`Generated ${chapters.length} concept images and ${quests.length} quests.`);
+
+writeFileSync('public/course-plan.json',JSON.stringify({description:'90-day course with 100 assigned DSA questions; choose your own start date in the app.',days:quests.map(q=>({day:q.day,course:q.title,chapter:chapters[q.chapter-1].name,mission:q.mission,...dayAssignments(q.day)}))},null,2));

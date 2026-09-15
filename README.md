@@ -106,3 +106,11 @@ The optional WebMCP tools `get_training_progress` and `open_training_day` expose
 
 To host elsewhere, deploy `out/` and preserve absolute asset paths from the domain root. Sites registration metadata in `.openai/hosting.json` belongs to the original deployment; remove that file before registering a separate Site.
 
+
+## Start date and the 100-question timeline
+
+Choose the start date from Mission control, the new 90-day timeline, or Settings. Submit with Set start date. The 90-day end date recalculates. An explicit checkbox controls whether custom dates for unfinished tasks also shift by the date difference; existing answers, screenshots, completion timestamps and recall dates remain intact.
+
+The timeline assigns 100 distinct DSA questions from 20 topics: one per day, with a second question on days 9, 18, 27, 36, 45, 54, 63, 72, 81 and 90. These occupy the daily DSA block; the older inline DSA questions are optional variations. Each day also links a companion interview, SQL or system-design question beside its authored course lesson and build. All 90 days can be filtered by week or completion. `public/course-plan.json` exports the complete assignment plan.
+
+Submit an answer, verify it with your own normal/boundary tests and reasoning, then use Mark solved. Submission alone does not advance the 100-question solved count. Reopen keeps attempt history. The coach recommends overdue questions first, then unfinished attempts, then the next question, and calculates remaining pace. A fully complete day requires both its course checklist and assigned DSA solved. All labels are self-reported learning evidence, not automated grading. Deferring a practice mission changes its DSA due date; deferrals beyond the course deadline are explicitly reported. Skipping a mission does not erase the 100-question goal.

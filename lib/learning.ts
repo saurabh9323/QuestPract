@@ -3,7 +3,7 @@ import type {Progress} from './progress';
 import {dateKey,dayDate,scheduledDay} from './progress';
 import {managedTasks,groups} from './planning';
 export type Attempt={id:string;text:string;feedback:string;createdAt:string;feedbackUpdatedAt?:string;confidence:'learning'|'assisted'|'independent'};
-export type Practice={draft:string;notes:string;attempts:Attempt[];bookmarked:boolean;updatedAt:string;reviewDue?:string;level:number};
+export type Practice={draft:string;notes:string;attempts:Attempt[];bookmarked:boolean;updatedAt:string;reviewDue?:string;level:number;solvedAt?:string};
 export const blankPractice=():Practice=>({draft:'',notes:'',attempts:[],bookmarked:false,updatedAt:'',level:0});
 export function savePractice(p:Progress,id:string,patch:Partial<Practice>):Progress{return {...p,updatedAt:new Date().toISOString(),practice:{...p.practice,[id]:{...blankPractice(),...p.practice?.[id],...patch,updatedAt:new Date().toISOString()}}};}
 export function submitAttempt(p:Progress,id:string,confidence:Attempt['confidence']='learning',now=new Date()):Progress{const record=p.practice?.[id]||blankPractice();if(!record.draft.trim())throw new Error('Write an answer before saving an attempt.');const attempt:Attempt={id:crypto.randomUUID(),text:record.draft,feedback:'',createdAt:now.toISOString(),confidence};return savePractice(p,id,{attempts:[...record.attempts,attempt],reviewDue:dayDate(dateKey(now),1)});}
