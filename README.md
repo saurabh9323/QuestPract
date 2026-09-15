@@ -29,7 +29,7 @@ npm start
 5. Send a sign-in link and open it in the same browser/profile. The app loads that user's cloud progress.
 6. Use **Import guest progress to account** to explicitly replace cloud progress with the guest data from that browser. Export existing cloud progress first if you need to retain it.
 
-Alternatively set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` using `.env.example` before building. These are public configuration values. The connection screen avoids a rebuild when you connect later.
+Alternatively set `SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` using `.env.example` before building. These are public configuration values. The connection screen avoids a rebuild when you connect later.
 
 Guest and cloud progress are deliberately separate. Guest progress and base64 screenshots use IndexedDB (`quest90-learning`); legacy `quest90.guest.v1` localStorage progress is migrated automatically. Data and stays on that origin/device. Clearing browser data can remove it. Export backups regularly. Cloud progress uses one JSONB document per authenticated user; it includes answers, notes, todos, timestamps, and spaced-review state. Static curriculum remains in the source and downloadable JSON.
 
@@ -105,7 +105,6 @@ The optional WebMCP tools `get_training_progress` and `open_training_day` expose
 - `public/supabase-setup.sql`: database setup and ownership policies.
 
 To host elsewhere, deploy `out/` and preserve absolute asset paths from the domain root. Sites registration metadata in `.openai/hosting.json` belongs to the original deployment; remove that file before registering a separate Site.
-
 
 ## Start date and the 100-question timeline
 
