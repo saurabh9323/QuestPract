@@ -228,6 +228,33 @@ export function useTraining() {
     if (e) throw e;
     setNotice("Check your email for the sign-in link.");
   };
+  const signUpPassword = async (email: string, password: string) => {
+    if (!client.current)
+      throw new Error("Connect your Supabase project first.");
+    if (password.length < 8)
+      throw new Error("Use at least 8 characters for your password.");
+    const { error: e } = await client.current.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: window.location.origin + "/" },
+    });
+    if (e) throw e;
+    setNotice(
+      "Account created. If email confirmation is enabled, check your inbox before signing in.",
+    );
+  };
+  const signInPassword = async (email: string, password: string) => {
+    if (!client.current)
+      throw new Error("Connect your Supabase project first.");
+    if (pending.current || saving.current)
+      throw new Error("Wait for your progress to save first.");
+    const { error: e } = await client.current.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (e) throw e;
+    setNotice("Signed in. Your course progress can now save to Supabase.");
+  };
   const signOut = async () => {
     if (pending.current || saving.current)
       throw new Error(
@@ -272,6 +299,8 @@ export function useTraining() {
     busy,
     configure,
     signIn,
+    signUpPassword,
+    signInPassword,
     signOut,
     retry,
     reload,

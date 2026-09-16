@@ -18,6 +18,10 @@ After 90 days, the learner should be stronger at:
 ## Main Features
 
 - Selectable course start date.
+- Finalized course start date saved inside the Supabase progress payload.
+- Supabase table columns for `course_start_date` and `course_start_lock_key`, with `course_start_locked_v1` preventing later date changes.
+- Supabase email/password login plus email-link fallback.
+- Dashboard status for days remaining, today's submitted minutes, overdue work, and recent constraints.
 - 90-day timeline.
 - 100 assigned DSA questions inside the 90 days.
 - 1,000-question practice bank:
@@ -27,6 +31,8 @@ After 90 days, the learner should be stronger at:
   - 100 system design questions.
 - Daily course quest with lesson, checklist, questions, hints, rubric, notes, and screenshots.
 - Daily communication mission with script, real-world task, saved reflection, reply notes, and history.
+- Communication and people-interaction practice appears as a managed daily task.
+- ChatGPT mock interview room with technical, system design, behavioral, and English-confidence prompts.
 - Smart schedule management for missed work, deferred tasks, planned breaks, and catch-up warnings.
 - Saved answer attempts with older versions preserved.
 - Manual ChatGPT review prompt for feedback when Codex is unavailable.
@@ -74,8 +80,11 @@ The browser app must use:
 
 - Supabase project URL, like `https://your-project.supabase.co`
 - Supabase publishable key or legacy anon key
+- Supabase Auth with email/password enabled if password login is desired
 
 The raw PostgreSQL connection string must stay private and should never be pasted into the public app UI or committed to source code.
+
+Passwords are handled by Supabase Auth. Quest90 never stores a password in the progress JSON or screenshot tables.
 
 Run `public/supabase-setup.sql` once in the Supabase SQL Editor. It creates:
 

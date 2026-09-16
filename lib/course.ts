@@ -47,7 +47,19 @@ export function communicationStats(p:Progress,today=dateKey()){
  const entries=quests.map(q=>({day:q.day,date:dayDate(p.startDate,q.day-1),mission:communicationMission(q.day),log:p.communication?.[q.day]}));
  return {entries,done:entries.filter(x=>x.log?.status==='done').length,attempted:entries.filter(x=>x.log?.status==='attempted').length,overdue:entries.filter(x=>x.date<today&&x.log?.status!=='done'),today:entries.find(x=>x.date===today)||entries.find(x=>!x.log||x.log.status!=='done')};
 }
+export function courseSnapshot(p:Progress,today=dateKey()){
+ const course=courseStats(p,today),communication=communicationStats(p,today),tasks=managedTasks(p),active=tasks.filter(t=>!t.done&&t.status!=='skipped'),todayTasks=active.filter(t=>t.dueDate===today),overdue=active.filter(t=>t.dueDate<today);
+ const todayMinutes=Object.values(p.days).flatMap(d=>d.submissions||[]).filter(s=>dateKey(new Date(s.at))===today).reduce((n,s)=>n+s.minutes,0);
+ const constraints=Object.values(p.days).flatMap(d=>d.submissions||[]).filter(s=>s.status!=='complete'&&s.reason.trim()).slice(-6).reverse();
+ return {course,communication,tasks:{today:todayTasks,overdue,pending:active.length},todayMinutes,constraints,daysRemaining:Math.max(0,Math.ceil((Date.parse(course.end+'T00:00:00Z')-Date.parse(today+'T00:00:00Z'))/86400000)+1)};
+}
+export function finalizeCourseStart(p:Progress,startDate:string,shiftOverrides=true):Progress{
+ if(p.enrollment?.startFinal||p.enrollment?.startDateChangeUsed)throw new Error('Your course start date is already locked.');
+ const next=changeCourseStart(p,startDate,shiftOverrides),at=new Date().toISOString();
+ return {...next,updatedAt:at,enrollment:{startFinal:true,startDateChangeUsed:true,lockKey:'course_start_locked_v1',finalizedAt:at,startedAt:startDate}};
+}
 export function changeCourseStart(p:Progress,startDate:string,shiftOverrides=true):Progress{
+ if(p.enrollment?.startFinal||p.enrollment?.startDateChangeUsed)throw new Error('Your course start date is locked. Export a backup before starting a new 90-day course.');
  if(!/^\d{4}-\d{2}-\d{2}$/.test(startDate)||dateKey(new Date(startDate+'T12:00:00'))!==startDate)throw new Error('Choose a valid course start date.');
  const difference=Math.round((Date.parse(startDate+'T00:00:00Z')-Date.parse(p.startDate+'T00:00:00Z'))/86400000),at=new Date().toISOString();
  if(!difference)return p;
