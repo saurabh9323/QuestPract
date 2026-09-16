@@ -2,6 +2,30 @@
 -- Progress, finalized course start date, answers, task history, notes and review dates live in this JSONB document.
 -- Email/password accounts are handled by Supabase Auth; passwords are never stored in these tables.
 -- A revision check prevents silent overwrites from concurrent tabs or devices.
+create table if not exists public.user_profiles (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  username text unique,
+  full_name text,
+  experience_years numeric(4,1),
+  target_role text default 'Full-stack Developer',
+  communication_goal text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  constraint username_format check (username is null or username ~ '^[a-zA-Z0-9_]{3,30}$'),
+  constraint full_name_length check (full_name is null or char_length(full_name) <= 120),
+  constraint target_role_length check (target_role is null or char_length(target_role) <= 120),
+  constraint communication_goal_length check (communication_goal is null or char_length(communication_goal) <= 1000)
+);
+alter table public.user_profiles enable row level security;
+drop policy if exists "Read own profile" on public.user_profiles;
+create policy "Read own profile" on public.user_profiles for select to authenticated using ((select auth.uid()) = user_id);
+drop policy if exists "Insert own profile" on public.user_profiles;
+create policy "Insert own profile" on public.user_profiles for insert to authenticated with check ((select auth.uid()) = user_id);
+drop policy if exists "Update own profile" on public.user_profiles;
+create policy "Update own profile" on public.user_profiles for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+grant select, insert, update on public.user_profiles to authenticated;
+revoke all on public.user_profiles from anon;
+
 create table if not exists public.training_state (
   user_id uuid primary key references auth.users(id) on delete cascade,
   payload jsonb not null,

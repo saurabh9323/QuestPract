@@ -116,3 +116,8 @@ Quest90 should feel like a personal teacher and interview gym:
 - Practical instead of motivational-only.
 - Strong on revision, explanations, and evidence.
 - Helpful for both technical skill and communication confidence.
+
+## Authentication update
+
+Quest90 should use Supabase Auth for email/password login. Do not store plain passwords in application tables. The SQL setup now includes public.user_profiles for username and user details, while Supabase Auth stores and verifies passwords securely. In Vercel, set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY so normal users see only the login/create-account form instead of setup fields.
+

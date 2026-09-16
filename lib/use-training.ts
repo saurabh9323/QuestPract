@@ -103,11 +103,11 @@ export function useTraining() {
         const raw = localStorage.getItem(CONFIG_KEY);
         if (raw) setConfig(JSON.parse(raw));
         else if (
-          process.env.SUPABASE_URL &&
+          process.env.NEXT_PUBLIC_SUPABASE_URL &&
           process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
         )
           setConfig({
-            url: process.env.SUPABASE_URL,
+            url: process.env.NEXT_PUBLIC_SUPABASE_URL,
             key: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
           });
         loaded.current = true;
