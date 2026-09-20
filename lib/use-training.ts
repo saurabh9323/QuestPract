@@ -11,6 +11,14 @@ import {
   writeCloud,
 } from "./storage";
 import { localGet, localSet } from "./local-db";
+const DEFAULT_CONNECTION: Connection = {
+  url:
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    "https://xavuhmunsmiknusfskwr.supabase.co",
+  key:
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+    "sb_publishable_szXgHTFOwnAIhCdemtwhDg_Ewpj4yX-",
+};
 export function useTraining() {
   const [progress, setProgress] = useState<Progress>(freshProgress),
     [ready, setReady] = useState(false),
@@ -102,14 +110,7 @@ export function useTraining() {
         show(saved);
         const raw = localStorage.getItem(CONFIG_KEY);
         if (raw) setConfig(JSON.parse(raw));
-        else if (
-          process.env.NEXT_PUBLIC_SUPABASE_URL &&
-          process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-        )
-          setConfig({
-            url: process.env.NEXT_PUBLIC_SUPABASE_URL,
-            key: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
-          });
+        else setConfig(DEFAULT_CONNECTION);
         loaded.current = true;
         setSync("Saved on this device");
       } catch {
