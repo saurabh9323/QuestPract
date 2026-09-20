@@ -1,0 +1,21 @@
+"use client";
+import {BarChart3,ArrowUpRight} from 'lucide-react';
+import type {Progress} from '@/lib/progress';
+import {dateKey,scheduledDay} from '@/lib/progress';
+import {managedTasks} from '@/lib/planning';
+import {questionBank,type Question} from '@/lib/bank';
+
+const pct=(n:number,d:number)=>d?Math.min(100,Math.round(n/d*100)):0;
+type Props={p:Progress;commit:(p:Progress)=>void;open?:(day:number)=>void;practice?:(id:string)=>void};
+export default function AnalyticsDashboard({p,open,practice}:Props){
+ const tasks=managedTasks(p),completedDays=Object.values(p.days).filter(d=>d.completedAt).length;
+ const attempted=questionBank.filter(q=>{const r=p.practice?.[q.id];return r&&(r.attempts.length||r.draft.trim()||r.solvedAt)}),solved=questionBank.filter(q=>p.practice?.[q.id]?.solvedAt).length;
+ const comm=Object.values(p.communication||{}).filter(c=>c.status==='done').length;
+ const groups:[string,(q:Question)=>boolean][]=[['Arrays',q=>q.kind==='DSA'&&/array/i.test(q.topic)],['Strings',q=>q.kind==='DSA'&&/string/i.test(q.topic)],['Trees',q=>q.kind==='DSA'&&/tree/i.test(q.topic)],['Graphs',q=>q.kind==='DSA'&&/graph/i.test(q.topic)],['Dynamic programming',q=>q.kind==='DSA'&&/dynamic|\bdp\b/i.test(q.topic)],['SQL',q=>q.kind==='SQL'],['System design',q=>q.kind==='System design']];
+ const topicRows=groups.map(([name,match])=>{const questions=questionBank.filter(match),done=questions.filter(q=>p.practice?.[q.id]?.solvedAt).length,next=questions.find(q=>!p.practice?.[q.id]?.solvedAt)||questions[0];return {name,done,total:questions.length,action:next&&practice?()=>practice(next.id):undefined};});
+ const nextComm=Array.from({length:90},(_,i)=>i+1).find(day=>p.communication?.[day]?.status!=='done')||90;
+ topicRows.push({name:'English communication',done:comm,total:90,action:open?()=>open(nextComm):undefined});
+ const overdue=tasks.filter(t=>!t.done&&t.status!=='skipped'&&t.dueDate<dateKey()).length;
+ return <section className="analytics-page"><div className="analytics-hero card"><div><span className="eyebrow">ANALYTICS DASHBOARD</span><h2>Your learning progress</h2><p>See completed work and choose your next area to practice.</p></div><BarChart3 size={38}/></div><div className="analytics-grid"><Metric label="90-day course" value={`${completedDays}/90`} score={pct(completedDays,90)}/><Metric label="Tasks complete" value={`${tasks.filter(t=>t.done).length}/${tasks.length}`} score={pct(tasks.filter(t=>t.done).length,tasks.length)}/><Metric label="Attempted questions marked solved" value={`${solved}/${attempted.length}`} score={pct(solved,attempted.length)}/><Metric label="Communication tasks complete" value={`${comm}/90`} score={pct(comm,90)}/></div><section className="card topic-progress"><h2>Progress by topic</h2><p>Percentages show questions marked solved out of the topic’s question bank. English shows completed daily communication tasks. These are completion counts, not interview readiness scores.</p><div className="topic-progress-grid">{topicRows.map(t=><button type="button" key={t.name} disabled={!t.action} onClick={t.action} className="topic-progress-card"><div className="topic-progress-heading"><strong>{t.name}</strong><ArrowUpRight size={17} aria-hidden="true"/></div><div className="topic-progress-numbers"><b>{pct(t.done,t.total)}%</b><span>{t.done} / {t.total} complete</span></div><div className="topic-progress-track" aria-hidden="true"><span style={{width:`${pct(t.done,t.total)}%`}}/></div><small>{t.done===0?'Ready for your first completion':t.done===t.total?'Completed · revisit for revision':'Continue practicing'}</small></button>)}</div></section><section className="card trend-card"><h2>Next coaching signal</h2><p>{overdue?`${overdue} tasks are overdue. Start with the earliest unfinished work.`:'No overdue tasks. Use your next session for independent practice and a short English explanation.'}</p><button className="secondary" onClick={()=>open?.(scheduledDay(p.startDate))}>Open current day</button></section></section>;
+}
+function Metric({label,value,score}:{label:string;value:string;score:number}){return <div className="card metric-card"><strong>{value}</strong><span>{label}</span><div className="metric-ring" style={{background:`conic-gradient(var(--green) ${score*3.6}deg,var(--line) 0deg)`}} aria-label={`${label}: ${score}%`}><em>{score}%</em></div></div>}
