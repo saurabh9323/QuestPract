@@ -9,7 +9,8 @@ export type OopAttempt = {id:string;text:string;feedback:string;confidence:'lear
 export type OopRecord = {draft:string;attempts:OopAttempt[];updatedAt:string;reviewDue?:string};
 export type DayProgress = {steps:string[];answers:Record<string,Answer>;notes:string;updatedAt:string;completedAt?:string;reviewDue?:string;reviewLevel:number;lastReviewedAt?:string;recall?:string;submissions?:Submission[]};
 export type Todo = {id:string;text:string;done:boolean;day:number;createdAt:string;updatedAt:string};
-export type Progress = {version:1;startDate:string;days:Record<string,DayProgress>;todos:Todo[];updatedAt:string;practice?:Record<string,Practice>;planning?:Planning;communication?:Record<string,CommunicationLog>;enrollment?:Enrollment;profile?:Profile;oop?:Record<string,OopRecord>};
+export type ReadingRecord={bookmarked:boolean;notes:string;visitedAt:string;updatedAt:string;readAt?:string;confidence?:'review'|'recalled';reviewDue?:string};
+export type Progress = {version:1;startDate:string;days:Record<string,DayProgress>;todos:Todo[];updatedAt:string;practice?:Record<string,Practice>;planning?:Planning;communication?:Record<string,CommunicationLog>;enrollment?:Enrollment;profile?:Profile;oop?:Record<string,OopRecord>;reading?:Record<string,ReadingRecord>};
 export function dateKey(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 export function freshProgress():Progress{return {version:1,startDate:'2026-09-15',days:{},todos:[],practice:{},updatedAt:new Date().toISOString()};}
 export function emptyDay():DayProgress{return {steps:[],answers:{},notes:'',updatedAt:'',reviewLevel:0};}
@@ -95,6 +96,10 @@ export function validateProgress(input:unknown):Progress{
    const attemptIds=new Set<string>();
    for(const a of r.attempts){if(!a||typeof a.id!=='string'||attemptIds.has(a.id)||typeof a.text!=='string'||!a.text.trim()||a.text.length>30000||typeof a.feedback!=='string'||a.feedback.length>10000||!['learning','assisted','independent'].includes(a.confidence)||!stamp(a.createdAt))throw new Error('Invalid OOP attempt.');attemptIds.add(a.id);}
   }
+ }
+ if(p.reading){
+  if(typeof p.reading!=='object'||Array.isArray(p.reading)||Object.keys(p.reading).length>2000)throw new Error('Invalid reading progress.');
+  for(const [id,r] of Object.entries(p.reading))if(!/^(guide|note)-[a-z0-9-]{1,100}$/.test(id)||!r||typeof r.bookmarked!=='boolean'||typeof r.notes!=='string'||r.notes.length>20000||!stamp(r.visitedAt)||!stamp(r.updatedAt)||(r.readAt!==undefined&&!stamp(r.readAt))||(r.confidence!==undefined&&!['review','recalled'].includes(r.confidence))||(r.reviewDue!==undefined&&!validDate(r.reviewDue)))throw new Error('Invalid reading record.');
  }
  if(JSON.stringify(p).length>12000000)throw new Error('Progress is too large (maximum 12 MB). Export older work before adding more.');
  return p;

@@ -3,7 +3,7 @@ import {BookOpen,ChartNoAxesCombined,Code2,Sun,UserRound,ChevronRight} from 'luc
 
 const groups = [
   {name:'Today',icon:Sun,items:[['dashboard','Overview'],['quest','Daily quest'],['planner','My schedule'],['tasks','Tasks & notes']]},
-  {name:'Learn',icon:BookOpen,items:[['visual','Visual lab'],['theory','Theory studio'],['oops','OOP studio'],['library','Skill library']]},
+  {name:'Learn',icon:BookOpen,items:[['commute','Commute library'],['visual','Visual lab'],['theory','Theory studio'],['oops','OOP studio'],['library','Skill library']]},
   {name:'Practice',icon:Code2,items:[['bank','Question bank'],['brain','Daily brainstorm'],['interview','Mock interview']]},
   {name:'Progress',icon:ChartNoAxesCombined,items:[['journey','90-day calendar'],['timeline','DSA learning path'],['analytics','Analytics'],['recall','Recall room']]},
   {name:'Profile',icon:UserRound,items:[['profile','My profile'],['settings','Settings & data']]},

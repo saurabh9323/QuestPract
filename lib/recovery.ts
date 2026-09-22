@@ -8,8 +8,10 @@ export function progressSummary(p:Progress){return {
   steps:Object.values(p.days).reduce((n,d)=>n+d.steps.length,0),
   answers:Object.values(p.days).reduce((n,d)=>n+Object.values(d.answers).filter(a=>a.text.trim()).length,0),
   attempts:Object.values(p.practice||{}).reduce((n,r)=>n+r.attempts.length,0)+Object.values(p.oop||{}).reduce((n,r)=>n+r.attempts.length,0),
+  readingEntries:Object.keys(p.reading||{}).length,
+  lessonsRead:Object.values(p.reading||{}).filter(r=>r.readAt).length,
 };}
-export function hasWork(p:Progress){const s=progressSummary(p);return !!(s.steps||s.answers||s.attempts||p.todos.length||Object.values(p.days).some(d=>d.notes.trim()||d.submissions?.length)||Object.values(p.practice||{}).some(r=>r.draft.trim()||r.notes.trim())||Object.values(p.oop||{}).some(r=>r.draft.trim())||Object.keys(p.communication||{}).length);}
+export function hasWork(p:Progress){const s=progressSummary(p);return !!(s.steps||s.answers||s.attempts||p.todos.length||Object.values(p.days).some(d=>d.notes.trim()||d.submissions?.length)||Object.values(p.practice||{}).some(r=>r.draft.trim()||r.notes.trim())||Object.values(p.oop||{}).some(r=>r.draft.trim())||Object.keys(p.communication||{}).length||Object.keys(p.reading||{}).length);}
 const unique=<T,>(rows:T[])=>Array.from(new Map(rows.map(row=>[JSON.stringify(row),row])).values());
 const time=(s:string)=>Date.parse(s)||0;
 // Recovery is an explicit additive action. Never infer that a day was completed.
@@ -29,6 +31,8 @@ export function mergeProgress(current:Progress,recovered:Progress):Progress{
  for(const [id,a] of Object.entries(recovered.practice||{})){const b=current.practice?.[id];if(!b)continue;const pick=time(b.updatedAt)>=time(a.updatedAt)?b:a;const attempts=[...a.attempts];for(const attempt of b.attempts){const old=attempts.find(x=>x.id===attempt.id);if(!old)attempts.push(attempt);else if(old.text!==attempt.text)attempts.push({...attempt,id:crypto.randomUUID()});else attempts[attempts.indexOf(old)]={...old,...attempt};}result.practice[id]={...pick,attempts,solvedAt:b.solvedAt||a.solvedAt,notes:a.notes===b.notes?a.notes:[b.notes,a.notes].filter(Boolean).join('\n\n[Recovered note]\n')};}
  result.oop={...recovered.oop,...current.oop};
  for(const [id,a] of Object.entries(recovered.oop||{})){const b=current.oop?.[id];if(!b)continue;const attempts=[...a.attempts];for(const attempt of b.attempts){const old=attempts.find(x=>x.id===attempt.id);if(!old)attempts.push(attempt);else if(old.text!==attempt.text)attempts.push({...attempt,id:crypto.randomUUID()});else attempts[attempts.indexOf(old)]={...old,...attempt};}result.oop[id]={...(time(b.updatedAt)>=time(a.updatedAt)?b:a),attempts};}
+ result.reading={...recovered.reading,...current.reading};
+ for(const [id,a] of Object.entries(recovered.reading||{})){const b=current.reading?.[id];if(!b)continue;const pick=time(b.updatedAt)>=time(a.updatedAt)?b:a;const notes=a.notes===b.notes?a.notes:[b.notes,a.notes].filter(Boolean).join('\n\n[Recovered reading note]\n');if(notes.length>20000)throw new Error('Combined reading notes exceed 20,000 characters. Export both copies before shortening the notes and retrying.');result.reading[id]={...pick,readAt:b.readAt||a.readAt,notes};}
  result.communication={...recovered.communication,...current.communication};
  for(const [id,a] of Object.entries(recovered.communication||{})){const b=current.communication?.[id];if(!b)continue;const pick=time(b.updatedAt)>=time(a.updatedAt)?b:a;result.communication[id]={...pick,history:unique([...a.history,...b.history,{status:a.status,notes:a.notes,reply:a.reply,savedAt:a.updatedAt},{status:b.status,notes:b.notes,reply:b.reply,savedAt:b.updatedAt}])};}
  if(recovered.planning||current.planning)result.planning={dailyBudget:current.planning?.dailyBudget||recovered.planning!.dailyBudget,items:{...recovered.planning?.items,...current.planning?.items}};
