@@ -1,4 +1,5 @@
 import {type Progress,emptyDay,validateProgress} from './progress';
+import {mergeStudio} from './studio-state';
 
 export type RecoveryCopy={id:string;label:string;savedAt:string;progress:Progress};
 export type LocalCheckpoint={progress:Progress;revision:number;pending:boolean;savedAt:string};
@@ -7,11 +8,12 @@ export function progressSummary(p:Progress){return {
   completedDays:Object.values(p.days).filter(d=>d.completedAt).length,
   steps:Object.values(p.days).reduce((n,d)=>n+d.steps.length,0),
   answers:Object.values(p.days).reduce((n,d)=>n+Object.values(d.answers).filter(a=>a.text.trim()).length,0),
-  attempts:Object.values(p.practice||{}).reduce((n,r)=>n+r.attempts.length,0)+Object.values(p.oop||{}).reduce((n,r)=>n+r.attempts.length,0),
+  attempts:Object.values(p.practice||{}).reduce((n,r)=>n+r.attempts.length,0)+Object.values(p.oop||{}).reduce((n,r)=>n+r.attempts.length,0)+Object.values(p.studio||{}).reduce((n,r)=>n+r.attempts.length,0),
+  studioEntries:Object.keys(p.studio||{}).length,
   readingEntries:Object.keys(p.reading||{}).length,
   lessonsRead:Object.values(p.reading||{}).filter(r=>r.readAt).length,
 };}
-export function hasWork(p:Progress){const s=progressSummary(p);return !!(s.steps||s.answers||s.attempts||p.todos.length||Object.values(p.days).some(d=>d.notes.trim()||d.submissions?.length)||Object.values(p.practice||{}).some(r=>r.draft.trim()||r.notes.trim())||Object.values(p.oop||{}).some(r=>r.draft.trim())||Object.keys(p.communication||{}).length||Object.keys(p.reading||{}).length);}
+export function hasWork(p:Progress){const s=progressSummary(p);return !!(s.steps||s.answers||s.attempts||p.todos.length||Object.values(p.days).some(d=>d.notes.trim()||d.submissions?.length)||Object.values(p.practice||{}).some(r=>r.draft.trim()||r.notes.trim())||Object.values(p.oop||{}).some(r=>r.draft.trim())||Object.keys(p.communication||{}).length||Object.keys(p.reading||{}).length||Object.keys(p.studio||{}).length);}
 const unique=<T,>(rows:T[])=>Array.from(new Map(rows.map(row=>[JSON.stringify(row),row])).values());
 const time=(s:string)=>Date.parse(s)||0;
 // Recovery is an explicit additive action. Never infer that a day was completed.
@@ -36,5 +38,6 @@ export function mergeProgress(current:Progress,recovered:Progress):Progress{
  result.communication={...recovered.communication,...current.communication};
  for(const [id,a] of Object.entries(recovered.communication||{})){const b=current.communication?.[id];if(!b)continue;const pick=time(b.updatedAt)>=time(a.updatedAt)?b:a;result.communication[id]={...pick,history:unique([...a.history,...b.history,{status:a.status,notes:a.notes,reply:a.reply,savedAt:a.updatedAt},{status:b.status,notes:b.notes,reply:b.reply,savedAt:b.updatedAt}])};}
  if(recovered.planning||current.planning)result.planning={dailyBudget:current.planning?.dailyBudget||recovered.planning!.dailyBudget,items:{...recovered.planning?.items,...current.planning?.items}};
+ result.studio=mergeStudio(recovered.studio,current.studio);
  return validateProgress(result);
 }

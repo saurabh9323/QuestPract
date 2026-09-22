@@ -1,6 +1,8 @@
 # Quest90
 
-A Next.js and TypeScript training workspace for a developer with two years of React/Next.js experience. It includes 90 authored missions beginning September 15, 2026, a 1,000-question practice bank (300 DSA, 400 interview, 200 SQL, 100 system design), 60 theory modules, 270 additional quest prompts, 13 SVG concept maps, three daily mission groups, revision scheduling, answer versions, screenshots, and a manual ChatGPT review handoff.
+A Next.js and TypeScript interview-training workspace. It includes a 90-day course with a selectable, finalized start date, a 1,000-question practice bank (300 DSA, 400 interview, 200 SQL, 100 system design), theory and visual lessons, revision scheduling, saved answer versions, screenshots, and a manual ChatGPT review handoff.
+
+The **Practice studio** adds 30 tool entries for experiments, system design, speaking and personal coaching. See [PRACTICE-STUDIO.md](PRACTICE-STUDIO.md) for the feature map, persistence details and execution limits. Its guide is also downloadable from the studio. The commute library has 32 visual guides and 1,000 scenario notes; see [COMMUTE-LIBRARY.md](COMMUTE-LIBRARY.md).
 
 ## Run it
 
@@ -50,7 +52,7 @@ The SQL setup was executed twice in a local PostgreSQL-compatible PGlite engine,
 - Answer text and feedback autosave. Save checkpoint preserves all saved snapshots for comparison. New answer preserves the current answer before clearing it. Practice-bank attempts have immutable answer text, individual review feedback, confidence labels, and dates. Select any old attempt for revision or comparison.
 - Review with ChatGPT copies the day's questions, rubrics, and actual answers. Nothing is automatically sent to an AI service. Paste the response back into the matching feedback field and test code corrections yourself.
 - Continue with ChatGPT prepares a context handoff; downloaded curriculum and Markdown study guides remain usable independently of Codex. ChatGPT availability and usage limits are separate.
-- This app is a guided practice curriculum, not an automatic code executor, grader, or an exhaustive textbook. Official reference links provide deeper material.
+- This app is a guided practice curriculum. The SQL playground executes local SQLite queries and compares sample rows; other studio exercises use guided traces, actual React demonstrations or self-review. It is not a general code judge or an exhaustive textbook. Official reference links provide deeper material.
 
 ## Daily teacher and question bank
 
@@ -60,7 +62,7 @@ The bank supports category, topic, difficulty, attempt, bookmark, and due-review
 
 System design covers 80 high-level scenarios, 10 OOP low-level exercises, and 10 functional/procedural exercises. MERN, TypeScript, Next.js, Python/FastAPI, SQL, AWS, CI/CD, testing, security, and behavioral interviews are covered.
 
-`public/sql-practice.sql` creates a separate disposable PostgreSQL schema with nine tables and sample rows. Use `SET search_path = quest90_practice, public;` before exercises. Some questions explicitly ask for schema extensions. IDs in the fixture are supplied integers. There is no in-browser SQL or DSA execution engine.
+`public/sql-practice.sql` creates a separate disposable PostgreSQL schema with nine tables and sample rows. Use `SET search_path = quest90_practice, public;` before exercises. Some questions explicitly ask for schema extensions. IDs in the fixture are supplied integers. The separate in-browser SQL playground uses SQLite and five starter exercises, not this PostgreSQL database. DSA code is not executed by the studio.
 
 ## Flexible schedule and submissions
 

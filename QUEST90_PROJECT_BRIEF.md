@@ -121,3 +121,11 @@ Quest90 should feel like a personal teacher and interview gym:
 
 Quest90 should use Supabase Auth for email/password login. Do not store plain passwords in application tables. The SQL setup now includes public.user_profiles for username and user details, while Supabase Auth stores and verifies passwords securely. In Vercel, set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY so normal users see only the login/create-account form instead of setup fields.
 
+## Practice studio update — September 23, 2026
+
+The workspace now includes a Practice studio with 30 tool entries grouped into experiments, design, speaking and personal coaching. Features include progressive puzzle hints, SQL execution, an actual React render demonstration, architecture diagrams with failure-path exploration, interview follow-ups, a local speaking recorder, English sentence practice, mistake tracking, a glossary, a private evidence portfolio and weekly activity reports.
+
+`PRACTICE-STUDIO.md` describes every tool, the starter-content counts and current limits. The same document is downloadable from the studio at `/practice-studio.md` for sharing with ChatGPT. Text work and immutable attempts are included in account progress and backups through the optional `studio` field; there is no studio database migration or course reset. Audio remains on the current device and must be downloaded separately.
+
+SQLite sample results are checked locally. Design reachability and supplied traces are educational models. Communication outcomes and confidence are self-reported. The application does not claim AI scoring, automatic ChatGPT-account access or guaranteed interview readiness.
+

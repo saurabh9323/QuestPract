@@ -4,14 +4,14 @@ import {ArrowLeft,ArrowRight,Bookmark,BookOpen,Check,Copy,Download,Headphones,Pa
 import {readingLibrary,readingCategories,lessonMarkdown,type ReadingLesson} from '@/lib/commute';
 import {dateKey,dayDate,type Progress,type ReadingRecord} from '@/lib/progress';
 import ReadingDataView from './ReadingDataView';
-type Props={p:Progress;commit:(p:Progress)=>void;notice:(text:string)=>void;sync:string;practice:(id:string)=>void};
+type Props={initialId?:string;p:Progress;commit:(p:Progress)=>void;notice:(text:string)=>void;sync:string;practice:(id:string)=>void};
 const emptyRecord=():ReadingRecord=>({bookmarked:false,notes:'',visitedAt:'',updatedAt:''});
 function download(name:string,text:string){const url=URL.createObjectURL(new Blob([text],{type:'text/markdown;charset=utf-8'}));const link=document.createElement('a');link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 function normalized(value:string){return value.toLowerCase().replace(/\bcloser\b/g,'closure').replace(/\bacidt\b/g,'acid').replace(/\boops\b/g,'oop').replace(/water fall/g,'waterfall')}
 
 export default function CommuteLibrary(props:Props){
   const {p,commit,notice,sync}=props;
-  const [selected,setSelected]=useState(''),[search,setSearch]=useState(''),[category,setCategory]=useState('All'),[status,setStatus]=useState('All'),[format,setFormat]=useState('All'),[visible,setVisible]=useState(24),[queue,setQueue]=useState<string[]>([]),[budget,setBudget]=useState(10);
+  const [selected,setSelected]=useState(props.initialId||''),[search,setSearch]=useState(''),[category,setCategory]=useState('All'),[status,setStatus]=useState('All'),[format,setFormat]=useState('All'),[visible,setVisible]=useState(24),[queue,setQueue]=useState<string[]>([]),[budget,setBudget]=useState(10);
   const records=p.reading||{};
   const filtered=useMemo(()=>readingLibrary.filter(l=>{
     const r=records[l.id];return (category==='All'||l.category===category)&&(format==='All'||l.format===format)&&(status==='All'||status==='Bookmarked'&&r?.bookmarked||status==='Unread'&&!r?.readAt||status==='Read'&&!!r?.readAt||status==='Review due'&&!!r?.reviewDue&&r.reviewDue<=dateKey())&&normalized(`${l.title} ${l.topic} ${l.category} ${l.explanation}`).includes(normalized(search).trim());

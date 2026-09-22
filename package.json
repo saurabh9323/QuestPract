@@ -2,7 +2,28 @@
   "name": "quest90",
   "version": "1.0.0",
   "private": true,
-  "scripts": { "dev": "next dev --hostname 0.0.0.0", "build": "next build", "start": "node scripts/serve.mjs", "generate": "tsx scripts/generate-assets.ts", "test": "tsx --test tests/*.test.ts", "typecheck": "tsc --noEmit" },
-  "dependencies": { "next": "latest", "react": "latest", "react-dom": "latest", "@supabase/supabase-js": "latest", "lucide-react": "latest" },
-  "devDependencies": { "typescript": "latest", "@types/node": "latest", "@types/react": "latest", "@types/react-dom": "latest", "tsx": "latest" }
+  "scripts": {
+    "dev": "next dev --hostname 0.0.0.0",
+    "build": "next build",
+    "start": "node scripts/serve.mjs",
+    "generate": "tsx scripts/generate-assets.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "node scripts/prepare-sql.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "latest",
+    "lucide-react": "latest",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "sql.js": "^1.14.2"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
 }
