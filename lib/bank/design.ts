@@ -1,5 +1,14 @@
 import {pack} from './core';
-function p(id:string,title:string,lesson:string,flow:string[],example:string,rows:string){pack('System design',id,title,lesson,flow,example,'State assumptions, label estimates, explain the first bottleneck and avoid promising exactly-once delivery or zero downtime without defining the boundary. Compare a simpler alternative.','https://aws.amazon.com/architecture/well-architected/',rows.trim().split('\n').map(s=>{const [q,a]=s.split('|');return `${q}|${q}|${a}`}).join('\n'))}
+// Editorial learning levels, in the stable order of each ten-question pack.
+// Keep IDs unchanged so existing answers and bookmarks remain attached.
+const levels:Record<string,string>={
+ 'sd-routing':'MEMMMEMEMH','sd-storage':'HMHHEMMHMM',
+ 'sd-consistency':'MMHHHMHHHM','sd-messaging':'MMHMEHMMMM',
+ 'sd-product':'MHHHEMMEEM','sd-commerce':'EHHHHMHMMM',
+ 'sd-platform':'HHHMHEMMMM','sd-data':'HMMMMHMMMM',
+ 'sd-oop':'MHEMEEMMMM','sd-functions':'EMEMMEMEMM',
+};
+function p(id:string,title:string,lesson:string,flow:string[],example:string,rows:string){pack('System design',id,title,lesson,flow,example,'State assumptions, label estimates, explain the first bottleneck and avoid promising exactly-once delivery or zero downtime without defining the boundary. Compare a simpler alternative.','https://aws.amazon.com/architecture/well-architected/',rows.trim().split('\n').map((s,i)=>{const [q,a]=s.split('|');const level=levels[id]?.[i];if(!level)throw new Error(`Missing design difficulty: ${id}-${i+1}`);return `${level} ${q}|${q}|${a}`}).join('\n'))}
 p('sd-routing','Request routing and edge systems','Routing controls how a request reaches a service, but different layers make different decisions. DNS routing, CDN edge selection, reverse proxying and application gateways are not interchangeable. Trace identity, timeouts and observability across each boundary.',['Client','DNS / edge','Gateway','Service','Response'], 'For an authenticated API call, terminate TLS at a defined boundary, verify identity, authorize the resource, attach a request ID and bound the upstream deadline.',`
 Design the complete request path through an API gateway for 1000 requests/second.|Separate TLS, authentication, routing, limits, upstream deadlines, response mapping and correlation.
 Explain CDN edge selection and design a global static-asset delivery path.|Compare DNS/anycast/routing mechanisms as deployment-dependent, then define cache keys, TTL and origin fallback.

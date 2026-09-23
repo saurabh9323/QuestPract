@@ -4,6 +4,8 @@ A Next.js and TypeScript interview-training workspace. It includes a 90-day cour
 
 The **Practice studio** adds 30 tool entries for experiments, system design, speaking and personal coaching. See [PRACTICE-STUDIO.md](PRACTICE-STUDIO.md) for the feature map, persistence details and execution limits. Its guide is also downloadable from the studio. The commute library has 32 visual guides and 1,000 scenario notes; see [COMMUTE-LIBRARY.md](COMMUTE-LIBRARY.md).
 
+The question bank's system-design path has 17 Easy, 55 Medium and 28 Hard questions, a nine-part answer format, and seven worked designs with diagrams and implementation steps. See [SYSTEM-DESIGN.md](SYSTEM-DESIGN.md).
+
 ## Run it
 
 Use Node.js 22 or newer supported by the installed Next.js release.
