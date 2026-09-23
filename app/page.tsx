@@ -76,7 +76,7 @@ export default function Page(){
  {(view==='bank'||view==='theory'||view==='brain')&&<TrainingLab key={view+bankId} mode={view} initialId={view==='bank'?bankId:undefined} p={p} commit={commit} client={s.client} user={user} notice={setNotice}/>}
  {view==='analytics'&&<AnalyticsDashboard p={p} commit={commit} open={n=>go('quest',n)} practice={id=>{setBankId(id);go('bank')}}/>}
  {view==='studio'&&<GrowthStudio p={p} commit={commit} notice={setNotice} sync={s.sync} userKey={(s.config?.url||'')+':'+user.id} openDay={n=>go('quest',n)} practice={id=>{setBankId(id);go('bank')}} read={id=>{setReadingId(id||'');go('commute')}}/>}
- {view==='commute'&&<CommuteLibrary key={readingId} initialId={readingId} p={p} commit={commit} notice={setNotice} sync={s.sync} practice={id=>{setBankId(id);go('bank')}}/>}
+ {view==='commute'&&<CommuteLibrary client={s.client} user={user} key={readingId} initialId={readingId} p={p} commit={commit} notice={setNotice} sync={s.sync} practice={id=>{setBankId(id);go('bank')}}/>}
  {view==='visual'&&<VisualLab practice={id=>{setBankId(id);go('bank')}}/>}
  {view==='profile'&&<MyProfile p={p} commit={commit} email={user.email||''} userId={user.id} sync={s.sync} open={n=>go('quest',n)} copies={s.recoveries} recoveryNote={s.recoveryNote} refreshRecovery={s.refreshRecovery} restoreRecovery={s.restoreRecovery}/>}
  {view==='oops'&&<OOPStudio p={p} commit={commit}/>}

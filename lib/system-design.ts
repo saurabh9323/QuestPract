@@ -1,4 +1,5 @@
 import type {Question} from './bank/core';
+import {designCases} from './design-cases';
 
 export const designLevels={
  Easy:{minutes:25,focus:'One bounded use case, clear ownership, a simple design and one failure path.'},
@@ -45,9 +46,11 @@ export const workedDesigns:Record<string,WorkedDesign>={
 
 export function designGuide(q:Question){
  const example=workedDesigns[q.id];
- const blueprint=example||blueprints[q.lessonId]||blueprints['sd-product'];
+ const scenario=designCases[q.id];
+ const base=blueprints[q.lessonId]||blueprints['sd-product'];
+ const blueprint=example||(scenario?{...base,name:q.title,nodes:scenario.nodes,flows:scenario.nodes.slice(1).map(n=>'To '+n),contract:scenario.contract,data:scenario.data,failure:scenario.risk,tradeoff:q.logic}:base);
  const mode=q.lessonId==='sd-oop'?'Low-level design · OOP':q.lessonId==='sd-functions'?'Low-level design · functions':'High-level design';
- return {mode,example,blueprint,...designLevels[q.difficulty]};
+ return {mode,example,scenario,blueprint,...designLevels[q.difficulty]};
 }
 export function designTemplate(q:Question){
  const g=designGuide(q);

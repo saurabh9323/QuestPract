@@ -33,7 +33,7 @@ export default function SystemDesignGuide({q,appendTemplate,notice}:Props){
  const [step,setStep]=useState(0);
  const g=designGuide(q),b=g.blueprint;
  const diagram=`flowchart LR\n${b.nodes.map((n,i)=>`  n${i}[${JSON.stringify(n)}]`).join('\n')}\n${b.flows.map((f,i)=>`  n${i} -->|${JSON.stringify(f)}| n${i+1}`).join('\n')}`;
- const workedMarkdown=`# ${b.name}\n\n${g.example?'Worked design for this question':'Topic-level illustration; adapt it to this question'}\n\n${g.example?`Scope: ${g.example.scope}\n\nRequirements:\n${g.example.requirements.map(x=>'- '+x).join('\n')}\n\nEstimate / invariant: ${g.example.estimate}\n\n`:''}\`\`\`mermaid\n${diagram}\n\`\`\`\n\n## Contract\n${b.contract}\n\n## Data model\n${b.data}\n\n## Failure\n${b.failure}\n\n## Tradeoff\n${b.tradeoff}${g.example?`\n\n## Main flow\n${g.example.walkthrough.map((x,i)=>`${i+1}. ${x}`).join('\n')}\n\n## Implementation\n${g.example.implementation.map((x,i)=>`${i+1}. ${x}`).join('\n')}`:''}`;
+ const workedMarkdown=`# ${b.name}\n\n${g.example?'Worked design for this question':'Scenario-specific starting design'}\n\n${g.example?`Scope: ${g.example.scope}\n\nRequirements:\n${g.example.requirements.map(x=>'- '+x).join('\n')}\n\nEstimate / invariant: ${g.example.estimate}\n\n`:''}\`\`\`mermaid\n${diagram}\n\`\`\`\n\n## Contract\n${b.contract}\n\n## Data model\n${b.data}\n\n## Failure\n${b.failure}\n\n## Tradeoff\n${b.tradeoff}${g.example?`\n\n## Main flow\n${g.example.walkthrough.map((x,i)=>`${i+1}. ${x}`).join('\n')}\n\n## Implementation\n${g.example.implementation.map((x,i)=>`${i+1}. ${x}`).join('\n')}`:''}`;
  async function copy(){try{await navigator.clipboard.writeText(`${designBrief(q)}\n\n${designTemplate(q)}`);notice('Design brief and blank answer template copied.')}catch{notice('Clipboard unavailable. Download the template instead.')}}
  return <section className="design-guide" aria-label="Structured system design guide">
   <div className="design-guide-heading"><span className="mini-tag">{g.mode}</span><span>{q.difficulty} · suggested {g.minutes} min</span></div>
@@ -50,9 +50,9 @@ export default function SystemDesignGuide({q,appendTemplate,notice}:Props){
   </div>
   <small>The template is appended to your draft. Submit answer below to preserve a version.</small>
   <details className="design-reference">
-   <summary>{g.example?'3. Reveal worked design, diagram and implementation':'3. Reveal topic example diagram and contracts'}</summary>
-   <h3>{b.name}</h3>
-   <p>{g.example?'One defensible starting design, not the only correct answer. State and adjust the assumptions in an interview.':'This is a topic-level illustration, not a complete solution to this question. Use the question-specific constraint above to adapt the components and contracts.'}</p>
+   <summary>{g.example?'3. Reveal worked design, diagram and implementation':'3. Reveal this scenario’s diagram and contracts'}</summary>
+   <h3>{b.name}</h3>{g.scenario&&<p className="design-focus"><strong>Concrete scenario:</strong> {g.scenario.example}</p>}
+   <p>{g.example?'One defensible starting design, not the only correct answer. State and adjust the assumptions in an interview.':'This starting design is specific to the question. Expand its assumptions, estimates and recovery paths for your chosen interview scope.'}</p>
    {g.example&&<><h4>Scope</h4><p>{g.example.scope}</p><h4>Requirements</h4><ul>{g.example.requirements.map(x=><li key={x}>{x}</li>)}</ul><h4>Estimate or invariant</h4><p>{g.example.estimate}</p></>}
    <h4>{g.mode.startsWith('Low-level')?'Collaboration diagram':'Architecture / data-flow diagram'}</h4>
    <p className="muted">Select a box to follow the illustrated forward path. Replies and recovery paths are explained separately below.</p>

@@ -36,7 +36,7 @@ Seven questions have question-specific worked designs:
 
 These include scope, requirements, labelled estimates or invariants, contracts, data models, an interactive forward-flow diagram, a walkthrough, failure handling, tradeoffs and implementation order. Reveal guidance after attempting the problem. The Markdown download includes Mermaid diagram text that can be rendered in a compatible Markdown viewer.
 
-The other 93 questions use one of ten **topic-level illustrations**, explicitly labelled as examples to adapt rather than complete solutions. They retain their individual prompt, reasoning focus, hints and rubric. The UI no longer shows the same gateway/cache/queue architecture for every question, including OOP problems.
+All 100 questions now have an authored concrete scenario and a distinct data model and forward flow. The other 93 use scenario-specific starting designs with an API or method contract and a failure risk, rather than a repeated topic architecture. They remain starting designs to expand with scope, estimates and implementation; the seven longer worked guides retain their additional depth.
 
 The diagrams illustrate a forward path; they do not execute a system, estimate performance automatically or prove correctness. Replies and recovery behavior are described separately. Capacity numbers in worked examples are either taken from the prompt or explicitly identified as assumed inputs.
 
