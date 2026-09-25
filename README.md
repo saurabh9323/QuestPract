@@ -2,7 +2,7 @@
 
 A Next.js and TypeScript interview-training workspace. It includes a 90-day course with a selectable, finalized start date, a 1,000-question practice bank (300 DSA, 400 interview, 200 SQL, 100 system design), theory and visual lessons, revision scheduling, saved answer versions, screenshots, and a manual ChatGPT review handoff.
 
-The **Practice studio** adds 30 tool entries for experiments, system design, speaking and personal coaching. See [PRACTICE-STUDIO.md](PRACTICE-STUDIO.md) for the feature map, persistence details and execution limits. Its guide is also downloadable from the studio. The commute library has 47 visual guides, 600 concise interview/SQL Q&As, 300 DSA reasoning notes and 100 scenario-specific design answers; see [COMMUTE-LIBRARY.md](COMMUTE-LIBRARY.md).
+The **Practice studio** adds 30 tool entries for experiments, system design, speaking and personal coaching. See [PRACTICE-STUDIO.md](PRACTICE-STUDIO.md) for the feature map, persistence details and execution limits. Its guide is also downloadable from the studio. The commute library has 71 visual guides, 600 concise interview/SQL Q&As, 300 DSA reasoning notes and 100 scenario-specific design answers; see [COMMUTE-LIBRARY.md](COMMUTE-LIBRARY.md).
 
 The question bank's system-design path has 17 Easy, 55 Medium and 28 Hard questions, a nine-part answer format, and seven worked designs with diagrams and implementation steps. See [SYSTEM-DESIGN.md](SYSTEM-DESIGN.md).
 
@@ -117,3 +117,5 @@ Choose the start date from Mission control, the new 90-day timeline, or Settings
 The timeline assigns 100 distinct DSA questions from 20 topics: one per day, with a second question on days 9, 18, 27, 36, 45, 54, 63, 72, 81 and 90. These occupy the daily DSA block; the older inline DSA questions are optional variations. Each day also links a companion interview, SQL or system-design question beside its authored course lesson and build. All 90 days can be filtered by week or completion. `public/course-plan.json` exports the complete assignment plan.
 
 Submit an answer, verify it with your own normal/boundary tests and reasoning, then use Mark solved. Submission alone does not advance the 100-question solved count. Reopen keeps attempt history. The coach recommends overdue questions first, then unfinished attempts, then the next question, and calculates remaining pace. A fully complete day requires both its course checklist and assigned DSA solved. All labels are self-reported learning evidence, not automated grading. Deferring a practice mission changes its DSA due date; deferrals beyond the course deadline are explicitly reported. Skipping a mission does not erase the 100-question goal.
+
+Five backend learning paths add 24 lessons on servers, Docker/CI/CD, RAG, C#/ASP.NET Core and Python/Flask/Django. Open **Learn → Commute library → Your backend learning paths**. Each path includes its architecture, ordered lessons, practical exercises and a downloadable study pack.

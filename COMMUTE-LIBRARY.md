@@ -4,9 +4,9 @@ Open **Learn → Commute library** after signing in.
 
 ## Content and scope
 
-The catalog contains **1,047 entries**:
+The catalog contains **1,071 entries**:
 
-- **47 visual guides**, including 15 new detailed foundations: Map operations/counting, Set, browser task queues, Redis basics/cache-aside/data types, serverless, React fundamentals/reconciliation/context/hooks/effects, WHERE/HAVING and ACID.
+- **71 visual guides**, including 15 new detailed foundations: Map operations/counting, Set, browser task queues, Redis basics/cache-aside/data types, serverless, React fundamentals/reconciliation/context/hooks/effects, WHERE/HAVING and ACID.
 - **600 concise interview/SQL Q&As** using the existing stable question IDs. The reader starts with the question-specific reference reasoning rather than repeating the chapter introduction. All 20 core JavaScript questions now include a worked code example, expected output, hint and common trap.
 - **300 DSA reasoning notes**, preserving existing problem statements and insights. These are not 300 complete executable solutions.
 - **100 design answers** with different scenario-specific contracts, data models, flows and failure risks. Seven have additional detailed worked implementation guides.
@@ -46,4 +46,10 @@ Existing scenario-note source links are retained; this change does not claim a n
 
 ## Validation
 
-TypeScript check and catalog audit: 1,047 unique IDs, 47 visual guides, all 1,000 original question-note IDs retained, 100 distinct design models/flows, and no missing explanation/example/flow/recall fields. No production build or browser tests were run. Speech and live account synchronization have not been exercised in an authenticated browser for this change.
+TypeScript check and catalog audit: 1,071 unique IDs, 71 visual guides, all 1,000 original question-note IDs retained, 100 distinct design models/flows, and no missing explanation/example/flow/recall fields. No production build or browser tests were run. Speech and live account synchronization have not been exercised in an authenticated browser for this change.
+
+## Backend paths
+
+24 additional lessons are organized into five paths: Server engineering (4), Docker/CI/CD (4), RAG (4), C#/ASP.NET Core (6), and Python/Flask/Django (6). Each has code or an explicitly labelled design sketch, expected behavior, a three-step trace, two interview Q&As, an exercise and acceptance criteria. Path maps distinguish framework architectures and show project organization. Read state, notes and image support reuse existing account storage. Download a path as Markdown for travel.
+
+These are learning examples, not deployed backend services. The .NET and Python snippets have not been compiled or executed as standalone applications. Schema, identity, dependency configuration and deployment prerequisites are identified in the lessons.
