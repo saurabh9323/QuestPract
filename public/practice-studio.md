@@ -78,3 +78,11 @@ UI lives in `components/GrowthStudio.tsx` and `components/studio/`; content in `
 Validation for this change: TypeScript check; direct execution of all five SQL examples through the worker handler; read-query guards and output-limit checks; studio validation, immutable-history, backup round-trip and additive-recovery checks. No new test files, production build or Playwright run. Microphone, speech playback, authenticated cloud saves and the deployed UI still require real-browser verification.
 
 References: [sql.js documentation](https://sql.js.org/documentation/), [React memo](https://react.dev/reference/react/memo), [React useEffect](https://react.dev/reference/react/useEffect), [MDN MediaRecorder](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder).
+
+## Varied experiment practice
+
+The five puzzle tools no longer initialize the same six-item list at index zero. Predict and Trace each offer 34 exercises; Bug detective and Hint ladder each offer 14; Change one thing offers 11 actual code comparisons. These are overlapping purposeful mode selections, not 107 unique questions. The catalog has 34 distinct source exercises.
+
+A tool prefers globally unseen exercises, then unanswered work in that tool, while an unfinished saved selection can be resumed. Search, topic and All/Unanswered/Review mistakes/Attempted filters help select practice. Next unanswered and Random unanswered exclude exercises already submitted in the current tool and never silently reset attempts. Review status follows the latest submitted outcome. Retry resets the current response and hint counter but preserves attempt history; repeat submission is disabled until retry. Existing record IDs remain unchanged, and older commentary-only change variants retain a history section.
+
+New submissions snapshot question, code, expected result, choice, explanation and hint use. Output choices and traces are authored references, not live code execution or an automatic assessment of explanation quality. TypeScript and catalog integrity checks were run; no production build or browser tests were run for this update.
