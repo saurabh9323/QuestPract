@@ -7,6 +7,8 @@ import './course.css';
 import './oop.css';
 import './theme.css';
 import './visual.css';
+import './scenario-lab.css';
+import './tournament.css';
 import './study.css';
 import './commute.css';
 import './studio.css';

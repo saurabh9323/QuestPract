@@ -1,5 +1,7 @@
 # Quest90
 
+The **Visual lab** now includes 100 input scenarios across ten algorithm families, interactive state walkthroughs, saved notes and bookmarks, and timed solo output-prediction tournaments with results history. See [VISUAL-LAB.md](VISUAL-LAB.md) for the content map, scoring rules and persistence details.
+
 A Next.js and TypeScript interview-training workspace. It includes a 90-day course with a selectable, finalized start date, a 1,000-question practice bank (300 DSA, 400 interview, 200 SQL, 100 system design), theory and visual lessons, revision scheduling, saved answer versions, screenshots, and a manual ChatGPT review handoff.
 
 The **Practice studio** adds 30 tool entries for experiments, system design, speaking and personal coaching. See [PRACTICE-STUDIO.md](PRACTICE-STUDIO.md) for the feature map, persistence details and execution limits. Its guide is also downloadable from the studio. The commute library has 71 visual guides, 600 concise interview/SQL Q&As, 300 DSA reasoning notes and 100 scenario-specific design answers; see [COMMUTE-LIBRARY.md](COMMUTE-LIBRARY.md).

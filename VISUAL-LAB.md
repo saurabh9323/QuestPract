@@ -1,17 +1,32 @@
-# Visual learning and a simpler dashboard
+# Visual Lab and solo tournaments
 
-Mission control now starts with one recommended task, followed by the next two unfinished tasks. These come from the existing schedule, ordered by due date and course day. Overdue and today's task counts stay visible. The full dashboard is available in an expandable section below.
+Open **Learn → Visual lab**. Three tabs provide the scenario library, the existing custom-input simulators, and solo tournaments.
 
-The optional 10-minute mode suggests 2 minutes of recall, 6 minutes of practice and 2 minutes of reflection. It does not change due dates, record elapsed time or mark work complete. Save actual work using the existing quest submission flow.
+## 100 visual scenarios
 
-## Visual lab
+The library contains ten input scenarios for each of ten algorithm families: Two Sum, exact binary search, lower bound, linear search, maximum subarray, prefix sums, frequency maps, stable deduplication, bubble sort, and fixed-size sliding windows. These are 100 input and edge-case exercises across ten algorithms, with Easy and Medium labels.
 
-- **Two Sum:** change the array and target, inspect one value at a time, watch the value-to-index map grow, and see the returned indices or empty result.
-- **Binary search:** use sorted input, inspect low/mid/high, and see which values are excluded after each comparison. Unsorted input is rejected rather than silently changed.
-- **Request journey:** follow a simplified profile read through browser, gateway, application, cache and database. Compare cache hits, cache misses, expired sessions and database timeouts.
+Each scenario includes a precise return-value contract, authored expected output, explanation, progressive hints, algorithm code, complexity, and computed state frames. Play, pause, change speed, move backward, or scrub to a frame to inspect indices and variables. Examples cover duplicates, empty inputs, negative values, missing targets, ties, and boundary positions where applicable.
 
-Walkthroughs include previous/next, play/pause, restart, adjustable speed, explanations, highlighted code and speaking prompts. DSA lessons link to the matching practice-bank question for independent answers and normal saved history.
+Search and filter by topic, difficulty, reviewed status, or bookmarks. Save a prediction and English/Hinglish notes, copy a review prompt, mark a scenario reviewed, and move to the next or a random unreviewed case. Reviewed status is a self-assessment, not a correctness grade. Existing custom-input Two Sum, binary-search, and request-journey simulators remain available.
 
-Inputs are limited to 1–12 integers so every value remains visible. Colors are accompanied by labels such as Inspecting, Found and Excluded. Both themes and narrow screens are supported; playback starts only after a user action.
+## Solo tournaments
 
-The visualizations are predefined teaching simulations, not arbitrary code execution, grading, or live request traces. Watching them does not affect course completion.
+Choose 4, 6, or 8 questions and a 10, 20, 30, or 45 minute budget. Topic and difficulty filters control the pool; mixed rounds prioritize different algorithm families. Each round snapshots its questions so later catalog changes do not change an existing round.
+
+Predict the exact JSON return value. Each correct answer earns 100 points. Object property order is ignored, but array order and value types matter. Missing, malformed, or non-finite JSON earns zero. Scratch code is saved for review and is not executed or graded. Submit early or let the absolute deadline expire; outputs and explanations appear in the completed-round review.
+
+Only one round can be active. The deadline uses the device clock and is checked when returning to the tournament tab. The app does not run a background timer while closed. This is personal practice, not a server-enforced coding competition, multiplayer leaderboard, or LeetCode-compatible judge.
+
+## Saved work
+
+Scenario predictions, notes, bookmarks, and reviews use `Progress.studio` records keyed by stable scenario IDs. Tournament records use unique round IDs and hold question snapshots, answers, scratch work, deadlines, and results. These pass through the existing authenticated progress save flow; watch the account save indicator before leaving.
+
+Submitted rounds are immutable through the round UI. A stale active draft merged from another save cannot reopen a valid submitted round. Its differing fields are retained in recovered draft history, with export available. Invalid saved rounds can be exported and archived without deleting the record. Completed-round exports include saved snapshots. No new database schema or progress reset is required.
+
+## Verification for this change
+
+- Executed all 100 trusted reference snippets in bounded Node VM contexts and compared their outputs with authored expected values.
+- Compared all 100 final visual-frame outputs with the same expected values; checked unique IDs and mixed-topic round selection.
+- Checked exact JSON scoring, object-order equivalence, non-finite-number rejection, malformed snapshot guards, and both merge orderings for finished versus stale active rounds.
+- TypeScript validation passed. No new test files, production build, Playwright run, browser verification, or live Supabase integration check was performed for this change.

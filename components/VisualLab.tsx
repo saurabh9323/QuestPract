@@ -3,13 +3,20 @@ import {useEffect,useState} from 'react';
 import {ArrowLeft,ArrowRight,Play,Pause,RotateCcw,Eye,Code2,Network} from 'lucide-react';
 import {algorithmCode,algorithmFrames,parseVisualInput,type Algorithm} from '@/lib/visual-lessons';
 import {questionBank} from '@/lib/bank';
+import type {Progress} from '@/lib/progress';
+import ScenarioExplorer from './ScenarioExplorer';
+import ScenarioTournament from './ScenarioTournament';
 
 function Playback({index,total,setIndex}:{index:number;total:number;setIndex:(n:number)=>void}){
  const [playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1400);
  useEffect(()=>{if(!playing)return;if(index>=total-1){setPlaying(false);return;}const timer=setTimeout(()=>setIndex(index+1),speed);return()=>clearTimeout(timer)},[playing,index,total,speed,setIndex]);
  return <div className="visual-playback"><button className="secondary" disabled={index===0} onClick={()=>{setPlaying(false);setIndex(index-1)}}><ArrowLeft size={16}/>Back</button><button className="primary" onClick={()=>{if(index===total-1)setIndex(0);setPlaying(!playing)}}>{playing?<Pause size={16}/>:<Play size={16}/>} {playing?'Pause':'Play'}</button><button className="secondary" disabled={index===total-1} onClick={()=>{setPlaying(false);setIndex(index+1)}}>Next <ArrowRight size={16}/></button><button className="secondary" onClick={()=>{setPlaying(false);setIndex(0)}} aria-label="Restart visualization"><RotateCcw size={16}/></button><label>Speed<select value={speed} onChange={e=>setSpeed(Number(e.target.value))}><option value={2300}>Slow</option><option value={1400}>Normal</option><option value={700}>Fast</option></select></label><span>Step {index+1} / {total}</span></div>;
 }
-export default function VisualLab({practice}:{practice:(id:string)=>void}){
+export default function VisualLab({practice,p,commit,notice}:{practice:(id:string)=>void;p:Progress;commit:(p:Progress)=>void;notice:(s:string)=>void}){
+ const [section,setSection]=useState('scenarios');
+ return <div className="visual-lab"><div className="visual-hub-tabs">{[['scenarios','Scenario library'],['sandbox','Custom-input simulators'],['tournaments','Solo tournaments']].map(([id,title])=><button key={id} className="secondary" aria-pressed={section===id} onClick={()=>setSection(id)}>{title}</button>)}</div>{section==='scenarios'?<ScenarioExplorer p={p} commit={commit} notice={notice}/>:section==='tournaments'?<ScenarioTournament p={p} commit={commit} notice={notice}/>:<CustomSimulators practice={practice}/>}</div>;
+}
+function CustomSimulators({practice}:{practice:(id:string)=>void}){
  const [tab,setTab]=useState<Algorithm|'request'>('two-sum');
  return <div className="visual-lab"><div className="visual-mode-tabs" aria-label="Choose a visual lesson">{[{id:'two-sum',title:'Two Sum',subtitle:'See the hash map',Icon:Code2},{id:'binary-search',title:'Binary search',subtitle:'Watch the range shrink',Icon:Eye},{id:'request',title:'Request journey',subtitle:'Browser → API → database',Icon:Network}].map(({id,title,subtitle,Icon})=><button key={id} className={tab===id?'chosen':''} aria-pressed={tab===id} onClick={()=>setTab(id as typeof tab)}><Icon size={22}/><span><strong>{title}</strong><small>{subtitle}</small></span></button>)}</div>{tab==='request'?<RequestJourney/>:<AlgorithmLesson key={tab} algorithm={tab} practice={practice}/>}</div>;
 }
