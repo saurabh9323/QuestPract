@@ -51,7 +51,7 @@ export function courseSnapshot(p:Progress,today=dateKey()){
  const course=courseStats(p,today),communication=communicationStats(p,today),tasks=managedTasks(p),active=tasks.filter(t=>!t.done&&t.status!=='skipped'),todayTasks=active.filter(t=>t.dueDate===today),overdue=active.filter(t=>t.dueDate<today);
  const todayMinutes=Object.values(p.days).flatMap(d=>d.submissions||[]).filter(s=>dateKey(new Date(s.at))===today).reduce((n,s)=>n+s.minutes,0);
  const constraints=Object.values(p.days).flatMap(d=>d.submissions||[]).filter(s=>s.status!=='complete'&&s.reason.trim()).slice(-6).reverse();
- return {course,communication,tasks:{today:todayTasks,overdue,pending:active.length},todayMinutes,constraints,daysRemaining:Math.max(0,Math.ceil((Date.parse(course.end+'T00:00:00Z')-Date.parse(today+'T00:00:00Z'))/86400000)+1)};
+ return {course,communication,tasks:{today:todayTasks,overdue,pending:active.length},todayMinutes,constraints,daysRemaining:course.daysLeft};
 }
 export function finalizeCourseStart(p:Progress,startDate:string,shiftOverrides=true):Progress{
  if(p.enrollment?.startFinal||p.enrollment?.startDateChangeUsed)throw new Error('Your course start date is already locked.');

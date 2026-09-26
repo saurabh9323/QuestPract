@@ -13,7 +13,7 @@ export type Todo = {id:string;text:string;done:boolean;day:number;createdAt:stri
 export type ReadingRecord={bookmarked:boolean;notes:string;visitedAt:string;updatedAt:string;readAt?:string;confidence?:'review'|'recalled';reviewDue?:string};
 export type Progress = {version:1;startDate:string;days:Record<string,DayProgress>;todos:Todo[];updatedAt:string;practice?:Record<string,Practice>;planning?:Planning;communication?:Record<string,CommunicationLog>;enrollment?:Enrollment;profile?:Profile;oop?:Record<string,OopRecord>;reading?:Record<string,ReadingRecord>;studio?:StudioState};
 export function dateKey(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
-export function freshProgress():Progress{return {version:1,startDate:'2026-09-15',days:{},todos:[],practice:{},updatedAt:new Date().toISOString()};}
+export function freshProgress():Progress{return {version:1,startDate:dateKey(),days:{},todos:[],practice:{},updatedAt:new Date().toISOString()};}
 export function emptyDay():DayProgress{return {steps:[],answers:{},notes:'',updatedAt:'',reviewLevel:0};}
 export function dayDate(start:string,offset:number){const d=new Date(`${start}T12:00:00`);d.setDate(d.getDate()+offset);return dateKey(d);}
 export function scheduledDay(start:string,now=new Date()){const [y,m,d]=start.split('-').map(Number);return Math.max(1,Math.min(90,Math.floor((Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())-Date.UTC(y,m-1,d))/86400000)+1));}

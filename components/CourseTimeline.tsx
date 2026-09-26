@@ -16,7 +16,7 @@ type Props={p:Progress;commit:(p:Progress)=>void;notice:(s:string)=>void};
 
 export function CourseStart({p,commit,notice}:Props){
 
- const [shift,setShift]=useState(true),[error,setError]=useState(''),locked=!!p.enrollment?.startFinal||!!p.enrollment?.startDateChangeUsed;
+ const [selectedStart,setSelectedStart]=useState(p.startDate),[shift,setShift]=useState(true),[error,setError]=useState(''),locked=!!p.enrollment?.startFinal||!!p.enrollment?.startDateChangeUsed;
 
  function submit(e:FormEvent<HTMLFormElement>){
 
@@ -30,13 +30,13 @@ export function CourseStart({p,commit,notice}:Props){
 
    setError('');
 
-   notice('Start date finalized and saved. Your 90-day course is now locked.');
+   notice('Start date finalized. Check the save status for cloud confirmation.');
 
   }catch(e){setError((e as Error).message)}
 
  }
 
- return <section className={`card course-start ${locked?'locked':''}`}><div><span className="eyebrow">YOUR COURSE START</span><h2>{locked?'Your course date is final':'Choose once, then lock your 90-day quest'}</h2><p>Current plan: <b>{p.startDate}</b> to <b>{dayDate(p.startDate,89)}</b> · 90 days · 100 DSA questions + daily course work.</p>{locked&&<p className="schedule-warning">Finalized {p.enrollment?.finalizedAt?new Date(p.enrollment.finalizedAt).toLocaleString():'for this course'} with key <b>{p.enrollment?.lockKey||'course_start_locked_v1'}</b>. This date is protected in local progress and Supabase.</p>}</div><form onSubmit={submit}><label className="field-label" htmlFor="course-start-date">Select your course start date</label><div className="inline-form"><input id="course-start-date" name="startDate" type="date" required defaultValue={p.startDate} disabled={locked}/><button className="primary" disabled={locked}>Start course</button></div><label className="shift-option"><input type="checkbox" checked={shift} disabled={locked} onChange={e=>setShift(e.target.checked)}/> Also shift custom due dates for unfinished tasks by the same amount</label><small>After you press Start course, the app saves the lock key and the start date cannot be changed again.</small>{error&&<p role="alert" className="error-text">{error}</p>}</form></section>
+ return <section className={`card course-start ${locked?'locked':''}`}><div><span className="eyebrow">YOUR COURSE START</span><h2>{locked?'Your course date is final':'Choose once, then lock your 90-day quest'}</h2><p>Current plan: <b>{p.startDate}</b> to <b>{dayDate(p.startDate,89)}</b> · 90 days · 100 DSA questions + daily course work.</p>{locked&&<p className="schedule-warning">Finalized {p.enrollment?.finalizedAt?new Date(p.enrollment.finalizedAt).toLocaleString():'for this course'} with key <b>{p.enrollment?.lockKey||'course_start_locked_v1'}</b>. This date is protected in local progress and Supabase.</p>}</div><form onSubmit={submit}><label className="field-label" htmlFor="course-start-date">Select your course start date</label><div className="inline-form"><input id="course-start-date" name="startDate" type="date" required value={selectedStart} onChange={e=>setSelectedStart(e.target.value)} disabled={locked}/><button className="primary" disabled={locked}>Start course</button></div>{!locked&&<><div className="button-row"><button type="button" className="secondary" onClick={()=>setSelectedStart(dateKey())}>Start today</button><button type="button" className="secondary" onClick={()=>setSelectedStart(dayDate(dateKey(),1))}>Start tomorrow</button></div>{selectedStart&&/^\d{4}-\d{2}-\d{2}$/.test(selectedStart)&&dateKey(new Date(selectedStart+'T12:00:00'))===selectedStart&&<p role="status">Preview: Day 1 · {selectedStart} → Day 90 · {dayDate(selectedStart,89)}. Press Start course to save this date.</p>}</>}<label className="shift-option"><input type="checkbox" checked={shift} disabled={locked} onChange={e=>setShift(e.target.checked)}/> Also shift custom due dates for unfinished tasks by the same amount</label><small>After you press Start course, the app saves the lock key and the start date cannot be changed again.</small>{error&&<p role="alert" className="error-text">{error}</p>}</form></section>
 
 }
 
