@@ -10,6 +10,7 @@ import AdventureSimulator from './AdventureSimulator';
 import ConceptAdventures,{BehavioralAdventure} from './ConceptAdventures';
 import PracticePassport from './PracticePassport';
 import FoundationWorkshops from './FoundationWorkshops';
+import ArrayFoundations from './ArrayFoundations';
 import {StudioProvider} from './studio/StudioContext';
 
 function Playback({index,total,setIndex}:{index:number;total:number;setIndex:(n:number)=>void}){
@@ -19,7 +20,7 @@ function Playback({index,total,setIndex}:{index:number;total:number;setIndex:(n:
 }
 export default function VisualLab({practice,p,commit,notice}:{practice:(id:string)=>void;p:Progress;commit:(p:Progress)=>void;notice:(s:string)=>void}){
  const [section,setSection]=useState('scenarios'),[conceptId,setConceptId]=useState('');
- return <StudioProvider p={p} commit={commit} notice={notice} practice={practice} userKey="visual-lab" openDay={()=>notice("Open Today to choose a course day.")} read={()=>notice("Open Learn to visit the commute library.")}><div className="visual-lab"><div className="visual-hub-tabs">{[['scenarios','Scenario library'],['sandbox','Custom-input simulators'],['concepts','Concept adventures'],['foundations','Systems & Linux'],['passport','Practice passport'],['behavior','Behavioral camp'],['tournaments','Solo tournaments']].map(([id,title])=><button key={id} className="secondary" aria-pressed={section===id} onClick={()=>setSection(id)}>{title}</button>)}</div>{section==='scenarios'?<ScenarioExplorer p={p} commit={commit} notice={notice}/>:section==='tournaments'?<ScenarioTournament p={p} commit={commit} notice={notice}/>:section==='concepts'?<ConceptAdventures key={conceptId} initialId={conceptId}/>:section==='foundations'?<FoundationWorkshops read={id=>{setConceptId(id);setSection('concepts')}}/>:section==='passport'?<PracticePassport/>:section==='behavior'?<BehavioralAdventure/>:<CustomSimulators practice={practice}/>}</div></StudioProvider>;
+ return <StudioProvider p={p} commit={commit} notice={notice} practice={practice} userKey="visual-lab" openDay={()=>notice("Open Today to choose a course day.")} read={()=>notice("Open Learn to visit the commute library.")}><div className="visual-lab"><div className="visual-hub-tabs">{[['arrays','Array foundations'],['scenarios','Scenario library'],['sandbox','Custom-input simulators'],['concepts','Concept adventures'],['foundations','Systems & Linux'],['passport','Practice passport'],['behavior','Behavioral camp'],['tournaments','Solo tournaments']].map(([id,title])=><button key={id} className="secondary" aria-pressed={section===id} onClick={()=>setSection(id)}>{title}</button>)}</div>{section==='arrays'?<ArrayFoundations/>:section==='scenarios'?<ScenarioExplorer p={p} commit={commit} notice={notice}/>:section==='tournaments'?<ScenarioTournament p={p} commit={commit} notice={notice}/>:section==='concepts'?<ConceptAdventures key={conceptId} initialId={conceptId}/>:section==='foundations'?<FoundationWorkshops read={id=>{setConceptId(id);setSection('concepts')}}/>:section==='passport'?<PracticePassport/>:section==='behavior'?<BehavioralAdventure/>:<CustomSimulators practice={practice}/>}</div></StudioProvider>;
 }
 function CustomSimulators({practice}:{practice:(id:string)=>void}){
  const [tab,setTab]=useState<Algorithm|'request'|'structures'>('structures');

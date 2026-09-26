@@ -1,5 +1,7 @@
 # Quest90
 
+**Array foundations** adds 60 beginner worked examples (20 loops, 20 Set, 20 Map), a live same-input comparison, hints, code explanations and saved attempts. See [ARRAY-FOUNDATIONS.md](ARRAY-FOUNDATIONS.md) for the learning path and output contracts.
+
 **Systems & Linux** adds animated HLD/LLD examples, a 30-command Linux practice fixture, a CPU/GPU workload model, PostgreSQL constraint gates, and a dated technology radar. See [FOUNDATIONS.md](FOUNDATIONS.md) for scope, sources and how to use them.
 
 **Adventure learning** expands the custom-input lab with 21 more simulators, 42 concept missions, a saved internal/external practice and contest journal, and 20 behavioral interview prompts. See [ADVENTURE-LEARNING.md](ADVENTURE-LEARNING.md) for navigation, supported topics, and storage details.
