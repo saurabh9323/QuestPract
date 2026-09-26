@@ -4,6 +4,8 @@ import type {Practice} from './learning';
 import type {Planning,Submission} from './planning';
 export type Answer = {text:string;feedback:string;updatedAt:string;history:{text:string;feedback:string;savedAt:string}[]};
 export type CommunicationLog = {status:'planned'|'attempted'|'done';notes:string;reply:string;updatedAt:string;history:{status:'planned'|'attempted'|'done';notes:string;reply:string;savedAt:string}[]};
+// A recorded attempt earns the daily speaking rep; retain its original status for review.
+export function hasCommunicationRep(log?:Pick<CommunicationLog,'status'>){return log?.status==='done'||log?.status==='attempted';}
 export type Enrollment = {startFinal:boolean;finalizedAt?:string;startedAt?:string;startDateChangeUsed?:boolean;lockKey?:'course_start_locked_v1'};
 export type Profile = {username?:string;fullName?:string;experienceYears?:number;targetRole?:string;targetCompanies?:string;weakAreas?:string[];dailyMinutes?:number;communicationGoal?:string};
 export type OopAttempt = {id:string;text:string;feedback:string;confidence:'learning'|'assisted'|'independent';createdAt:string};

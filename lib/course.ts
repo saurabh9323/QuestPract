@@ -1,3 +1,4 @@
+import {hasCommunicationRep} from './progress';
 import {questionBank,theory} from './bank';
 import {quests} from './curriculum';
 import {Progress,dateKey,dayDate,scheduledDay} from './progress';
@@ -45,7 +46,7 @@ export function courseStats(p:Progress,today=dateKey()){
 }
 export function communicationStats(p:Progress,today=dateKey()){
  const entries=quests.map(q=>({day:q.day,date:dayDate(p.startDate,q.day-1),mission:communicationMission(q.day),log:p.communication?.[q.day]}));
- return {entries,done:entries.filter(x=>x.log?.status==='done').length,attempted:entries.filter(x=>x.log?.status==='attempted').length,overdue:entries.filter(x=>x.date<today&&x.log?.status!=='done'),today:entries.find(x=>x.date===today)||entries.find(x=>!x.log||x.log.status!=='done')};
+ return {entries,done:entries.filter(x=>hasCommunicationRep(x.log)).length,attempted:entries.filter(x=>x.log?.status==='attempted').length,overdue:entries.filter(x=>x.date<today&&!hasCommunicationRep(x.log)),today:entries.find(x=>x.date===today)||entries.find(x=>!hasCommunicationRep(x.log))};
 }
 export function courseSnapshot(p:Progress,today=dateKey()){
  const course=courseStats(p,today),communication=communicationStats(p,today),tasks=managedTasks(p),active=tasks.filter(t=>!t.done&&t.status!=='skipped'),todayTasks=active.filter(t=>t.dueDate===today),overdue=active.filter(t=>t.dueDate<today);
