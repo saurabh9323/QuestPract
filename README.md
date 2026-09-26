@@ -1,5 +1,7 @@
 # Quest90
 
+**Adventure learning** expands the custom-input lab with 21 more simulators, 22 concept missions, a saved internal/external practice and contest journal, and 20 behavioral interview prompts. See [ADVENTURE-LEARNING.md](ADVENTURE-LEARNING.md) for navigation, supported topics, and storage details.
+
 The **Visual lab** now includes 100 input scenarios across ten algorithm families, interactive state walkthroughs, saved notes and bookmarks, and timed solo output-prediction tournaments with results history. See [VISUAL-LAB.md](VISUAL-LAB.md) for the content map, scoring rules and persistence details.
 
 A Next.js and TypeScript interview-training workspace. It includes a 90-day course with a selectable, finalized start date, a 1,000-question practice bank (300 DSA, 400 interview, 200 SQL, 100 system design), theory and visual lessons, revision scheduling, saved answer versions, screenshots, and a manual ChatGPT review handoff.

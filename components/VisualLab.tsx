@@ -6,6 +6,10 @@ import {questionBank} from '@/lib/bank';
 import type {Progress} from '@/lib/progress';
 import ScenarioExplorer from './ScenarioExplorer';
 import ScenarioTournament from './ScenarioTournament';
+import AdventureSimulator from './AdventureSimulator';
+import ConceptAdventures,{BehavioralAdventure} from './ConceptAdventures';
+import PracticePassport from './PracticePassport';
+import {StudioProvider} from './studio/StudioContext';
 
 function Playback({index,total,setIndex}:{index:number;total:number;setIndex:(n:number)=>void}){
  const [playing,setPlaying]=useState(false),[speed,setSpeed]=useState(1400);
@@ -14,11 +18,11 @@ function Playback({index,total,setIndex}:{index:number;total:number;setIndex:(n:
 }
 export default function VisualLab({practice,p,commit,notice}:{practice:(id:string)=>void;p:Progress;commit:(p:Progress)=>void;notice:(s:string)=>void}){
  const [section,setSection]=useState('scenarios');
- return <div className="visual-lab"><div className="visual-hub-tabs">{[['scenarios','Scenario library'],['sandbox','Custom-input simulators'],['tournaments','Solo tournaments']].map(([id,title])=><button key={id} className="secondary" aria-pressed={section===id} onClick={()=>setSection(id)}>{title}</button>)}</div>{section==='scenarios'?<ScenarioExplorer p={p} commit={commit} notice={notice}/>:section==='tournaments'?<ScenarioTournament p={p} commit={commit} notice={notice}/>:<CustomSimulators practice={practice}/>}</div>;
+ return <StudioProvider p={p} commit={commit} notice={notice} practice={practice} userKey="visual-lab" openDay={()=>notice("Open Today to choose a course day.")} read={()=>notice("Open Learn to visit the commute library.")}><div className="visual-lab"><div className="visual-hub-tabs">{[['scenarios','Scenario library'],['sandbox','Custom-input simulators'],['concepts','Concept adventures'],['passport','Practice passport'],['behavior','Behavioral camp'],['tournaments','Solo tournaments']].map(([id,title])=><button key={id} className="secondary" aria-pressed={section===id} onClick={()=>setSection(id)}>{title}</button>)}</div>{section==='scenarios'?<ScenarioExplorer p={p} commit={commit} notice={notice}/>:section==='tournaments'?<ScenarioTournament p={p} commit={commit} notice={notice}/>:section==='concepts'?<ConceptAdventures/>:section==='passport'?<PracticePassport/>:section==='behavior'?<BehavioralAdventure/>:<CustomSimulators practice={practice}/>}</div></StudioProvider>;
 }
 function CustomSimulators({practice}:{practice:(id:string)=>void}){
- const [tab,setTab]=useState<Algorithm|'request'>('two-sum');
- return <div className="visual-lab"><div className="visual-mode-tabs" aria-label="Choose a visual lesson">{[{id:'two-sum',title:'Two Sum',subtitle:'See the hash map',Icon:Code2},{id:'binary-search',title:'Binary search',subtitle:'Watch the range shrink',Icon:Eye},{id:'request',title:'Request journey',subtitle:'Browser → API → database',Icon:Network}].map(({id,title,subtitle,Icon})=><button key={id} className={tab===id?'chosen':''} aria-pressed={tab===id} onClick={()=>setTab(id as typeof tab)}><Icon size={22}/><span><strong>{title}</strong><small>{subtitle}</small></span></button>)}</div>{tab==='request'?<RequestJourney/>:<AlgorithmLesson key={tab} algorithm={tab} practice={practice}/>}</div>;
+ const [tab,setTab]=useState<Algorithm|'request'|'structures'>('structures');
+ return <div className="visual-lab"><div className="visual-mode-tabs" aria-label="Choose a visual lesson">{[{id:'structures',title:'21 data structure expeditions',subtitle:'Map, Set, trees, graphs, bits & more',Icon:Code2},{id:'two-sum',title:'Two Sum',subtitle:'See the hash map',Icon:Code2},{id:'binary-search',title:'Binary search',subtitle:'Watch the range shrink',Icon:Eye},{id:'request',title:'Request journey',subtitle:'Browser → API → database',Icon:Network}].map(({id,title,subtitle,Icon})=><button key={id} className={tab===id?'chosen':''} aria-pressed={tab===id} onClick={()=>setTab(id as typeof tab)}><Icon size={22}/><span><strong>{title}</strong><small>{subtitle}</small></span></button>)}</div>{tab==='structures'?<AdventureSimulator/>:tab==='request'?<RequestJourney/>:<AlgorithmLesson key={tab} algorithm={tab} practice={practice}/>}</div>;
 }
 function AlgorithmLesson({algorithm,practice}:{algorithm:Algorithm;practice:(id:string)=>void}){
  const [input,setInput]=useState(algorithm==='two-sum'?'2, 7, 11, 15':'1, 3, 5, 7, 9, 11, 13');
