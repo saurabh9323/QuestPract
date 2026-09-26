@@ -17,9 +17,11 @@ Every tool includes when to choose it, relevant methods, complexity, a common tr
 
 Input contracts are explicit: sorted two-pointer inputs must be ascending, XOR cancellation requires one singleton and pairs, bit comparisons accept two integers from 0 to 255, and exponential backtracking is limited to six inputs. Number bitwise behavior is distinguished from Boolean NOR. Simulator inputs and method playgrounds are temporary scratch work; they do not execute submitted code.
 
-## Concept adventures: 22 missions
+## Concept adventures: 42 missions
 
-Missions cover encapsulation, polymorphism, abstraction, composition/inheritance, each SOLID principle, closures, the browser event loop, React state, memoization, Context, idempotency, WebSocket, webpack, Redis, serverless, greedy selection, shortest-path selection, and topological sorting.
+Twenty additional foundation lessons cover architecture, Linux, hardware, PostgreSQL, delivery, and AI fundamentals. See [FOUNDATIONS.md](FOUNDATIONS.md) for their interactive workshops and the dated tech radar.
+
+The original missions cover encapsulation, polymorphism, abstraction, composition/inheritance, each SOLID principle, closures, the browser event loop, React state, memoization, Context, idempotency, WebSocket, webpack, Redis, serverless, greedy selection, shortest-path selection, and topological sorting.
 
 Each mission has a narrated flow diagram, example code, a common failure, a challenge, progressive hints, and reference reasoning. JavaScript, React, Node, Python, and C# examples appear where relevant; not every concept has every language. The flow animation is an explanation, not execution of those snippets.
 

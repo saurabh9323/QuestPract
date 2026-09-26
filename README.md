@@ -1,6 +1,8 @@
 # Quest90
 
-**Adventure learning** expands the custom-input lab with 21 more simulators, 22 concept missions, a saved internal/external practice and contest journal, and 20 behavioral interview prompts. See [ADVENTURE-LEARNING.md](ADVENTURE-LEARNING.md) for navigation, supported topics, and storage details.
+**Systems & Linux** adds animated HLD/LLD examples, a 30-command Linux practice fixture, a CPU/GPU workload model, PostgreSQL constraint gates, and a dated technology radar. See [FOUNDATIONS.md](FOUNDATIONS.md) for scope, sources and how to use them.
+
+**Adventure learning** expands the custom-input lab with 21 more simulators, 42 concept missions, a saved internal/external practice and contest journal, and 20 behavioral interview prompts. See [ADVENTURE-LEARNING.md](ADVENTURE-LEARNING.md) for navigation, supported topics, and storage details.
 
 The **Visual lab** now includes 100 input scenarios across ten algorithm families, interactive state walkthroughs, saved notes and bookmarks, and timed solo output-prediction tournaments with results history. See [VISUAL-LAB.md](VISUAL-LAB.md) for the content map, scoring rules and persistence details.
 
