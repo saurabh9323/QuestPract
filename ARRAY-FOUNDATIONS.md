@@ -44,3 +44,12 @@ The final loop example continues to Set; the final Set example continues to Map.
 All sixty trusted reference functions were executed in bounded Node VM contexts and matched their authored expected outputs without mutating their sample inputs. The live comparison matched independent brute-force expectations in 2,178 checks across small arrays, target choices, and all three approaches. Content IDs and twenty-per-track counts were checked. TypeScript validation passed.
 
 No new test files, production build, Playwright run, browser visual inspection or live Supabase check was performed. There is no browser execution or automatic grading of learner-submitted code, and no database migration or progress reset.
+
+
+## Commute reading edition
+
+Learn → Commute library now includes all 60 worked examples, three tool introductions, and one live comparison guide (64 lessons). The beginner path is Loops → Set → Map; each path resumes at its first unread lesson. All lessons are searchable under Array foundations and can be exported with Download filtered pack.
+
+Each example reuses the original input, reference JavaScript, expected output, hint, complexity and common trap, so the reader and practice section cannot silently diverge. The four-step illustrated flow follows input → memory choice → example reasoning → result. Its backpack marker follows Play/Previous/Next; this is a narrated diagram, not code execution. The comparison guide uses the actual bounded duplicate/Two Sum simulator and editable inputs.
+
+The existing reading records store bookmarks, notes, read status and recall dates under stable array-reading-* IDs. They do not overwrite array-* practice attempts, or mark course tasks solved. Browser read-aloud and larger text are available. Markdown exports include the explanation, code, steps, methods and result; the exported document has no interactive animation. No offline-availability guarantee is added.

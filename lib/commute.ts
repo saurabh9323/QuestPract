@@ -4,6 +4,7 @@ import {backendLessons} from './backend-tracks';
 import {foundationLessons} from './foundations';
 import {designGuide} from './system-design';
 import {questionExamples} from './question-examples';
+import {arrayReadingLessons} from './commute-arrays';
 export type {ReadingLesson} from './commute-guides';
 const modules=new Map(theory.map(t=>[t.id,t]));
 function category(id:string,kind:string){
@@ -50,6 +51,6 @@ const scenarioNotes:ReadingLesson[]=questionBank.map(q=>{
     ...(b?{code:b.contract+'\n\nData model:\n'+b.data,useWhen:'Use this design to reason about: '+q.prompt}:{}),
   };
 });
-export const readingLibrary:ReadingLesson[]=[...backendLessons,...foundationLessons,...commuteGuides,...scenarioNotes];
+export const readingLibrary:ReadingLesson[]=[...arrayReadingLessons,...backendLessons,...foundationLessons,...commuteGuides,...scenarioNotes];
 export const readingCategories=[...new Set(readingLibrary.map(l=>l.category))].sort();
 export function lessonMarkdown(l:ReadingLesson){return `# ${l.title}\n\n${l.category} · ${l.format} · About ${l.minutes} minutes\n\n## Understand\n${l.explanation}${l.useWhen?`\n\n## When to use\n${l.useWhen}`:''}${l.hinglish?`\n\n## Hinglish help\n${l.hinglish}`:''}${l.methods?`\n\n## Methods\n${l.methods.map(m=>`- ${m.name}: ${m.use} Example: ${m.example}`).join('\n')}`:''}${l.questions?`\n\n## Questions and answers\n${l.questions.map(q=>`Q: ${q.question}\nA: ${q.answer}`).join('\n\n')}`:''}\n\n## Example\n${l.example}\n${l.code?`\n\`\`\`\n${l.code}\n\`\`\`\n`:''}${l.output?`\nExpected result: ${l.output}\n`:''}\n## Follow the flow\n${l.steps.map((s,i)=>`${i+1}. **${s.title}**: ${s.detail}\n\n   ${s.state.replace(/\n/g,'; ')}`).join('\n\n')}\n\n## Common trap\n${l.pitfall}${l.exercise?`\n\n## Build exercise\n${l.exercise.task}\n\n${l.exercise.acceptance.map(x=>'- '+x).join('\n')}\n\n## Suggested project layout\n${l.exercise.layout||''}`:''}\n\n## Say it in an interview\n${l.interview}\n\n## Recall\n${l.recall}\n\n## Recall guide\n${l.answer}\n${l.resource?`\nReference: ${l.resource}\n`:''}`;}
