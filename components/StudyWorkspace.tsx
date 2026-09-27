@@ -2,8 +2,8 @@
 import {useRef,useState,type ReactNode} from 'react';
 import {BookOpen,Code2,MessageCircle,Send,Maximize2,Minimize2} from 'lucide-react';
 const sections=[{id:'learn',label:'Learn & build',icon:BookOpen},{id:'practice',label:'DSA practice',icon:Code2},{id:'speak',label:'Speak & reflect',icon:MessageCircle},{id:'finish',label:'Checklist & submit',icon:Send}] as const;
-export default function StudyWorkspace({day,title,focus,onFocus,timer,lesson,diagram,editor,practice,communication,finish,support,sync}:{day:number;title:string;focus:boolean;onFocus:()=>void;timer:ReactNode;lesson:ReactNode;diagram:ReactNode;editor:(finish:()=>void)=>ReactNode;practice:ReactNode;communication:ReactNode;finish:ReactNode;support:ReactNode;sync:string}){
-  const [section,setSection]=useState<typeof sections[number]['id']>('learn');
+export default function StudyWorkspace({day,title,focus,onFocus,timer,lesson,diagram,editor,practice,communication,finish,support,sync,initialSection='learn'}:{initialSection?:'learn'|'speak';day:number;title:string;focus:boolean;onFocus:()=>void;timer:ReactNode;lesson:ReactNode;diagram:ReactNode;editor:(finish:()=>void)=>ReactNode;practice:ReactNode;communication:ReactNode;finish:ReactNode;support:ReactNode;sync:string}){
+  const [section,setSection]=useState<typeof sections[number]['id']>(initialSection);
   const [reference,setReference]=useState<'guide'|'diagram'>('guide');
   const finishRef=useRef<HTMLDivElement>(null);
   function openSubmission(){setSection('finish');requestAnimationFrame(()=>{finishRef.current?.focus();finishRef.current?.scrollIntoView({block:'start',behavior:'smooth'})})}

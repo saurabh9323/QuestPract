@@ -127,3 +127,6 @@ The timeline assigns 100 distinct DSA questions from 20 topics: one per day, wit
 Submit an answer, verify it with your own normal/boundary tests and reasoning, then use Mark solved. Submission alone does not advance the 100-question solved count. Reopen keeps attempt history. The coach recommends overdue questions first, then unfinished attempts, then the next question, and calculates remaining pace. A fully complete day requires both its course checklist and assigned DSA solved. All labels are self-reported learning evidence, not automated grading. Deferring a practice mission changes its DSA due date; deferrals beyond the course deadline are explicitly reported. Skipping a mission does not erase the 100-question goal.
 
 Five backend learning paths add 24 lessons on servers, Docker/CI/CD, RAG, C#/ASP.NET Core and Python/Flask/Django. Open **Learn → Commute library → Your backend learning paths**. Each path includes its architecture, ordered lessons, practical exercises and a downloadable study pack.
+
+
+See [PERSONAL-COACH.md](PERSONAL-COACH.md) for the Today plan, pattern detective and commute lessons, mistake revisions, solution explanations, reading-to-practice links, weekly checkpoints, STAR story bank and save confirmations.

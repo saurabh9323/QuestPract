@@ -6,6 +6,7 @@ import {CONFIG_KEY,GUEST_KEY,type Connection,connect,readCloud,writeCloud,readCl
 import {localGet,saveCheckpoint} from './local-db';
 import {accountKey,hasWork,mergeProgress,type LocalCheckpoint,type RecoveryCopy} from './recovery';
 
+function savedStatus(at?:string){return at&&Number.isFinite(Date.parse(at))?`Saved to Supabase · ${new Date(at).toLocaleString()}`:'Saved to Supabase';}
 const DEFAULT_CONNECTION:Connection={url:process.env.NEXT_PUBLIC_SUPABASE_URL||'https://xavuhmunsmiknusfskwr.supabase.co',key:process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY||'sb_publishable_szXgHTFOwnAIhCdemtwhDg_Ewpj4yX-'};
 export function useTraining(){
  const [progress,setProgress]=useState<Progress>(freshProgress),[ready,setReady]=useState(false),[dataReady,setDataReady]=useState(false),[user,setUser]=useState<User|null>(null),[config,setConfig]=useState<Connection|null>(null),[sync,setSync]=useState('Checking your account…'),[error,setError]=useState(''),[notice,setNotice]=useState(''),[busy,setBusy]=useState(false),[recoveries,setRecoveries]=useState<RecoveryCopy[]>([]),[recoveryNote,setRecoveryNote]=useState('');
@@ -28,7 +29,7 @@ export function useTraining(){
      setSync('Saving to Supabase…');const next=await writeCloud(c,p,revision.current);
      if(gen!==generation.current)break;revision.current=next;
      // A response for an earlier edit must not overwrite newer typing.
-     if(!pending.current){await cache(key,p,next,false);setSync(pending.current?'Changes pending…':'Saved to Supabase');}
+     if(!pending.current){await cache(key,p,next,false);setSync(pending.current?'Changes pending…':savedStatus(new Date().toISOString()));}
      else await cache(key,pending.current,next,true);
     }else throw new Error('Sign in before saving account progress.');
    }
@@ -68,7 +69,7 @@ export function useTraining(){
        setRecoveries([{id:'device-current',label:saved.pending?'Unsynced work from this account':'Previous copy from this account',savedAt:saved.savedAt,progress:saved.progress}]);
        if(saved.pending||!row)setRecoveryNote('A different local copy is available in My profile → Recovery copies. It has not replaced your cloud progress.');
       }
-      setSync(row?'Saved to Supabase':'No saved course for this account yet');
+      setSync(row?savedStatus(row.updatedAt):'No saved course for this account yet');
       if(row&&!saved?.pending)await cache(key,p,row.revision,false,true);
      }
     }catch(e){if(!cancelled&&gen===generation.current){setError(e instanceof Error?e.message:'Unable to load cloud progress.');setSync('Could not load saved data · editing paused');blocked.current=true;}}
@@ -98,7 +99,7 @@ export function useTraining(){
  const reload=async()=>{
   if(!client.current||!identity.current)return;if(saving.current)throw new Error('A save is still in progress. Wait before reloading.');
   setBusy(true);const gen=generation.current;if(timer.current)clearTimeout(timer.current);
-  try{if(loaded.current)await cache(cacheKey.current,current.current,revision.current,!!pending.current,true);const row=await readCloud(client.current,identity.current.id);if(gen!==generation.current)return;if(!row)throw new Error('No cloud record was found. Your displayed work has been kept; nothing was reset.');revision.current=row.revision;pending.current=null;blocked.current=false;loaded.current=true;setDataReady(true);setError('');show(row.progress);await cache(cacheKey.current,row.progress,row.revision,false,true);setSync('Saved to Supabase');}
+  try{if(loaded.current)await cache(cacheKey.current,current.current,revision.current,!!pending.current,true);const row=await readCloud(client.current,identity.current.id);if(gen!==generation.current)return;if(!row)throw new Error('No cloud record was found. Your displayed work has been kept; nothing was reset.');revision.current=row.revision;pending.current=null;blocked.current=false;loaded.current=true;setDataReady(true);setError('');show(row.progress);await cache(cacheKey.current,row.progress,row.revision,false,true);setSync(savedStatus(row.updatedAt));}
   catch(e){if(gen===generation.current)setError(e instanceof Error?e.message:'Load failed.');}finally{if(gen===generation.current)setBusy(false);}
  };
  const retry=()=>{blocked.current=false;setError('');if(!loaded.current)setConfig(c=>c?{...c}:c);else void drain();};
