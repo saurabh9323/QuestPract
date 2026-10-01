@@ -1,3 +1,4 @@
+import {makeSpeakingPlan,readSpeakingPlan} from './communication-coach';
 import {hasCommunicationRep} from './progress';
 import {questionBank,theory} from './bank';
 import {quests} from './curriculum';
@@ -30,8 +31,9 @@ export function dayAssignments(day:number){
  const offset=day-1+Math.floor((day-1)/9),count=day%9===0?2:1,q=quests[day-1],pool=questionBank.filter(x=>x.lessonId===courseLessons[q.chapter-1]);
  return {dsa:requiredDSA.slice(offset,offset+count),companion:pool[(day-1)%7%pool.length]};
 }
-export function communicationMission(day:number){
+export function communicationMission(day:number,p?:Progress){
  if(!Number.isInteger(day)||day<1||day>90)throw new Error('Choose day 1-90.');
+ if(p){const m=readSpeakingPlan(p.studio?.[`communication-coach-${day}`]?.fields.plan)||makeSpeakingPlan(p,day,'balanced',10,'Private rehearsal',0);return {day,title:m.title,prompt:m.prompt,audience:m.audience,skill:m.track,phase:m.level,script:m.opener,reflection:'What did you say? Write one clearer sentence and one improvement for next time.'};}
  const [title,prompt,audience,skill]=communicationLadder[(day-1)%communicationLadder.length];
  const phase=day<=15?'Foundation':day<=35?'Known people':day<=60?'Public practice':day<=75?'Interview simulation':'Polish and confidence';
  return {day,title,prompt,audience,skill,phase,script:'Hi, I am practicing my English communication for full-stack interviews. Can I explain one small idea in two minutes and get one honest question or suggestion?',reflection:'What did I say clearly? Where did I pause? What will I say shorter next time?'};
@@ -45,7 +47,7 @@ export function courseStats(p:Progress,today=dateKey()){
  return {entries,solved:solved.length,due,assigned:assigned.length,remaining,daysLeft,end,day,started,next,pace:daysLeft?Number((remaining/daysLeft).toFixed(1)):remaining,extended:entries.filter(x=>x.dueDate>end&&!x.solved).length,completeDays:quests.filter(q=>p.days[q.day]?.completedAt&&dayAssignments(q.day).dsa.every(x=>p.practice?.[x.id]?.solvedAt)).length};
 }
 export function communicationStats(p:Progress,today=dateKey()){
- const entries=quests.map(q=>({day:q.day,date:dayDate(p.startDate,q.day-1),mission:communicationMission(q.day),log:p.communication?.[q.day]}));
+ const entries=quests.map(q=>({day:q.day,date:dayDate(p.startDate,q.day-1),mission:communicationMission(q.day,p),log:p.communication?.[q.day]}));
  return {entries,done:entries.filter(x=>hasCommunicationRep(x.log)).length,attempted:entries.filter(x=>x.log?.status==='attempted').length,overdue:entries.filter(x=>x.date<today&&!hasCommunicationRep(x.log)),today:entries.find(x=>x.date===today)||entries.find(x=>!hasCommunicationRep(x.log))};
 }
 export function courseSnapshot(p:Progress,today=dateKey()){

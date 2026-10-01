@@ -4,7 +4,7 @@ import {dayAssignments,communicationMission} from '@/lib/course';
 import {patternCases} from '@/lib/patterns';
 import {challengeCadences,challengeWindow} from '@/lib/progress-challenges';
 export default function TodayFocus({p,commit,practice,read,open,tool}:{p:Progress;commit:(p:Progress)=>void;practice:(id:string)=>void;read:(id:string)=>void;open:(day:number)=>void;tool:(id:string)=>void}){
- const today=dateKey(),day=scheduledDay(p.startDate),id=`today-focus-${today}`,r=p.studio?.[id],minutes=r?.fields.minutes==='30'?30:60,assigned=dayAssignments(day),q=assigned.dsa.find(q=>!p.practice?.[q.id]?.solvedAt)||assigned.dsa[0],lesson=patternCases[(day-1)%patternCases.length],comm=communicationMission(day);
+ const today=dateKey(),day=scheduledDay(p.startDate),id=`today-focus-${today}`,r=p.studio?.[id],minutes=r?.fields.minutes==='30'?30:60,assigned=dayAssignments(day),q=assigned.dsa.find(q=>!p.practice?.[q.id]?.solvedAt)||assigned.dsa[0],lesson=patternCases[(day-1)%patternCases.length],comm=communicationMission(day,p);
  const mistakes=Object.entries(p.studio||{}).filter(([id,r])=>id.startsWith('mistake-')&&r.fields.deleted!=='yes'&&r.fields.resolved!=='yes'&&r.fields.retry&&r.fields.retry<=today),recalls=Object.entries(p.studio||{}).filter(([id,r])=>id.startsWith('bridge-')&&r.fields.due&&r.fields.due<=today&&r.fields.recalled!=='yes');
  const availableChallenges=challengeCadences.filter(c=>{const w=challengeWindow(p,c.id,today);return w.id&&p.studio?.[w.id]?.fields.status!=='finished'}).length;
  const times=minutes===30?[15,10,5]:[30,20,10];

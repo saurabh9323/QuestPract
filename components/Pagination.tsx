@@ -1,0 +1,5 @@
+'use client';
+export default function Pagination({page,total,pageSize,onChange,label='Results'}:{page:number;total:number;pageSize:number;onChange:(page:number)=>void;label?:string}){
+ const pages=Math.max(1,Math.ceil(total/pageSize)),current=Math.min(pages,Math.max(1,page)),numbers=[...new Set([1,current-1,current,current+1,pages])].filter(n=>n>=1&&n<=pages).sort((a,b)=>a-b);
+ return <nav className="pagination" aria-label={`${label} pages`}><button className="secondary" disabled={current===1} onClick={()=>onChange(current-1)}>← Previous</button>{numbers.map((n,i)=><span key={n}>{i>0&&n-numbers[i-1]>1&&<span aria-hidden="true"> … </span>}<button className="secondary" aria-label={`${label} page ${n}`} aria-current={n===current?'page':undefined} onClick={()=>onChange(n)}>{n}</button></span>)}<button className="secondary" disabled={current===pages} onClick={()=>onChange(current+1)}>Next →</button><small>{total?`${(current-1)*pageSize+1}–${Math.min(current*pageSize,total)} of ${total}`:'No results'}</small></nav>;
+}
