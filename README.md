@@ -1,5 +1,7 @@
 # Quest90
 
+**Cartoon classroom** adds 43 original animated stories with simple explanations, technical views, browser narration, saved recall, and captioned video downloads. The stories also live in Commute alongside the 15-reference pattern shelf from your screenshot. See [CARTOON-CLASSROOM.md](CARTOON-CLASSROOM.md).
+
 **Array foundations** adds 60 beginner worked examples (20 loops, 20 Set, 20 Map), a live same-input comparison, hints, code explanations and saved attempts. See [ARRAY-FOUNDATIONS.md](ARRAY-FOUNDATIONS.md) for the learning path and output contracts.
 
 **Systems & Linux** adds animated HLD/LLD examples, a 30-command Linux practice fixture, a CPU/GPU workload model, PostgreSQL constraint gates, and a dated technology radar. See [FOUNDATIONS.md](FOUNDATIONS.md) for scope, sources and how to use them.
