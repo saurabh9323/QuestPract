@@ -1,0 +1,6 @@
+project_id = "quest90"
+
+[functions.auto-coach]
+# The handler validates the bearer token with Supabase Auth before any provider call.
+# Supports modern signing keys without trusting the legacy gateway JWT check.
+verify_jwt = false

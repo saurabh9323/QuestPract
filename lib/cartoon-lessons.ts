@@ -2,7 +2,7 @@ import type {ReadingLesson} from './commute-guides';
 import {cartoonPatterns} from './cartoon-patterns';
 import {patternReferences} from './pattern-references';
 export type CartoonScene={title:string;say:string;technical:string;code:string;items:string[];active:number[]};
-export type CartoonLesson={id:string;category:string;title:string;world:'table'|'city'|'queue'|'stack'|'tree'|'array'|'stage'|'factory';why:string;limit:string;scenes:CartoonScene[];quiz:{question:string;choices:string[];answer:number;why:string}};
+export type CartoonLesson={id:string;category:string;title:string;world:'table'|'city'|'queue'|'stack'|'tree'|'array'|'stage'|'factory';layout?:'bfs-tree'|'linux-path';why:string;limit:string;scenes:CartoonScene[];quiz:{question:string;choices:string[];answer:number;why:string}};
 const s=(title:string,say:string,technical:string,code:string,items:string[],active:number[]):CartoonScene=>({title,say,technical,code,items,active});
 const m=(id:string,category:string,title:string,world:CartoonLesson['world'],why:string,limit:string,scenes:CartoonScene[],question:string,choices:string[],answer:number,explanation:string):CartoonLesson=>({id,category,title,world,why,limit,scenes,quiz:{question,choices,answer,why:explanation}});
 export const cartoonLessons:CartoonLesson[]=[

@@ -5,6 +5,7 @@ import {freshProgress,type Progress,validateProgress} from './progress';
 import {CONFIG_KEY,GUEST_KEY,type Connection,connect,readCloud,writeCloud,readCloudHistory} from './storage';
 import {localGet,saveCheckpoint} from './local-db';
 import {accountKey,hasWork,mergeProgress,type LocalCheckpoint,type RecoveryCopy} from './recovery';
+import {autoCoachAfterSubmission,preserveCoachArtifacts} from './auto-coach';
 
 function savedStatus(at?:string){return at&&Number.isFinite(Date.parse(at))?`Saved to Supabase · ${new Date(at).toLocaleString()}`:'Saved to Supabase';}
 const DEFAULT_CONNECTION:Connection={url:process.env.NEXT_PUBLIC_SUPABASE_URL||'https://xavuhmunsmiknusfskwr.supabase.co',key:process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY||'sb_publishable_szXgHTFOwnAIhCdemtwhDg_Ewpj4yX-'};
@@ -39,10 +40,21 @@ export function useTraining(){
  const commit=useCallback((p:Progress)=>{
   if(!loaded.current||!identity.current){setNotice('Wait for your account progress to load before editing.');return;}
   try{validateProgress(p);}catch(e){setError(e instanceof Error?e.message:'Invalid progress.');return;}
+  // Optional coaching must never prevent the original submission from being saved.
+  // Preserve packs created by a preceding same-tick commit from a studio form.
+  try{
+   const enriched=autoCoachAfterSubmission(current.current,preserveCoachArtifacts(current.current,p));
+   validateProgress(enriched);p=enriched;
+  }catch{setNotice('Your answer is being saved. Automatic practice could not be prepared; you can retry in Auto coach.');}
   show(p);pending.current=p;void cache(cacheKey.current,p,revision.current,true);
   setSync('Changes pending · saving recovery copy…');if(timer.current)clearTimeout(timer.current);timer.current=setTimeout(()=>void drain(),600);
  },[show,cache,drain]);
  const guest=useCallback(async()=>{const stored=await localGet<Progress>('progress');if(stored)return validateProgress(stored);const raw=localStorage.getItem(GUEST_KEY);return raw?validateProgress(JSON.parse(raw)):freshProgress();},[]);
+ const patchCoach=useCallback((id:string,fields:Record<string,string>,owner:{url:string;userId:string})=>{
+  if(!loaded.current||cacheKey.current!==accountKey(owner.url,owner.userId)||!id.startsWith('auto-pack-'))return;
+  const old=current.current.studio?.[id];if(!old)return;
+  const at=new Date().toISOString();commit({...current.current,updatedAt:at,studio:{...current.current.studio,[id]:{...old,fields:{...old.fields,...fields},updatedAt:at}}});
+ },[commit]);
  useEffect(()=>{try{const raw=localStorage.getItem(CONFIG_KEY);setConfig(raw?JSON.parse(raw):DEFAULT_CONNECTION);}catch{setConfig(DEFAULT_CONNECTION);}setReady(true);},[]);
  useEffect(()=>{
   if(!ready||!config)return;
@@ -103,5 +115,5 @@ export function useTraining(){
   catch(e){if(gen===generation.current)setError(e instanceof Error?e.message:'Load failed.');}finally{if(gen===generation.current)setBusy(false);}
  };
  const retry=()=>{blocked.current=false;setError('');if(!loaded.current)setConfig(c=>c?{...c}:c);else void drain();};
- return {progress,commit,ready,dataReady,user,config,sync,error,notice,setNotice,busy,configure,signIn,signUpPassword,signInPassword,signOut,retry,reload,client:client.current,recoveries,recoveryNote,refreshRecovery,restoreRecovery,importGuest:async()=>{try{const old=await guest();if(!hasWork(old)){setNotice('No previous guest work exists in this browser.');return;}commit(mergeProgress(current.current,old));}catch(e){setNotice(e instanceof Error?e.message:'Guest progress could not be imported.');}}};
+ return {progress,commit,patchCoach,ready,dataReady,user,config,sync,error,notice,setNotice,busy,configure,signIn,signUpPassword,signInPassword,signOut,retry,reload,client:client.current,recoveries,recoveryNote,refreshRecovery,restoreRecovery,importGuest:async()=>{try{const old=await guest();if(!hasWork(old)){setNotice('No previous guest work exists in this browser.');return;}commit(mergeProgress(current.current,old));}catch(e){setNotice(e instanceof Error?e.message:'Guest progress could not be imported.');}}};
 }

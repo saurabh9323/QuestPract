@@ -27,7 +27,7 @@ export function drawCartoon(ctx:CanvasRenderingContext2D,lesson:CartoonLesson,sc
  }else if(lesson.world==='stack'){
   scene.items.forEach((_,i)=>positions.push({x:400,y:378-i*71,w:380,h:60}));
   text('TOP = last item added',800,200,240,18,muted,2);
- }else if(lesson.id==='trees-bfs'){
+ }else if((lesson.id==='trees-bfs'||lesson.layout==='bfs-tree')){
   // Preserve the actual example topology: A -> B,C and B -> D,E.
   [[580,154],[370,259],[790,259],[260,365],[490,365]].forEach(([x,y])=>positions.push({x,y,w:150,h:65}));
  }else if(lesson.world==='tree'){
@@ -38,8 +38,8 @@ export function drawCartoon(ctx:CanvasRenderingContext2D,lesson:CartoonLesson,sc
   text({array:'Inspect each value',queue:'FRONT  →  process in order  →  BACK',city:'Follow the request',factory:'Follow each responsibility',stage:'Watch the state change'}[lesson.world as 'array'|'queue'|'city'|'factory'|'stage']||'',220,158,800,18,muted,1);
  }
  function arrow(a:Point,b:Point,vertical=false){const ax=vertical?a.x+a.w/2:a.x+a.w,ay=vertical?a.y+a.h:a.y+a.h/2,bx=vertical?b.x+b.w/2:b.x,by=vertical?b.y:b.y+b.h/2;ctx.strokeStyle=line;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();const angle=Math.atan2(by-ay,bx-ax);ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx-11*Math.cos(angle-.5),by-11*Math.sin(angle-.5));ctx.moveTo(bx,by);ctx.lineTo(bx-11*Math.cos(angle+.5),by-11*Math.sin(angle+.5));ctx.stroke()}
- if(lesson.id==='trees-bfs')[[0,1],[0,2],[1,3],[1,4]].forEach(([a,b])=>arrow(positions[a],positions[b],true));
- else if(lesson.world==='tree'&&!(lesson.id==='linux'&&sceneIndex===1))positions.slice(1).forEach((p,i)=>arrow(positions[i],p,true));
+ if((lesson.id==='trees-bfs'||lesson.layout==='bfs-tree'))[[0,1],[0,2],[1,3],[1,4]].forEach(([a,b])=>arrow(positions[a],positions[b],true));
+ else if(lesson.world==='tree'&&!((lesson.id==='linux'||lesson.layout==='linux-path')&&sceneIndex===1))positions.slice(1).forEach((p,i)=>arrow(positions[i],p,true));
  else if(['city','factory','queue','stage'].includes(lesson.world))positions.slice(1).forEach((p,i)=>{if(p.y===positions[i].y)arrow(positions[i],p)});
  positions.forEach((p,i)=>{const active=scene.active.includes(i);box(p.x,p.y,p.w,p.h,active?accent:panel,active?'#72964f':line);text(scene.items[i],p.x+16,p.y+14,p.w-32,lesson.world==='table'?22:20,active?'#172b42':ink,3);if(lesson.world==='array')text(`[${i}]`,p.x+10,p.y+p.h+12,p.w,16,muted,1)});
  const focus=scene.active.filter(i=>positions[i]);

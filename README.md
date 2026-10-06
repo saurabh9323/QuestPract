@@ -132,3 +132,18 @@ Five backend learning paths add 24 lessons on servers, Docker/CI/CD, RAG, C#/ASP
 
 
 See [PERSONAL-COACH.md](PERSONAL-COACH.md) for the Today plan, pattern detective and commute lessons, mistake revisions, solution explanations, reading-to-practice links, weekly checkpoints, STAR story bank and save confirmations.
+
+## Automatic follow-up lessons
+
+**Practice → Auto coach** (`/auto-coach/`) turns newly submitted answers into saved
+practice packs. The default rule-based engine requires no key. It provides generated
+reference examples for supported algorithms, related cartoon stories for other
+topics, and recall checkpoints without changing solved/completion status. The same
+personal shelf is linked from Today and Commute. Original attempts stay intact.
+
+Optional Gemini feedback uses an authenticated Supabase Edge Function, separate
+AI results, bounded cartoon storyboards, explicit opt-in, daily request limits and
+allowlisted official-documentation retrieval. It requires a server-side
+`GEMINI_API_KEY`, the new SQL migration and a separate Edge Function deployment.
+The static Next.js deployment does not deploy that backend automatically.
+See [the setup and privacy guide](public/auto-coach-setup.md).
