@@ -267,12 +267,19 @@ export async function handleCoachRequest(
      },
    );
     if (!response.ok) {
+      const errorText = await response.text();
+
+      console.error("GEMINI_API_ERROR", {
+        status: response.status,
+        body: errorText,
+      });
+
       await finish("failed", null);
-      return reply(response.status === 429 ? 429 : 502, {
-        error:
-          response.status === 429
-            ? "Gemini quota reached. Your built-in lesson remains available."
-            : "Gemini could not complete this request. Check the key and model availability in Google AI Studio.",
+
+      return reply(502, {
+        error: "Gemini request failed",
+        geminiStatus: response.status,
+        details: errorText,
       });
     }
     const result = JSON.parse(await boundedText(response, 60000)),
