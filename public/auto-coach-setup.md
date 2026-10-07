@@ -69,7 +69,7 @@ Adding the secret alone does not deploy the function.
 
 ## Limits, data and reference fetching
 
-The function uses `gemini-2.5-flash-lite`. It makes no paid-model fallback and no
+The function uses `gemini-3.5-flash-lite`. It makes no paid-model fallback and no
 automatic retry loop. App limits are **10 reserved requests per account and 100
 per project per UTC day**, including failed requests. Provider limits can be lower.
 The app cannot force a billing-enabled Google project to be free; check AI Studio.
