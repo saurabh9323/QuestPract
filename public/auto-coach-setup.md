@@ -107,3 +107,7 @@ hosted Edge Function even from localhost.
 
 The source code and setup guide do not establish that your hosted function or
 migration has been deployed. Confirm the first signed-in request after deployment.
+
+## Topic conversations
+
+Open a saved Auto coach lesson and use **Talk about this topic** to ask questions or submit follow-up answers. Each message and reply is saved with that lesson in your account. The server receives the original topic and up to three recent exchanges, bounded to 2,000 characters; older messages remain readable in the UI. Use Retry for failed messages or Copy conversation to export. Conversations allow up to 40 messages per lesson and share the existing daily Gemini limits. Replies do not mark course work complete.

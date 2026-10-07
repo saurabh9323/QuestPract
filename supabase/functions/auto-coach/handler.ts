@@ -241,7 +241,7 @@ export async function handleCoachRequest(
        signal: AbortSignal.timeout(45000),
        body: JSON.stringify({
          systemInstruction: {
-           parts: [{ text: instructions }],
+           parts: [{ text: instructions + (input.source === "topic-chat" ? " This is a continuing tutoring conversation. The answer field is the learner's latest message and previous contains recent conversation. Reply directly to the latest message in observations with useful detail and code when appropriate, rather than grading it as a submission. Respect requests for a quiz: ask one question and wait; do not reveal its answer in observations. Use prior context for follow-ups. The challenge, hint and cartoon are optional supporting material displayed separately. Keep each observation under 800 characters." : "") }],
          },
          contents: [
            {
