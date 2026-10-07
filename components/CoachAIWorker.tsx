@@ -6,11 +6,16 @@ import {readCoachPack} from '@/lib/coach-contract';
 type Owner={url:string;userId:string};
 export default function CoachAIWorker({p,client,owner,publicKey,update}:{p:Progress;client:SupabaseClient|null;owner:Owner;publicKey:string;update:(id:string,fields:Record<string,string>,owner:Owner)=>void}){
  const active=useRef(false),mounted=useRef(true),controller=useRef<AbortController|null>(null),[cycle,setCycle]=useState(0);
+ const dispatched=useRef(new Set<string>());
  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;controller.current?.abort()}},[]);
  useEffect(()=>{
   if(active.current||!client)return;
-  const entry=Object.entries(p.studio||{}).find(([id,r])=>id.startsWith('auto-pack-')&&r.fields.cloudStatus==='pending');
+  const requestKey=(id:string,requestId:string)=>JSON.stringify([owner.url,owner.userId,id,requestId]);
+  const entry=Object.entries(p.studio||{}).find(([id,r])=>id.startsWith('auto-pack-')&&r.fields.cloudStatus==='pending'&&!dispatched.current.has(requestKey(id,r.fields.requestId)));
   if(!entry)return;const [id,r]=entry,pack=readCoachPack(r.fields.pack);
+  // Reserve before starting async work. React may render stale pending props
+  // between the result update and the queue's next cycle. Retry uses a new ID.
+  dispatched.current.add(requestKey(id,r.fields.requestId));
   if(!pack||!r.fields.requestId){update(id,{cloudStatus:'failed',cloudError:'The saved request could not be read. Choose Retry.'},owner);return}
   active.current=true;const abort=new AbortController();controller.current=abort;const timeout=setTimeout(()=>abort.abort(),75000);
   void (async()=>{

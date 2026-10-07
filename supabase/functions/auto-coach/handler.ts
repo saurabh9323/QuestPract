@@ -267,19 +267,27 @@ export async function handleCoachRequest(
      },
    );
     if (!response.ok) {
-      const errorText = await response.text();
-
-      console.error("GEMINI_API_ERROR", {
-        status: response.status,
-        body: errorText,
-      });
-
-      await finish("failed", null);
-
-      return reply(502, {
-        error: "Gemini request failed",
+      // Never forward/log raw provider bodies: they can echo keys or input.
+      let providerCode = "";
+      try {
+        const body = JSON.parse(await boundedText(response, 16000));
+        const allowed = ["INVALID_ARGUMENT", "UNAUTHENTICATED", "PERMISSION_DENIED", "NOT_FOUND", "RESOURCE_EXHAUSTED", "FAILED_PRECONDITION", "INTERNAL", "UNAVAILABLE", "DEADLINE_EXCEEDED"];
+        if (allowed.includes(body?.error?.status)) providerCode = body.error.status;
+      } catch { /* HTTP status still identifies a non-JSON provider error. */ }
+      const guidance: Record<number, string> = {
+        400: "Check the API key and whether this model accepts the request settings.",
+        401: "Check GEMINI_API_KEY in Supabase Secrets; Google did not accept authentication.",
+        403: "Check the key's API restrictions and this Google project's Gemini access.",
+        404: "Check the configured model name and its availability for your Google project.",
+        429: "Gemini's quota or rate limit was reached. Wait before retrying; the local lesson remains available.",
+        500: "Gemini reported a server error. Try again later.",
+        503: "Gemini is temporarily unavailable. Try again later.",
+      };
+      await finish("failed", null).catch(() => {});
+      return reply(response.status === 429 ? 429 : 502, {
+        error: `Gemini HTTP ${response.status}${providerCode ? ` (${providerCode})` : ""}. ${guidance[response.status] || "Check the provider's availability before retrying."}`,
         geminiStatus: response.status,
-        details: errorText,
+        ...(providerCode ? { geminiCode: providerCode } : {}),
       });
     }
     const result = JSON.parse(await boundedText(response, 60000)),
