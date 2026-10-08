@@ -1,3 +1,4 @@
+import {expandedInterview} from './interview-expanded';
 import dotnet from './interview-dotnet.json';
 export type InterviewQuestion={id:string;group:string;question:string;answer:string;example:string;mistake:string};
 export type WorkedExample={title:string;code:string;explanation:string;followUp:string};
@@ -87,8 +88,16 @@ dsa:[
  ['Dynamic programming or backtracking?','Backtracking explores choices and undoes them. DP reuses results for overlapping subproblems with a well-defined state and transition.','Subset generation can use backtracking. Minimum coins for a value can use DP, with unreachable states represented explicitly.','Do not memoize on an incomplete state that omits a decision affecting future choices.'],
  ['How do I remember a solution in an interview?','Reconstruct the invariant rather than reciting code: what information must remain true after each step? Start with brute force, then identify repeated work.','For Two Sum: before processing i, the map contains earlier values and their indices. Test duplicates, no match, negatives and minimal input.','Do not state complexity without explaining how many times each element is processed.'],
 ]};
-export function materialQuestions(slug:string):InterviewQuestion[]{return slug==='dotnet'?dotnet.questions:(bank[slug]||[]).map(([question,answer,example,mistake],i)=>({id:`${slug}-${String(i+1).padStart(2,'0')}`,group:'Core interview revision',question,answer,example,mistake}));}
+export function materialQuestions(slug:string):InterviewQuestion[]{
+ if(slug==='dotnet')return dotnet.questions;
+ const result=[...(bank[slug]||[]),...(expandedInterview[slug]||[])].map(([question,answer,example,mistake],i)=>({id:`${slug}-${String(i+1).padStart(2,'0')}`,group:'Core interview revision',question,answer,example,mistake}));
+ // Present the foundations first without changing saved question IDs.
+ const first:Record<string,number[]>={nodejs:[10,11,12,0],react:[10,11,0,12],nextjs:[10,11,0,1],sql:[10,3,0,1],aws:[10,0,1,13],'system-design':[10,11,0,1],dsa:[10,11,12,0]};
+ const priority=first[slug]||[];
+ return [...priority.map(i=>result[i]).filter(Boolean),...result.filter((_,i)=>!priority.includes(i))];
+}
 export const workedExamples:Record<string,WorkedExample[]>={dotnet:dotnet.examples,
+mern:[{title:'Explain a note creation flow',code:'React form -> POST /notes -> authenticate -> validate DTO\n-> authorize owner from session -> insert MongoDB document\n-> return 201 with ID -> update UI\nFailure: keep draft; show safe error and retry option',explanation:'Conceptual request flow. The server derives owner identity from the verified session, not from a trusted-looking client field. Database operations and input validation need actual implementation.',followUp:'How would you avoid duplicate notes if the response was lost and the client retries?'}],
 nodejs:[{title:'Stream with backpressure',code:"import { pipeline } from 'node:stream/promises';\nimport { createReadStream, createWriteStream } from 'node:fs';\nawait pipeline(createReadStream('input.txt'),\n  createWriteStream('copy.txt'));",explanation:'Assume trusted local file paths and permission to read/write. Pipeline propagates errors and coordinates stream flow. Wrap it in your application error handling.',followUp:'How does this differ from reading the entire file into one buffer?'}],
 react:[{title:'Previous-state updates',code:'const [count, setCount] = useState(0);\nfunction addTwo() {\n  setCount(c => c + 1);\n  setCount(c => c + 1);\n}',explanation:'Import useState from React and use inside a component. Starting at zero, one call requests a final count of two.',followUp:'Why would two setCount(count + 1) calls in one event usually add only one?'}],
 nextjs:[{title:'Generate known static routes',code:"export function generateStaticParams() {\n  return ['dotnet', 'react', 'sql'].map(topic => ({ topic }));\n}\n// In app/interview-materials/[topic]/page.tsx\n// Await params before reading topic in current Next.js.",explanation:'This example assumes a [topic] segment. Static export needs all supported paths at generation time. It is a routing snippet, not a complete page.',followUp:'Where should per-user private revision notes be fetched and authorized?'}],
@@ -98,7 +107,8 @@ aws:[{title:'Private upload request flow',code:'Authenticated client\n  -> API c
 dsa:[{title:'Two Sum: remember earlier indices',code:'function twoSum(nums, target) {\n  const seen = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const need = target - nums[i];\n    if (seen.has(need)) return [seen.get(need), i];\n    seen.set(nums[i], i);\n  }\n  return [];\n}',explanation:'Assume integer values and sums within JavaScript’s safe integer range. [3,3] with target 6 returns [0,1]. Average O(n) time, O(n) space.',followUp:'Explain why checking before insertion matters and when two pointers would be an alternative.'}],
 };
 export const materialSources:Record<string,[string,string][]>= {
-dotnet:[['Microsoft: dependency injection','https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection'],['Microsoft: async programming','https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/'],['Microsoft: EF querying','https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying']],
+mern:[['MongoDB: embedding data','https://www.mongodb.com/docs/manual/data-modeling/embedding/'],['MongoDB: references','https://www.mongodb.com/docs/manual/reference/database-references/']],
+dotnet:[['Microsoft: middleware','https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/'],['Microsoft: EF asynchronous operations','https://learn.microsoft.com/en-us/ef/core/miscellaneous/async'],['Microsoft: concurrency conflicts','https://learn.microsoft.com/en-us/ef/core/saving/concurrency'],['Microsoft: dependency injection','https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection'],['Microsoft: async programming','https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/'],['Microsoft: EF querying','https://learn.microsoft.com/en-us/ef/core/performance/efficient-querying']],
 nodejs:[['Node.js: event-loop blocking','https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop']],
 react:[['React: when effects are unnecessary','https://react.dev/learn/you-might-not-need-an-effect']],
 nextjs:[['Next.js: server and client components','https://nextjs.org/docs/app/getting-started/server-and-client-components']],

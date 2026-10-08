@@ -1,4 +1,5 @@
 export const interviewTopics = [
+ {slug:'mern',name:'MERN full stack',summary:'Explain yourself, your architecture, MongoDB, Express and end-to-end features'},
  {slug:'dotnet',name:'.NET',summary:'C#, OOP, ASP.NET Core, EF Core and production scenarios'},
  {slug:'nodejs',name:'Node.js',summary:'Event loop, APIs, streams, failures and backend ownership'},
  {slug:'react',name:'React',summary:'State, effects, rendering, hooks and UI performance'},
