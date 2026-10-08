@@ -1,0 +1,13 @@
+/* Light callouts need their own text color, independent of the page theme. */
+details>p{color:#17251f;line-height:1.7;overflow-wrap:anywhere}
+.night-mode details>p{background:#f5f8f3;color:#17251f}
+.night-mode details>p :is(span,small,strong,em,a){color:inherit}
+.course-coach>p,.communication-coach>p{line-height:1.75;overflow-wrap:anywhere}
+.observatory :is(.orbit-stats article,.orbit-detail>div,.orbit-toolbar>div){min-width:0}
+.observatory .orbit-stats strong{overflow-wrap:anywhere;line-height:1.3;padding-right:20px}
+.observatory .orbit-stats :is(span,small){overflow-wrap:anywhere;line-height:1.6}
+.observatory .orbit-controls{max-width:100%}
+.observatory .orbit-controls label{flex-wrap:wrap}
+.observatory .orbit-detail{overflow-wrap:anywhere}
+.account-sync-strip{flex-wrap:wrap}.account-sync-strip>span{min-width:0;overflow-wrap:anywhere}
+@media(max-width:480px){.observatory .orbit-stats{grid-template-columns:1fr}.observatory .orbit-controls{align-items:stretch}.observatory .orbit-controls button{flex:1;justify-content:center}.observatory .orbit-replay label{min-width:100px}.observatory .orbit-replay>strong{width:100%;text-align:right}.course-coach .section-heading,.communication-coach .section-heading{flex-wrap:wrap}.observatory .orbit-landscape{padding:18px}}
