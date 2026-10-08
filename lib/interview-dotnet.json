@@ -1,0 +1,522 @@
+{
+  "questions": [
+    {
+      "id": "dotnet-01",
+      "group": "C# and runtime fundamentals",
+      "question": "What is .NET, and how is it different from C#?",
+      "answer": "C# is a programming language. .NET provides the runtime, libraries and tools that run applications written in C# and other supported languages. ASP.NET Core is the web framework.",
+      "example": "C# source is compiled into an assembly; runtime services include garbage collection and execution. JIT commonly compiles intermediate code to machine code; AOT is another deployment option.",
+      "mistake": "Calling C#, .NET and ASP.NET the same thing."
+    },
+    {
+      "id": "dotnet-02",
+      "group": "C# and runtime fundamentals",
+      "question": "Modern .NET versus .NET Framework?",
+      "answer": "Modern .NET is cross-platform and is the usual choice for new ASP.NET Core services. .NET Framework is the older Windows-focused platform used by many existing applications.",
+      "example": "Ask whether the role uses ASP.NET Core or classic ASP.NET MVC/Web Forms. Migration can involve incompatible dependencies and hosting changes.",
+      "mistake": "Assuming a Framework application can always migrate by changing its target version."
+    },
+    {
+      "id": "dotnet-03",
+      "group": "C# and runtime fundamentals",
+      "question": "What are CLR, managed code and GC?",
+      "answer": "The CLR executes managed code and provides services such as memory management, exception handling and type safety. GC reclaims managed objects that are no longer reachable.",
+      "example": "A static collection that keeps references alive can cause memory growth even with a garbage collector. External resources still require deliberate cleanup.",
+      "mistake": "Saying GC prevents every memory leak or immediately frees every unused object."
+    },
+    {
+      "id": "dotnet-04",
+      "group": "C# and runtime fundamentals",
+      "question": "Value types versus reference types?",
+      "answer": "Assigning a value type copies its value. Assigning a reference type copies a reference to the same object. Examples are int/struct and class respectively.",
+      "example": "Two variables referencing the same List see the same mutations. A struct can contain reference fields, so copying it need not deeply copy the object graph.",
+      "mistake": "Saying all value types are on the stack and all references are on the heap."
+    },
+    {
+      "id": "dotnet-05",
+      "group": "C# and runtime fundamentals",
+      "question": "What is boxing and unboxing?",
+      "answer": "Boxing wraps a value type value in an object representation. Unboxing extracts the value with the expected value type. It can create allocations and type-cast failures.",
+      "example": "object value = 42; int n = (int)value; works. Casting that boxed int directly to long fails; unbox to int first, then convert.",
+      "mistake": "Using non-generic collections unnecessarily when a typed collection is available."
+    },
+    {
+      "id": "dotnet-06",
+      "group": "C# and runtime fundamentals",
+      "question": "Why are strings immutable?",
+      "answer": "A string cannot be changed after creation. Operations that appear to modify it produce another string. Immutability makes sharing and reasoning about string values simpler.",
+      "example": "For repeated concatenation in a loop, StringBuilder can avoid many intermediate strings. For a few values, ordinary interpolation is clearer.",
+      "mistake": "Claiming StringBuilder is always faster for every string operation."
+    },
+    {
+      "id": "dotnet-07",
+      "group": "OOP and design principles",
+      "question": "Explain encapsulation, abstraction, inheritance and polymorphism.",
+      "answer": "Encapsulation protects state and valid transitions. Abstraction exposes useful behavior while hiding details. Inheritance derives from a base type. Polymorphism lets different implementations satisfy the same contract.",
+      "example": "A payment interface abstracts charging; a wallet class guards its balance; card and bank implementations behave differently through the same interface.",
+      "mistake": "Reciting definitions without showing how they affect an API or class."
+    },
+    {
+      "id": "dotnet-08",
+      "group": "OOP and design principles",
+      "question": "Interface versus abstract class?",
+      "answer": "An interface describes a contract and allows multiple interface implementations. An abstract class can share instance state, constructors and implementation; a class has one direct base class.",
+      "example": "Use INotificationSender for email/SMS alternatives. Use an abstract base when a genuine shared base behavior exists. Modern interfaces can also have default members.",
+      "mistake": "Saying interfaces can never contain implementations, or inheriting only to reuse a few lines."
+    },
+    {
+      "id": "dotnet-09",
+      "group": "OOP and design principles",
+      "question": "Overloading versus overriding?",
+      "answer": "Overloading uses the same method name with different parameter signatures. Overriding replaces a virtual or abstract base implementation using runtime polymorphism.",
+      "example": "Print(int) and Print(string) are overloads. Dog overriding Animal.Speak is an override. The new keyword hides a member rather than overriding it.",
+      "mistake": "Thinking changing only the return type creates an overload."
+    },
+    {
+      "id": "dotnet-10",
+      "group": "OOP and design principles",
+      "question": "Explain SOLID with practical examples.",
+      "answer": "SRP: one reason to change. OCP: extend behavior without repeatedly modifying stable code. LSP: substitutes preserve contracts. ISP: focused interfaces. DIP: high-level logic depends on abstractions.",
+      "example": "An order service uses IPaymentGateway; a new gateway implementation can be injected. Do not force read-only clients to implement write methods.",
+      "mistake": "Creating an interface for every class without a real boundary or testing need."
+    },
+    {
+      "id": "dotnet-11",
+      "group": "OOP and design principles",
+      "question": "Composition versus inheritance?",
+      "answer": "Composition builds behavior by collaborating with other objects. Inheritance models a substitutable is-a relationship. I prefer composition when capabilities vary independently.",
+      "example": "An order service has a pricing policy and notification sender. This avoids a growing tree of special-purpose order subclasses.",
+      "mistake": "Treating inheritance as the only way to reuse code."
+    },
+    {
+      "id": "dotnet-12",
+      "group": "OOP and design principles",
+      "question": "Dependency inversion versus dependency injection?",
+      "answer": "Dependency inversion is a design principle about depending on abstractions. Dependency injection is a technique for supplying dependencies from outside an object.",
+      "example": "A constructor accepts IClock instead of constructing a concrete clock. Production supplies a real clock; a test supplies a predictable one.",
+      "mistake": "Confusing the design principle with a particular DI container."
+    },
+    {
+      "id": "dotnet-13",
+      "group": "Collections, LINQ and language details",
+      "question": "Array, List, Dictionary and HashSet: when?",
+      "answer": "Array fits fixed-size indexed data. List supports dynamic indexed sequences. Dictionary maps unique keys to values. HashSet represents unique membership.",
+      "example": "Use Dictionary<int,int> for Two Sum value-to-index lookup; use HashSet<int> when only duplicate detection matters. Hash lookup is average O(1), not an absolute worst-case guarantee.",
+      "mistake": "Using a Dictionary when only membership is needed, or mutating keys in a way that changes their hash."
+    },
+    {
+      "id": "dotnet-14",
+      "group": "Collections, LINQ and language details",
+      "question": "IEnumerable versus IQueryable?",
+      "answer": "IEnumerable represents an enumerable sequence. IQueryable represents a query expression a provider can translate, for example into SQL. Which methods run where depends on the provider and query composition.",
+      "example": "Filter and project an EF query before ToListAsync. AsEnumerable switches subsequent LINQ operators to in-process enumeration; it does not by itself materialize every row.",
+      "mistake": "Assuming IQueryable always means SQL or that every C# expression translates."
+    },
+    {
+      "id": "dotnet-15",
+      "group": "Collections, LINQ and language details",
+      "question": "What is deferred execution in LINQ?",
+      "answer": "Many LINQ operators describe work that runs when the sequence is enumerated. Materializers such as ToList create a result at that moment.",
+      "example": "Enumerating a database query twice may execute two database calls. Changing the source before enumeration can change the result.",
+      "mistake": "Assuming creating a query variable already fetched its rows."
+    },
+    {
+      "id": "dotnet-16",
+      "group": "Collections, LINQ and language details",
+      "question": "FirstOrDefault, SingleOrDefault and Any?",
+      "answer": "FirstOrDefault takes the first match or default. SingleOrDefault requires at most one match and throws if more exist. Any asks only whether a match exists.",
+      "example": "Use Any for existence checks. Use SingleOrDefault only when uniqueness is a real contract, ideally enforced by a database constraint.",
+      "mistake": "Using Count() > 0 for existence without considering the query cost."
+    },
+    {
+      "id": "dotnet-17",
+      "group": "Collections, LINQ and language details",
+      "question": "What are delegates, lambdas and events?",
+      "answer": "A delegate is a type-safe reference to a compatible method. A lambda is an inline function expression. An event exposes controlled subscription to notifications.",
+      "example": "A filtering predicate can be a lambda. An event publisher raises a notification to subscribers; long-lived publishers may retain subscribers if they never unsubscribe.",
+      "mistake": "Treating every callback as a separate thread."
+    },
+    {
+      "id": "dotnet-18",
+      "group": "Collections, LINQ and language details",
+      "question": "var, dynamic, nullable types and records?",
+      "answer": "var infers a compile-time type. dynamic defers member binding to runtime. Nullable value types represent a value or null. Nullable reference annotations support compiler analysis. Records provide value-oriented equality semantics.",
+      "example": "var count = 3 is still an int. A record is useful for a DTO, but a record class remains a reference type and can contain mutable members.",
+      "mistake": "Saying var is dynamically typed or that records are automatically deeply immutable."
+    },
+    {
+      "id": "dotnet-19",
+      "group": "Async, errors and resource ownership",
+      "question": "What do async and await do?",
+      "answer": "An async method can suspend at an incomplete await and resume when the awaited operation completes. A Task represents completion, not necessarily a dedicated thread.",
+      "example": "Awaiting an HTTP call lets the server avoid occupying a thread just waiting for I/O. Marking a CPU loop async does not make its calculations faster.",
+      "mistake": "Saying async always starts a new thread."
+    },
+    {
+      "id": "dotnet-20",
+      "group": "Async, errors and resource ownership",
+      "question": "Why avoid .Result, .Wait() and async void?",
+      "answer": "Blocking on asynchronous work can waste threads and may deadlock in synchronization-context environments. Task-returning methods allow callers to await completion and observe exceptions; async void is mainly for event handlers.",
+      "example": "An ASP.NET Core request should await its data call rather than block on Result. Thread-pool starvation can still occur even without the classic UI deadlock.",
+      "mistake": "Fire-and-forget work that silently fails after a request finishes."
+    },
+    {
+      "id": "dotnet-21",
+      "group": "Async, errors and resource ownership",
+      "question": "Task.WhenAll and CancellationToken?",
+      "answer": "WhenAll combines completion of independent tasks. CancellationToken communicates a cooperative cancellation request that operations must observe or pass onward.",
+      "example": "Parallelize independent remote calls within limits. Pass cancellation to HTTP and EF methods. Never start parallel EF operations on one DbContext.",
+      "mistake": "Assuming cancellation forcibly terminates all code or that unbounded concurrency is safe."
+    },
+    {
+      "id": "dotnet-22",
+      "group": "Async, errors and resource ownership",
+      "question": "Task.Run versus naturally asynchronous I/O?",
+      "answer": "Task.Run schedules work on the thread pool, which can help keep a desktop UI responsive during CPU work. Naturally asynchronous I/O does not need Task.Run around it.",
+      "example": "For expensive server jobs, use a bounded background worker or queue with appropriate capacity rather than spawning unlimited request-side tasks.",
+      "mistake": "Wrapping every database or HTTP call in Task.Run."
+    },
+    {
+      "id": "dotnet-23",
+      "group": "Async, errors and resource ownership",
+      "question": "How should you handle exceptions?",
+      "answer": "Catch exceptions where you can recover or add useful context. Use centralized API error handling for unexpected failures. Log diagnostic details internally and return a safe, consistent client error.",
+      "example": "Use throw; to rethrow while preserving stack information. Handle expected validation failures explicitly instead of using exceptions as normal control flow.",
+      "mistake": "Returning stack traces, connection strings or secrets to clients."
+    },
+    {
+      "id": "dotnet-24",
+      "group": "Async, errors and resource ownership",
+      "question": "IDisposable, using and garbage collection?",
+      "answer": "IDisposable provides deterministic resource cleanup. using ensures Dispose is called when leaving scope, including on exceptions. GC handles managed memory and is not a substitute for timely resource release.",
+      "example": "Use using for streams you own; await using for IAsyncDisposable resources. Let the DI container dispose services it creates within their lifetime.",
+      "mistake": "Calling Dispose on injected shared dependencies you do not own."
+    },
+    {
+      "id": "dotnet-25",
+      "group": "ASP.NET Core fundamentals",
+      "question": "Walk through an ASP.NET Core request.",
+      "answer": "The server receives the request, then middleware processes it in order. Routing selects an endpoint; authentication and authorization run as configured; the endpoint handles input and returns a response.",
+      "example": "Response processing unwinds through middleware that awaited the next delegate. A middleware can short-circuit the pipeline. See the flow page.",
+      "mistake": "Assuming every request always reaches a controller."
+    },
+    {
+      "id": "dotnet-26",
+      "group": "ASP.NET Core fundamentals",
+      "question": "Why does middleware order matter?",
+      "answer": "Earlier middleware wraps later middleware. Exception handling must be placed where it can catch downstream failures. Authentication should precede authorization.",
+      "example": "A typical protected API explicitly orders routing, CORS when needed, authentication and authorization before executing its mapped endpoints. Static/public endpoints need deliberate policy decisions.",
+      "mistake": "Copying one pipeline order without considering endpoint and hosting requirements."
+    },
+    {
+      "id": "dotnet-27",
+      "group": "ASP.NET Core fundamentals",
+      "question": "Transient, scoped and singleton lifetimes?",
+      "answer": "Transient creates a new instance per resolution. Scoped reuses an instance within a scope, commonly an HTTP request. Singleton reuses one instance for the container lifetime.",
+      "example": "Choose a scoped business service when it uses the request DbContext. A singleton must handle concurrent access safely.",
+      "mistake": "Thinking scoped means one instance for the entire application."
+    },
+    {
+      "id": "dotnet-28",
+      "group": "ASP.NET Core fundamentals",
+      "question": "Why cannot a singleton capture a scoped DbContext?",
+      "answer": "Its lifetime outlives the request scope, so it can retain the wrong context and share unsafe state across requests. Lifetime validation may reject this configuration.",
+      "example": "A background worker creates and disposes an explicit scope for each unit of work. It does not keep the scoped object after disposing that scope.",
+      "mistake": "Changing DbContext to singleton to silence a lifetime error."
+    },
+    {
+      "id": "dotnet-29",
+      "group": "ASP.NET Core fundamentals",
+      "question": "Controllers versus Minimal APIs?",
+      "answer": "Both define HTTP endpoints. Controllers offer an attribute-based organization and MVC features. Minimal APIs provide concise endpoint mapping and can also use services, filters and route groups.",
+      "example": "Choose based on application size, conventions and team needs. Business logic belongs in testable services rather than large endpoint bodies.",
+      "mistake": "Calling one approach inherently secure or production-ready and the other not."
+    },
+    {
+      "id": "dotnet-30",
+      "group": "ASP.NET Core fundamentals",
+      "question": "Model binding, validation and DTOs?",
+      "answer": "Binding converts request values into parameters or models. Validation checks whether input meets rules. DTOs define the external contract separately from persistence entities.",
+      "example": "An update DTO exposes allowed fields rather than accepting an entire User entity with an IsAdmin property. Controller APIs using ApiController can produce automatic validation responses.",
+      "mistake": "Assuming all endpoint styles and framework versions have identical automatic validation behavior."
+    },
+    {
+      "id": "dotnet-31",
+      "group": "API security and HTTP",
+      "question": "Authentication versus authorization?",
+      "answer": "Authentication determines who the caller is. Authorization determines what that caller may do. An authenticated user is not automatically allowed to access every resource.",
+      "example": "A valid token identifies a user; an ownership check still ensures the requested order belongs to that user. Policies can express permission requirements.",
+      "mistake": "Checking only whether the user is logged in."
+    },
+    {
+      "id": "dotnet-32",
+      "group": "API security and HTTP",
+      "question": "How does JWT validation work?",
+      "answer": "A bearer token is sent with the request. The API validates signature, issuer, audience and lifetime according to configured trust. Claims are used for authorization.",
+      "example": "Signed JWT payloads are usually readable, not encrypted. Use HTTPS and avoid storing secrets in claims. Revocation/refresh design needs separate consideration.",
+      "mistake": "Merely decoding a JWT and trusting its payload."
+    },
+    {
+      "id": "dotnet-33",
+      "group": "API security and HTTP",
+      "question": "Which HTTP status codes should an API use?",
+      "answer": "200 for successful content, 201 for creation, 204 for successful no-content, 400 for invalid requests, 401 for missing/invalid authentication, 403 for denied access, 404 for not found, 409 for conflicts and 500 for unexpected failures.",
+      "example": "A created resource can return a Location header. A validation error should identify safe, actionable field errors.",
+      "mistake": "Returning 200 for every failure or exposing internal exception messages."
+    },
+    {
+      "id": "dotnet-34",
+      "group": "API security and HTTP",
+      "question": "CORS versus CSRF?",
+      "answer": "CORS controls browser cross-origin access to responses; it is not authentication. CSRF exploits automatically attached credentials, such as cookies, to trigger unwanted actions.",
+      "example": "Cookie-authenticated applications need an appropriate anti-CSRF strategy. Allowed origins should be deliberate; bearer token designs have different exposure, including XSS risks.",
+      "mistake": "Treating CORS as a firewall that prevents all non-browser callers."
+    },
+    {
+      "id": "dotnet-35",
+      "group": "API security and HTTP",
+      "question": "How do you prevent SQL injection and overposting?",
+      "answer": "Use parameterized database queries and validate allowed input. Use explicit DTOs and server-side authorization for changes. Never trust client-supplied role or ownership fields.",
+      "example": "Interpolated SQL APIs may parameterize values, but raw string concatenation is dangerous. Dynamic identifiers require allowlisting because parameters represent values, not SQL structure.",
+      "mistake": "Assuming an ORM makes every raw SQL string safe."
+    },
+    {
+      "id": "dotnet-36",
+      "group": "API security and HTTP",
+      "question": "PUT, PATCH, POST and idempotency?",
+      "answer": "PUT generally replaces a resource representation; PATCH applies partial changes; POST commonly creates or invokes an action. Idempotency means repeating a request has the same intended effect as doing it once.",
+      "example": "A payment API can persist an idempotency key with a request fingerprint and outcome under a uniqueness constraint. PATCH idempotency depends on its operation.",
+      "mistake": "Retrying a charge blindly or confusing idempotency with identical response codes."
+    },
+    {
+      "id": "dotnet-37",
+      "group": "EF Core and database access",
+      "question": "What does DbContext do?",
+      "answer": "DbContext coordinates queries, tracked entity changes and persistence in EF Core. It represents a short-lived unit of work and is not safe for concurrent use.",
+      "example": "Load an order, change a property, then SaveChangesAsync. Keep request contexts scoped; use a separate scope/context for a separate background operation.",
+      "mistake": "Sharing one context across threads."
+    },
+    {
+      "id": "dotnet-38",
+      "group": "EF Core and database access",
+      "question": "Tracking versus AsNoTracking?",
+      "answer": "Tracking queries retain entity change information for later updates. AsNoTracking avoids that tracking overhead for read-only entity results.",
+      "example": "For a read-only listing, project only needed columns into DTOs. Tracking is useful for a read-modify-save operation, so disable it deliberately rather than everywhere.",
+      "mistake": "Believing AsNoTracking makes an inefficient query automatically fast."
+    },
+    {
+      "id": "dotnet-39",
+      "group": "EF Core and database access",
+      "question": "What is the N+1 query problem?",
+      "answer": "One query fetches a list, then an additional query runs for each item to load related data. Latency grows with the list size.",
+      "example": "Inspect SQL and use appropriate projection or eager loading. Large multi-collection joins can also over-fetch, so assess split queries and pagination when appropriate.",
+      "mistake": "Adding Include for every navigation without measuring result size."
+    },
+    {
+      "id": "dotnet-40",
+      "group": "EF Core and database access",
+      "question": "How do you handle concurrent updates?",
+      "answer": "Optimistic concurrency compares an original concurrency token during an update. If another writer changed the row, the update can fail with DbUpdateConcurrencyException.",
+      "example": "Use a SQL Server rowversion or another configured token. Reload/merge, reject with a conflict, or retry only when business semantics allow it.",
+      "mistake": "Silently overwriting another user or assuming every database has SQL Server rowversion."
+    },
+    {
+      "id": "dotnet-41",
+      "group": "EF Core and database access",
+      "question": "What are migrations?",
+      "answer": "Migrations describe incremental schema changes derived from model changes. Review the generated operations and apply them through a controlled deployment process.",
+      "example": "Adding a required column to a populated table may need a staged backfill. Plan backup, compatibility and rollback/forward-fix before production changes.",
+      "mistake": "Automatically applying destructive migrations from every application instance."
+    },
+    {
+      "id": "dotnet-42",
+      "group": "EF Core and database access",
+      "question": "How do you improve a slow database endpoint?",
+      "answer": "Measure timings and inspect generated SQL and the database execution plan. Reduce rows and columns, use appropriate indexes, avoid N+1 calls and page large results.",
+      "example": "Filter before materialization; use a stable unique ordering for pagination. Caching may help repeated reads but introduces invalidation decisions.",
+      "mistake": "Guessing that more application servers will fix a poorly indexed query."
+    },
+    {
+      "id": "dotnet-43",
+      "group": "SQL and transactions",
+      "question": "INNER JOIN versus LEFT JOIN?",
+      "answer": "INNER JOIN returns matching rows. LEFT JOIN also retains unmatched left-side rows with null values on the right. One-to-many matches can produce multiple result rows.",
+      "example": "List customers with no orders using a left join and an IS NULL check on the non-nullable order key. Moving right-side filters into WHERE can remove unmatched rows.",
+      "mistake": "Assuming a join always returns one result per left row."
+    },
+    {
+      "id": "dotnet-44",
+      "group": "SQL and transactions",
+      "question": "WHERE, HAVING and GROUP BY?",
+      "answer": "WHERE filters rows before grouping. GROUP BY forms groups. HAVING filters groups based on aggregate results or grouping expressions.",
+      "example": "Find customers with at least three paid orders: filter status in WHERE, group by customer, then HAVING COUNT(*) >= 3.",
+      "mistake": "Using HAVING as a replacement for every ordinary row filter."
+    },
+    {
+      "id": "dotnet-45",
+      "group": "SQL and transactions",
+      "question": "What is an index, and what does it cost?",
+      "answer": "An index is an additional access structure that can speed suitable lookups, joins and ordering. It uses storage and adds maintenance cost to writes.",
+      "example": "A composite index can help a query filtering by customer and ordering by creation time; column order and database behavior matter. Check the execution plan.",
+      "mistake": "Indexing every column or promising every indexed query is fast."
+    },
+    {
+      "id": "dotnet-46",
+      "group": "SQL and transactions",
+      "question": "Explain ACID.",
+      "answer": "Atomicity: commit all work or none. Consistency: preserve defined invariants. Isolation: control interference between transactions. Durability: committed data survives according to the database guarantees.",
+      "example": "A bank transfer updates both balances in one transaction and enforces sufficient funds. Isolation levels affect which concurrent anomalies are possible.",
+      "mistake": "Confusing transaction consistency with distributed CAP consistency."
+    },
+    {
+      "id": "dotnet-47",
+      "group": "SQL and transactions",
+      "question": "Normalization versus denormalization?",
+      "answer": "Normalization organizes facts to reduce duplication and update anomalies. Denormalization deliberately duplicates or precomputes data for a measured read requirement.",
+      "example": "Separate customers from orders; add a reporting summary only if its performance benefit justifies keeping that summary consistent.",
+      "mistake": "Assuming joins are inherently bad or duplicate data is always wrong."
+    },
+    {
+      "id": "dotnet-48",
+      "group": "SQL and transactions",
+      "question": "Deadlock versus optimistic concurrency conflict?",
+      "answer": "A deadlock is a cycle of waiting for resources; the database usually chooses a victim. An optimistic conflict means a version check detected another update.",
+      "example": "Reduce deadlocks with short transactions and consistent access order. A bounded retry may be appropriate, but a concurrency conflict can require user resolution.",
+      "mistake": "Retrying every database exception forever."
+    },
+    {
+      "id": "dotnet-49",
+      "group": "Production and system scenarios",
+      "question": "An endpoint is slow in production. What do you do?",
+      "answer": "Define the symptom and compare latency percentiles, traffic and errors. Trace a request across API, database and dependencies. Identify whether time is CPU, I/O, locking or queueing.",
+      "example": "Check recent deployments and query plans before changing code. Make one measured fix, then verify latency and correctness under representative load.",
+      "mistake": "Starting with random caching or rewriting the entire service."
+    },
+    {
+      "id": "dotnet-50",
+      "group": "Production and system scenarios",
+      "question": "How should you use HttpClient?",
+      "answer": "Reuse connection management through a suitable long-lived client/handler or IHttpClientFactory. Configure timeouts and pass cancellation. Treat remote failures explicitly.",
+      "example": "A typed client can centralize an external API integration. Retry transient failures with limits; unsafe operations need idempotency before retries.",
+      "mistake": "Creating and disposing a new handler for every request or retrying payments blindly."
+    },
+    {
+      "id": "dotnet-51",
+      "group": "Production and system scenarios",
+      "question": "When would you use Redis?",
+      "answer": "Redis can provide shared low-latency caching or other data structures across application instances. A cache-aside flow reads cache, falls back to the database, then populates cache.",
+      "example": "Set a TTL and define invalidation after writes. Plan for cache outage and hot-key/stampede behavior. Keep the authoritative data source explicit.",
+      "mistake": "Treating cached data as permanently correct or adding a cache before measuring."
+    },
+    {
+      "id": "dotnet-52",
+      "group": "Production and system scenarios",
+      "question": "What is a background queue useful for?",
+      "answer": "It moves slow or bursty work out of the interactive request and allows bounded processing and retries. Return a job identifier when work is asynchronous.",
+      "example": "Generate a report in a worker, persist job status and let the client poll. Make consumers idempotent because messages may be delivered more than once.",
+      "mistake": "Claiming a queue alone guarantees exactly-once business effects."
+    },
+    {
+      "id": "dotnet-53",
+      "group": "Production and system scenarios",
+      "question": "Explain a layered API architecture.",
+      "answer": "An endpoint handles HTTP concerns, an application service coordinates a use case, domain logic enforces rules, and infrastructure handles storage or external systems.",
+      "example": "Place business validation where it can be reused and tested. Small services can stay simple; extra layers should justify their maintenance cost.",
+      "mistake": "Adding repositories and interfaces mechanically when they hide useful EF capabilities without benefit."
+    },
+    {
+      "id": "dotnet-54",
+      "group": "Production and system scenarios",
+      "question": "Unit tests versus integration tests?",
+      "answer": "Unit tests isolate small behavior with controlled dependencies. Integration tests verify collaborating parts such as routing, authentication, serialization and database behavior.",
+      "example": "Test a pricing rule in isolation; test an API update against a representative database provider. EF in-memory behavior is not a substitute for relational semantics.",
+      "mistake": "Mocking everything and never testing real persistence or authorization."
+    },
+    {
+      "id": "dotnet-55",
+      "group": "Deployment, teamwork and interview communication",
+      "question": "How would you deploy a .NET API with Docker and CI/CD?",
+      "answer": "Build and test in CI, create a versioned image, scan/configure it and deploy with health checks and rollback capability. A multi-stage image separates build tools from runtime.",
+      "example": "Provide secrets at runtime and handle schema changes separately and safely. Confirm readiness before shifting traffic. Docker packages an app; it is not a virtual machine per container.",
+      "mistake": "Baking secrets into image layers or assuming a passing build proves production health."
+    },
+    {
+      "id": "dotnet-56",
+      "group": "Deployment, teamwork and interview communication",
+      "question": "Logs, metrics and traces: why all three?",
+      "answer": "Logs describe events, metrics show aggregate trends, and traces connect work across a request path. Together they help identify impact and root cause.",
+      "example": "Use correlation identifiers and structured fields for an order request. Track latency, error rates and saturation; redact personal data and credentials.",
+      "mistake": "Logging entire request bodies or access tokens by default."
+    },
+    {
+      "id": "dotnet-57",
+      "group": "Deployment, teamwork and interview communication",
+      "question": "HLD versus LLD for an order service?",
+      "answer": "HLD covers components, data flow, scaling and reliability. LLD covers interfaces, classes, schemas and detailed interactions within those components.",
+      "example": "Start with requirements; draw client, API, database and queue. Then detail PlaceOrder, stock checks, transaction boundaries and idempotency.",
+      "mistake": "Drawing microservices before asking about traffic, consistency and team constraints."
+    },
+    {
+      "id": "dotnet-58",
+      "group": "Deployment, teamwork and interview communication",
+      "question": "Tell me about yourself.",
+      "answer": "I am a full-stack developer with around three years of experience. I work on [your real stack] and have contributed to [real feature]. My strengths are [evidence]. I am looking to deepen backend ownership in this role.",
+      "example": "Keep it to 60-90 seconds. Connect one feature, one technical decision and one outcome to the job. If .NET is new, say so and explain transferable backend experience.",
+      "mistake": "Inventing production .NET experience, company names or impact numbers."
+    },
+    {
+      "id": "dotnet-59",
+      "group": "Deployment, teamwork and interview communication",
+      "question": "Describe a production issue or disagreement.",
+      "answer": "Use STAR: situation, task, action and result. Explain what you personally investigated or changed, how you collaborated and what you learned.",
+      "example": "For a disagreement: state the shared goal, evidence, trade-off and small experiment. Use a real example; mention the prevention step after an incident.",
+      "mistake": "Blaming teammates or claiming team work as entirely your own."
+    },
+    {
+      "id": "dotnet-60",
+      "group": "Deployment, teamwork and interview communication",
+      "question": "What if you do not know an answer?",
+      "answer": "State what you know, clarify assumptions, and reason through the problem. Be honest about the gap and describe how you would verify the detail.",
+      "example": "Say: I have not used that feature in production. My understanding is ... I would verify it with a small example and the official documentation.",
+      "mistake": "Guessing confidently. Ask useful closing questions about their .NET version, database, testing and ownership expectations."
+    }
+  ],
+  "examples": [
+    {
+      "title": "01 / Dictionary: Two Sum",
+      "code": "static int[] TwoSum(int[] nums, int target)\n{\n    var seen = new Dictionary<int, int>();\n    for (int i = 0; i < nums.Length; i++)\n    {\n        long need = (long)target - nums[i];\n        if (need >= int.MinValue && need <= int.MaxValue &&\n            seen.TryGetValue((int)need, out int j))\n            return new[] { j, i };\n        seen[nums[i]] = i;\n    }\n    return Array.Empty<int>();\n}",
+      "explanation": "Assume non-null input; return indices for any valid pair, or an empty array if absent. [2,7,11,15], target 9 gives [0,1]. [3,3], target 6 gives [0,1]. Check before inserting so the same index is not reused. Average O(n) time and O(n) space. The long subtraction avoids int overflow.",
+      "followUp": "Why a Dictionary rather than HashSet? We need the earlier index, not only whether the complement exists."
+    },
+    {
+      "title": "02 / LINQ: paid orders by customer",
+      "code": "var totals = orders\n    .Where(o => o.Status == \"Paid\")\n    .GroupBy(o => o.CustomerId)\n    .Select(g => new {\n        CustomerId = g.Key,\n        Total = g.Sum(o => o.Amount)\n    })\n    .OrderByDescending(x => x.Total)\n    .ToList();",
+      "explanation": "Assume orders is an in-memory collection with CustomerId, Status and decimal Amount. For paid amounts 10 and 20 for customer A, total is 30; unpaid orders are excluded. GroupBy creates groups; Select changes the shape. An EF query requires checking provider translation.",
+      "followUp": "What changes if orders is IQueryable? The expression may be translated to database operations before materialization."
+    },
+    {
+      "title": "03 / Async HTTP with cancellation",
+      "code": "public async Task<string> LoadAsync(\n    HttpClient client, CancellationToken ct)\n{\n    using var response = await client.GetAsync(\n        \"https://example.com/api/catalog\", ct);\n    response.EnsureSuccessStatusCode();\n    return await response.Content.ReadAsStringAsync(ct);\n}",
+      "explanation": "The endpoint URL is illustrative. The caller supplies a configured client and owns its lifetime; this method owns the response. Non-success statuses throw. Cancellation propagates. In a real API, map dependency failures deliberately and configure timeouts.",
+      "followUp": "Why not Task.Run? The HTTP library already provides asynchronous I/O. Why not dispose client here? This method does not own it."
+    },
+    {
+      "title": "04 / EF Core: read-only page",
+      "code": "var page = await db.Products\n    .AsNoTracking()\n    .Where(p => p.IsActive)\n    .OrderBy(p => p.Id)\n    .Skip((pageNumber - 1) * pageSize)\n    .Take(pageSize)\n    .Select(p => new { p.Id, p.Name, p.Price })\n    .ToListAsync(ct);",
+      "explanation": "Assume an EF DbContext with Products and validated bounded integers pageNumber >= 1 and 1 <= pageSize <= 100. Ordering is stable because Id is unique. Filtering and projection happen before materialization. For deep pages consider keyset pagination, such as Id > lastId.",
+      "followUp": "Do you need AsNoTracking for this scalar-only projection? No entities are materialized here, so there are no entity instances to track; it mainly communicates read-only intent."
+    },
+    {
+      "title": "05 / SQL: customers with three paid orders",
+      "code": "SELECT CustomerId, COUNT(*) AS PaidOrders,\n       SUM(Amount) AS TotalPaid\nFROM Orders\nWHERE Status = 'Paid'\nGROUP BY CustomerId\nHAVING COUNT(*) >= 3\nORDER BY TotalPaid DESC, CustomerId;",
+      "explanation": "Assume one row per order and non-null Amount. WHERE first keeps paid orders. GROUP BY builds one group per customer. HAVING retains groups with at least three orders. The second ordering key makes ties deterministic.",
+      "followUp": "If you need customers with zero orders, why is this query insufficient? Start from Customers and join Orders with suitable counting and filtering."
+    },
+    {
+      "title": "06 / Polymorphism and injection",
+      "code": "public interface IDiscount\n{\n    decimal Apply(decimal amount);\n}\npublic sealed class TenPercent : IDiscount\n{\n    public decimal Apply(decimal amount) => amount * 0.90m;\n}\npublic sealed class Checkout\n{\n    private readonly IDiscount discount;\n    public Checkout(IDiscount discount) => this.discount = discount;\n    public decimal Total(decimal amount) => discount.Apply(amount);\n}\n// Registration in Program.cs:\n// builder.Services.AddScoped<IDiscount, TenPercent>();\n// builder.Services.AddScoped<Checkout>();",
+      "explanation": "Assume non-negative amounts; real pricing also defines currency rounding and validation. Checkout depends on the contract rather than a concrete policy. TenPercent.Apply(100m) returns 90m. A different implementation changes the policy without changing Checkout.",
+      "followUp": "Which SOLID principles does this illustrate? Dependency inversion and open/closed design. Explain why you would avoid unnecessary abstraction for trivial, unchanging logic."
+    }
+  ]
+}

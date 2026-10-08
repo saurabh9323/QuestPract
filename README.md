@@ -147,3 +147,7 @@ allowlisted official-documentation retrieval. It requires a server-side
 `GEMINI_API_KEY`, the new SQL migration and a separate Edge Function deployment.
 The static Next.js deployment does not deploy that backend automatically.
 See [the setup and privacy guide](public/auto-coach-setup.md).
+
+## Interview materials
+
+Learn > Interview materials opens `/interview-materials/`. Eight static topic routes cover `dotnet`, `nodejs`, `react`, `nextjs`, `sql`, `aws`, `system-design` and `dsa`. The .NET guide includes 60 Q&A and six worked examples plus its downloadable PDF; each other topic begins with ten Q&A and one worked example. Search and pagination live in the URL. Per-question notes and self-rated revision markers use the existing authenticated Studio account persistence and do not mark course tasks complete. The common-topic selection is editorial, not a measured interview-frequency ranking.
