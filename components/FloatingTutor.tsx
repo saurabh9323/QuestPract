@@ -33,6 +33,7 @@ export default function FloatingTutor({title,context,sync}:{title:string;context
  const turns=Object.entries(p.studio||{}).filter(([,r])=>r.fields.chatParent===thread).sort((a,b)=>a[1].fields.chatAt.localeCompare(b[1].fields.chatAt));
  const pending=turns.some(([,r])=>r.fields.cloudStatus==='pending'),draft=get(thread).fields.draft||'';
  const close=()=>{setOpen(false);requestAnimationFrame(()=>launcher.current?.focus());};
+ useEffect(()=>{const help=(event:Event)=>{const value=(event as CustomEvent).detail;if(!value||!['id','title','context','prompt'].every(k=>typeof value[k]==='string'))return;const id='tutor-'+coachKey({source:`question-help:${value.id}`,attemptId:'thread'}).slice(10);patch(id,{title:value.title.slice(0,300),context:value.context.slice(0,1600),draft:value.prompt.slice(0,4000)});setSelected(id);setGym(false);setHistoryOpen(false);setOpen(true);};window.addEventListener('quest90:question-help',help);return()=>window.removeEventListener('quest90:question-help',help);},[patch]);
  useEffect(()=>{if(open)input.current?.focus();},[open,thread]);
  useEffect(()=>{if(!open)return;const escape=(e:KeyboardEvent)=>{if(e.key==='Escape'){setOpen(false);requestAnimationFrame(()=>launcher.current?.focus());}};window.addEventListener('keydown',escape);return()=>window.removeEventListener('keydown',escape)},[open]);
  function send(){

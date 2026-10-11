@@ -1,5 +1,11 @@
 # Interview and communication mode
 
+Upgrades: three interviewer styles; project deep dive with explicit learner-supplied facts; rescue scenarios; concept/sentence/example help that preserves round and draft; per-question explanation, hint and visual actions; AI-generated supporting cartoons; saved first/latest answer comparison by round; and an explicit repeat-opening-question checkpoint that keeps the old session. Repeat next week manually—this does not create a scheduled reminder or an automatic weekly evaluation. Sentence-building mode supplies personalised sentence practice.
+
+Current question text is reserved in the bounded request context so help exchanges do not immediately displace it. Round metadata is added to new turns; legacy transcripts stay intact. Model-generated comparisons are guidance rather than deterministic grammar annotations or hiring scores.
+
+Question-bank entries also offer authored hints and prepared AI explanation/visual prompts through the floating tutor. Visuals are generated with the existing cartoon renderer and a text diagram request; no external diagrams or code are executed. Generation remains subject to the existing Gemini quota and may need review for accuracy.
+
 Open Ask your tutor → Interview & communication. Choose a practice mode, topic/role, and English or Hinglish coaching. Start explicitly sends a Gemini request for one question.
 
 The session progresses through question, feedback, optional retries, and next question. After five rounds the next action requests a review; learners may end earlier. Typed answers and pasted speaking transcripts are supported. There is no microphone recording or pronunciation assessment.
