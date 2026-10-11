@@ -1,4 +1,5 @@
 /* Light callouts need their own text color, independent of the page theme. */
+.dashboard-task-page{display:flex;flex-direction:column;min-width:0}.dashboard-page-results{flex:1}.dashboard-date-group{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px;background:var(--surface-raised)}.dashboard-date-group h4{font-size:13px;margin:0;color:var(--ink)}.dashboard-task-page .list-row{width:100%;min-width:0;gap:12px}.dashboard-task-page .list-row span{overflow-wrap:anywhere;min-width:0}.dashboard-task-page .list-row small{flex-shrink:0}.dashboard-page-count{color:var(--muted);font-size:12px;line-height:1.6}.dashboard-task-page .pagination{margin:8px 0;gap:5px}.dashboard-task-page .pagination button{padding:8px;font-size:12px}.dashboard-task-page .pagination small{width:100%;text-align:center}.dashboard-board>.section-heading p{font-size:13px;line-height:1.6;color:var(--muted)}
 details>p{color:#17251f;line-height:1.7;overflow-wrap:anywhere}
 .night-mode details>p{background:#f5f8f3;color:#17251f}
 .night-mode details>p :is(span,small,strong,em,a){color:inherit}
