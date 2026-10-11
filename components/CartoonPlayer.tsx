@@ -2,6 +2,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {drawCartoon,MOVIE_WIDTH,MOVIE_HEIGHT} from '@/lib/cartoon-renderer';
 import type {CartoonLesson} from '@/lib/cartoon-lessons';
+import LessonFlow from './LessonFlow';
 import {useStudio,Field,Attempts,saveFile} from './studio/StudioContext';
 
 export default function CartoonPlayer({lesson}:{lesson:CartoonLesson}){
@@ -50,6 +51,7 @@ export default function CartoonPlayer({lesson}:{lesson:CartoonLesson}){
  }
  const choice=record.fields.choice??'',checked=record.fields.checked==='yes',correct=Number(choice)===lesson.quiz.answer;
  return <section className="cartoon-player" aria-label={`${lesson.title} animated lesson`}>
+  <details><summary>Flowchart & data flow · explore this lesson</summary><LessonFlow key={lesson.id} lesson={lesson}/></details>
   <div className="cartoon-screen"><canvas ref={canvas} width={MOVIE_WIDTH} height={MOVIE_HEIGHT} role="img" aria-label={`${scene.title}. ${scene.say}`}/></div>
   <div className="cartoon-controls">
    <button className="secondary" disabled={step===0} onClick={()=>jump(step-1)}>← Previous</button>

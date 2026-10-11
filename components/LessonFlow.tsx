@@ -1,0 +1,17 @@
+'use client';
+import {useState} from 'react';
+import type {CartoonLesson} from '@/lib/cartoon-lessons';
+
+export default function LessonFlow({lesson}:{lesson:CartoonLesson}){
+ const [view,setView]=useState<'flow'|'data'>('flow'),[step,setStep]=useState(0);
+ const scene=lesson.scenes[step],previous=lesson.scenes[step-1];
+ if(!scene)return null;
+ function more(){window.dispatchEvent(new CustomEvent('quest90:question-help',{detail:{id:lesson.id,title:lesson.title,context:`${lesson.why}\n${lesson.scenes.map(s=>`${s.title}: ${s.technical}`).join('\n')}`.slice(0,1600),prompt:view==='flow'?'Create a different concrete example of this topic. Include a labeled flowchart with the actual operations, decisions, yes/no branches and stopping conditions. Explain each arrow. Include input and expected output. Make the supporting story scenes follow these operations; do not invent branches that do not apply.':'Show a concrete data-flow example for this topic. Name the input, each transformation, storage or state, and output. Label arrows with the exact data passed. Include before/after values and a failure case. Put the data snapshots in the supporting story scene items and explain the changes in technical captions. State assumptions; do not claim to execute code.'}}));}
+ return <section className="lesson-flow" aria-label={`${lesson.title} flow diagrams`}>
+  <h3>Follow the flow</h3><div className="dimension-controls"><button aria-pressed={view==='flow'} onClick={()=>setView('flow')}>Flowchart</button><button aria-pressed={view==='data'} onClick={()=>setView('data')}>Data & state flow</button></div>
+  {view==='flow'?<><p>Follow the supplied explanation in order. Select a step to inspect it.</p><ol className="lesson-flow-path">{lesson.scenes.map((s,i)=><li key={i}><button aria-current={step===i?'step':undefined} onClick={()=>setStep(i)}><small>Step {i+1}</small><strong>{s.title}</strong></button>{i<lesson.scenes.length-1&&<span className="lesson-flow-arrow" aria-label="Next explanation step">↓</span>}</li>)}</ol></>:<><p>Compare the items shown before and after this step. These are lesson snapshots, not runtime measurements.</p><div className="lesson-data-path"><div><h4>{previous?'Previous scene':'Starting scene'}</h4><ul>{(previous||scene).items.map((x,i)=><li key={i}>{x}</li>)}</ul></div><span className="lesson-flow-arrow" aria-label="Explained transition">↓</span><div><h4>{scene.title}</h4><p>{scene.technical}</p></div><span className="lesson-flow-arrow" aria-label="Current snapshot">↓</span><div><h4>Current scene items</h4><ul>{scene.items.map((x,i)=><li key={i}>{x}{scene.active.includes(i)?' · current focus':''}</li>)}</ul></div></div></>}
+  <div className="dimension-controls"><button disabled={step===0} onClick={()=>setStep(step-1)}>Previous step</button><span>{step+1} / {lesson.scenes.length}</span><button disabled={step===lesson.scenes.length-1} onClick={()=>setStep(step+1)}>Next step</button></div>
+  <div aria-live="polite"><h4>{scene.title}</h4><p>{scene.say}</p><pre><code>{scene.code}</code></pre></div>
+  <p className="lesson-flow-note">This diagram follows the lesson’s scenes. It does not infer missing branches, system connections, or data values. {lesson.limit}</p><button onClick={more}>Generate another {view==='flow'?'flowchart':'data-flow example'}</button><small className="lesson-flow-note">Opens a prepared request in your tutor. Review and send to use Gemini.</small>
+ </section>;
+}
