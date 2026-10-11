@@ -1,5 +1,9 @@
 # Always-available Gemini tutor
 
+Chat history now indexes saved topic chats and interview sessions across pages. Search by topic, reopen a conversation, rename it, or start a separate chat. Existing conversation IDs are preserved. The original request pack supplies context for older chats without metadata. New chats store their starting topic and context. An explicitly reopened chat stays selected while navigating until Current page or another conversation is chosen.
+
+Optional learner-written pinned notes (600 characters) are included on each topic-chat request. They share the backend's 2,000-character prior-context budget with up to three recent successful exchanges. The entire transcript remains saved but is not transmitted wholesale. Interview sessions retain their own context handling.
+
 The signed-in workspace now mounts a floating tutor on every page. The launcher opens a compact or expanded panel, with Escape/close controls and mobile sizing. The panel remains open across navigation and shows the new topic's conversation.
 
 Requests use the existing `auto-coach` worker and server-side Gemini key. The `topic-chat` source is already supported by the Edge Function's conversational prompt. No secret is stored in the client and no new backend deployment is required for this interface.
