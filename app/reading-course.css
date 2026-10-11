@@ -1,0 +1,42 @@
+.reading-course-layout{display:grid;grid-template-columns:210px minmax(0,1fr);gap:24px;align-items:start}
+.reading-course-layout .reading-room{min-width:0}
+.reading-chapters{position:sticky;top:20px;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:16px;max-height:calc(100dvh - 40px);overflow:auto;color:var(--ink)}
+.reading-chapters summary{font-weight:700;cursor:pointer;line-height:1.6;font-size:14px}
+.reading-chapters p,.reading-chapters small{font-size:12px;line-height:1.6;color:var(--muted)}
+.reading-chapters progress,.design-course-shelf progress{width:100%;height:7px;accent-color:var(--accent)}
+.reading-chapters label{display:grid;gap:7px;font-size:11px;margin:16px 0}
+.reading-chapters input{width:100%;min-width:0;padding:9px;background:var(--surface-raised);border:1px solid var(--line);border-radius:8px;color:var(--ink)}
+.reading-chapters nav{display:grid;gap:6px}
+.reading-chapters nav button{display:flex;gap:9px;text-align:left;align-items:baseline;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--ink);padding:10px 8px;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.reading-chapters nav button[aria-current=page]{border-color:var(--accent);background:var(--surface-raised);font-weight:700}
+.reading-chapters nav button:hover{background:var(--surface-raised)}
+.chapter-paging{display:flex;gap:6px;align-items:center;justify-content:space-between;margin:14px 0;font-size:11px}
+.chapter-paging button{border:1px solid var(--line);background:var(--surface-raised);color:var(--ink);padding:7px;border-radius:7px;font-size:11px}
+.chapter-paging button:disabled{opacity:.45;cursor:not-allowed}
+.reading-course-layout .reading-body{grid-template-columns:minmax(0,1fr)}
+.reading-course-layout .reading-sidebar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.reading-course-layout .reading-body .card{padding:24px}
+.reading-course-layout .reading-title h2{max-width:850px;font-size:clamp(25px,2.6vw,36px);line-height:1.3}
+.reading-room .reading-objectives{border-left:4px solid var(--accent);background:var(--surface-raised);margin-bottom:18px}
+.reading-objectives li{margin:10px 0;line-height:1.7}
+.reading-objectives p{font-size:13px;color:var(--muted)}
+.reading-toc{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:18px 0 24px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.reading-toc strong{font-size:11px;text-transform:uppercase;color:var(--muted)}
+.reading-toc a{color:var(--ink);font-size:12px;text-underline-offset:4px}
+.reading-room [id^=lesson-]{scroll-margin-top:24px}
+.reading-focus .reading-sidebar>section:first-child{display:none}
+.reading-course-layout:has(.reading-focus){grid-template-columns:minmax(0,1fr)}
+.reading-course-layout:has(.reading-focus)>.reading-chapters{display:none}
+.reading-focus{max-width:900px;margin:auto;width:100%}
+.design-course-shelf{margin-bottom:24px;background:var(--surface)}
+.design-course-shelf h2{font-size:clamp(24px,2.4vw,32px);line-height:1.3}
+.design-course-groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:24px 0}
+.design-course-groups>div{background:var(--surface-raised);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.design-course-groups h3{font-size:15px;line-height:1.5}
+.design-course-groups button{display:grid;gap:7px;text-align:left;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;color:var(--ink);width:100%;margin:10px 0}
+.design-course-groups button:hover{border-color:var(--accent)}
+.design-course-groups button strong{font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.design-course-groups button span,.design-course-groups button small{font-size:11px;color:var(--muted)}
+@media(min-width:1900px){.reading-course-layout .reading-body{grid-template-columns:minmax(0,1fr) 260px}.reading-course-layout .reading-sidebar{display:block}}
+@media(max-width:1100px){.reading-course-layout{grid-template-columns:1fr}.reading-chapters{position:static;max-height:360px}.design-course-groups{grid-template-columns:1fr}.reading-course-layout .reading-sidebar{grid-template-columns:1fr}}
+@media(max-width:650px){.reading-course-layout .reading-body .card{padding:18px}.reading-toc{gap:12px}.reading-course-layout{gap:16px}}
