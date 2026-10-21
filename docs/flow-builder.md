@@ -23,3 +23,9 @@ The editor does not execute diagrams, judge architectural correctness, bind diag
 - `/flows/` returned HTTP 200 from the development server on port 3015.
 - Browser visual verification was blocked by the browser tool policy. Desktop/mobile layout, touch dragging and live account synchronization have not been verified for this milestone.
 - No production build or push performed.
+
+## Direct manipulation update
+
+The shelf supports desktop drag/drop into canvas coordinates, with tap-to-add retained for touch and keyboard use. Ports support drag-to-connect or click/Enter source then destination; Escape cancels. Grid snapping, selected-node duplication/deletion, component search and Grow from selected reduce repeated editing. Grow places a tapped component to the right of the selection and connects it, within graph limits. Existing inspector connection controls remain available.
+
+Typecheck and four flow model tests passed after this update. Pointer gestures and visual layout remain unverified in a browser; unit tests cover the model, not gestures.

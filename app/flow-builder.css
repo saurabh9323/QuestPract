@@ -25,3 +25,20 @@
 .flow-workspace details>p{background:var(--surface-raised,var(--bg));color:var(--ink)}
 @media(max-width:1000px){.flow-editor-layout,.flow-inspectors{grid-template-columns:1fr}.flow-palette{flex-direction:row;flex-wrap:wrap}.flow-palette h3,.flow-palette p{flex-basis:100%}.flow-canvas-scroll{max-height:380px}}
 @media(max-width:550px){.flow-workspace .card{padding:16px}.flow-controls{align-items:stretch}.flow-controls label{flex-basis:100%}.flow-controls button{flex:1 1 120px}.flow-palette button{flex:1 1 110px}}
+
+.sql-level-map{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.sql-level-map [aria-current=step]{outline:3px solid #539bcd;outline-offset:1px}
+.sql-game progress{width:100%;accent-color:#67a33d}.sql-game pre{overflow:auto;max-width:100%}
+.sql-game button:disabled{opacity:.55;cursor:not-allowed}.sql-game textarea{font-family:monospace}
+.sql-game .sql-result{padding:16px;border-left:4px solid #539bcd;background:var(--bg);color:var(--ink)}
+
+.sql-journey{height:48px;margin:20px 0;border-bottom:3px dashed var(--line);position:relative}
+.sql-journey span{position:absolute;bottom:4px;font-size:28px;transition:left .5s ease}
+@media(prefers-reduced-motion:reduce){.sql-journey span{transition:none}}
+
+.flow-port{fill:#539bcd;stroke:var(--bg);stroke-width:3;cursor:crosshair}
+.flow-port:hover,.flow-port:focus-visible{fill:#b9f56c;stroke:var(--ink);outline:none}
+.flow-wire-preview{fill:none;stroke:#539bcd;stroke-width:3;stroke-dasharray:8 5;pointer-events:none}
+.flow-connect-help{padding:10px 14px;border-radius:8px;background:var(--bg);color:var(--ink);font-size:14px}
+.flow-palette button[draggable=true]{cursor:grab;text-align:left;border-left:3px solid #539bcd}
+.flow-palette input{min-width:0;width:100%}
