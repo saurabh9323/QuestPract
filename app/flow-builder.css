@@ -42,3 +42,8 @@
 .flow-connect-help{padding:10px 14px;border-radius:8px;background:var(--bg);color:var(--ink);font-size:14px}
 .flow-palette button[draggable=true]{cursor:grab;text-align:left;border-left:3px solid #539bcd}
 .flow-palette input{min-width:0;width:100%}
+
+.pattern-flow{text-align:center;display:grid;gap:12px}.pattern-flow>div,.pattern-flow .flow-inspectors>div{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.pattern-memory{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}.pattern-memory>div{padding:16px;border:2px solid var(--line);border-radius:12px;display:grid;gap:8px;max-width:100%;overflow-wrap:anywhere;transition:background .2s,border-color .2s}.pattern-memory .focused{border-color:#539bcd;background:var(--bg)}
+.sql-level-map [aria-pressed=true]{outline:3px solid #539bcd;outline-offset:1px}
+@media(prefers-reduced-motion:reduce){.pattern-memory>div{transition:none}}

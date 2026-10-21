@@ -20,7 +20,8 @@ export function validateLink(v:unknown):Link{
   return x as Link;
 }
 export function validateFlow(v:unknown):Flow{
-  const x=object(v);keys(x,['id','title','domain','nodes','edges','tags','links','versions','createdAt','updatedAt']);
+  const x=object(v);keys(x,['id','title','domain','nodes','edges','tags','links','versions','createdAt','updatedAt','brief']);
+  if(x.brief!==undefined){const b=object(x.brief);keys(b,['mode','title','question','explanation','approach']);if(b.mode!=='linked'&&b.mode!=='custom')throw new Error('Invalid question mode.');text(b.title,200);text(b.question,4000);text(b.explanation,4000);text(b.approach,4000);}
   id(x.id);text(x.title,200,true);
   if(!domains.includes(x.domain as Flow['domain']))throw new Error('Unsupported flow domain.');
   const nodes=list(x.nodes,80).map(v=>{

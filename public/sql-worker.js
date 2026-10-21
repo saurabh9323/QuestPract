@@ -15,7 +15,10 @@ self.onmessage = async function(event) {
       while(statement.step()){if(rows.length>=200){truncated=true;break}rows.push(statement.get())}
     }
     if(!count)throw new Error('Write a SELECT query first.');
-    self.postMessage({columns,rows,truncated});
+    let plan=[],planError='';
+    try{const explained=db.exec('EXPLAIN QUERY PLAN '+sql);plan=explained[0]?.values||[]}catch{planError='Query plan unavailable for this statement.'}
+    const tables=event.data.inspect?['employees','orders'].map(name=>({name,...db.exec('SELECT * FROM '+name)[0]})):[];
+    self.postMessage({columns,rows,truncated,plan,planError,tables});
   } catch(error){self.postMessage({columns:[],rows:[],truncated:false,error:error.message||'Query failed.'})}
   finally{if(db)db.close()}
 };

@@ -29,3 +29,7 @@ The editor does not execute diagrams, judge architectural correctness, bind diag
 The shelf supports desktop drag/drop into canvas coordinates, with tap-to-add retained for touch and keyboard use. Ports support drag-to-connect or click/Enter source then destination; Escape cancels. Grid snapping, selected-node duplication/deletion, component search and Grow from selected reduce repeated editing. Grow places a tapped component to the right of the selection and connects it, within graph limits. Existing inspector connection controls remain available.
 
 Typecheck and four flow model tests passed after this update. Pointer gestures and visual layout remain unverified in a browser; unit tests cover the model, not gestures.
+
+## Question context
+
+Flows optionally include a brief: linked-question or custom-question mode, a custom title/question, explanation and approach. Existing diagrams remain valid. Question links use the existing catalogue IDs and question route. Mode switching preserves the custom text and saved link; active mode indicates which to use. All fields participate in Save flow, undo/redo, export and account synchronization. Question/explanation/approach are bounded at 4,000 characters each within the existing 30KB total document limit. No automatic solving or completion credit is implied.

@@ -29,3 +29,15 @@ test('saved flows round-trip through existing account records without modifying 
  assert.deepEqual(state['dojo-old'],legacy);assert.deepEqual(readLearning(state).documents[0].document.data,f);
  assert.deepEqual(parseWorkspacePath('/flows/'),{view:'flows'});assert.ok(workspaceStaticPaths.some(p=>p.join('/')==='flows'));assert.deepEqual(parseWorkspacePath('/dojo/'),{view:'dojo'});
 });
+
+test('question briefs survive account persistence and remain optional for old diagrams',()=>{
+ const legacy=newFlow('dsa','legacy');assert.doesNotThrow(()=>validateFlow(legacy));
+ for(const mode of ['linked','custom'] as const){
+  const data={...legacy,links:[{kind:'question' as const,id:'two-sum',label:'Two Sum'}],brief:{mode,title:'Pair finder',question:'Find a pair',explanation:'Return indices',approach:'Keep seen values in a Map'}};
+  const doc=validateDocument({schemaVersion:1,kind:'flow',origin:'manual',status:'draft',data});
+  const saved=readLearning(changeLearning({}, {save:[doc]})).documents[0].document;
+  assert.deepEqual(saved.data,data);
+  assert.throws(()=>validateFlow({...data,brief:{...data.brief,approach:'x'.repeat(4001)}}));
+  assert.throws(()=>validateFlow({...data,brief:{...data.brief,mode:'unsafe'}}));
+ }
+});
