@@ -29,6 +29,12 @@ export function mergeStudio(a:StudioState={},b:StudioState={}):StudioState{
  const result={...a,...b};
  for(const [id,old] of Object.entries(a)){
   const current=b[id];if(!current)continue;
+  // Learning deletion markers are irreversible for this ID. Never recover
+  // deleted content as an attempt when reconciling a stale device.
+  if(id.startsWith('learning-')&&(old.fields.deleted==='yes'||current.fields.deleted==='yes')){
+   const tombstone=current.fields.deleted==='yes'?current:old;
+   result[id]={...tombstone,fields:{deleted:'yes',schemaVersion:'1'},attempts:[]};continue;
+  }
   let latest=Date.parse(current.updatedAt)>=Date.parse(old.updatedAt)?current:old;
   // A later draft recovered from another device must not reopen a submitted round.
   // Ordinary studio tools and two completed rounds keep their timestamp merge rule.

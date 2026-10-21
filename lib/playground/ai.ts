@@ -1,41 +1,15 @@
 import type {TestResult,TraceEvent} from './types';
-export const CONTEXT_CAP=3800; // fits the existing server's 4,000-character answer field
+import {checkCitations} from '../learning/citations';
+import {AI_CONTEXT_CAP,boundedContext} from '../learning/gemini';
+export const CONTEXT_CAP=AI_CONTEXT_CAP;
 export function buildPlaygroundContext(input:{moduleId:string;code:string;trace:TraceEvent[];step:number;tests:TestResult[];pinned?:string}){
-  const selected=input.trace[input.step];
   const relevant=input.tests.find(t=>!t.passed)||input.tests[0]||null;
-  let trimmed=false;
-  const clip=(s:string,n:number)=>{if(s.length>n)trimmed=true;return s.slice(0,n)};
-  const excerpts=input.trace.slice(Math.max(0,input.step-5),input.step+6).map(e=>({
-    step:e.step,line:e.line,kind:e.kind,target:e.target,
-    value:clip(JSON.stringify(e.value),100),
-    variables:clip(JSON.stringify(e.snapshot),220)
-  }));
-  const payload={
-    moduleId:clip(input.moduleId,60),code:clip(input.code,1800),
-    selectedStep:selected?.step??null,totalSteps:input.trace.length,
-    relevantTest:relevant?clip(JSON.stringify(relevant),450):null,
-    pinned:clip(input.pinned||'',250),trace:excerpts,contextTrimmed:false
-  };
-  while(JSON.stringify(payload).length>CONTEXT_CAP&&payload.trace.length>1){
-    const first=payload.trace[0],last=payload.trace.at(-1)!;
-    if(Math.abs(first.step-input.step)>Math.abs(last.step-input.step))payload.trace.shift();else payload.trace.pop();
-    trimmed=true;
-  }
-  while(JSON.stringify(payload).length>CONTEXT_CAP&&payload.code.length){
-    payload.code=clip(payload.code,Math.floor(payload.code.length/2));trimmed=true;
-  }
-  while(JSON.stringify(payload).length>CONTEXT_CAP&&payload.pinned.length){
-    payload.pinned=clip(payload.pinned,Math.floor(payload.pinned.length/2));trimmed=true;
-  }
-  payload.contextTrimmed=trimmed;
-  return {text:JSON.stringify(payload),trimmed,steps:payload.trace.map(e=>e.step)};
+  const excerpt=input.trace.slice(Math.max(0,input.step-5),input.step+6).sort((a,b)=>Math.abs(a.step-input.step)-Math.abs(b.step-input.step));
+  const context=boundedContext({topic:input.moduleId,code:input.code,pinned:input.pinned,summary:JSON.stringify({moduleId:input.moduleId,selectedStep:input.trace[input.step]?.step??null,totalSteps:input.trace.length,relevantTest:relevant}),evidence:excerpt.map(e=>({kind:'step',id:String(e.step),summary:JSON.stringify({line:e.line,kind:e.kind,target:e.target,value:e.value,variables:e.snapshot})}))});
+  return {...context,steps:(context.scope.steps||[]).sort((a,b)=>a-b)};
 }
 export function citationParts(text:string,steps:number[]){
-  const allowed=new Set(steps);
-  return text.split(/(\[step\s+\d+\])/gi).filter(Boolean).map(text=>{
-    const match=/^\[step\s+(\d+)\]$/i.exec(text),step=match?Number(match[1]):undefined;
-    return {text,step,valid:step!==undefined&&allowed.has(step)};
-  });
+  return checkCitations(text,{steps}).map(p=>({text:p.text,step:p.kind==='step'&&/^\d+$/.test(p.id!)?Number(p.id):undefined,valid:p.valid}));
 }
 export function attemptConfidence(level:number,explained=false){return level>=3?'learning':level>0||explained?'assisted':'independent'}
 export function tutorInstruction(level:number|null){

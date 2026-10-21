@@ -1,0 +1,26 @@
+'use client';
+import {useId,useRef,useState,type RefObject} from 'react';
+export type CanvasNode={id:string;label:string;x:number;y:number;type?:string};
+export type CanvasEdge={from:string;to:string;label?:string;condition?:string;id?:string};
+export default function FlowCanvas<N extends CanvasNode,E extends CanvasEdge>({graph,selected,failed='',onSelect,onChange,svgRef}:{graph:{nodes:N[];edges:E[]};selected:string;failed?:string;onSelect:(id:string)=>void;onChange:(graph:{nodes:N[];edges:E[]},commit:boolean)=>void;svgRef?:RefObject<SVGSVGElement|null>}){
+  const ownSvg=useRef<SVGSVGElement>(null),svg=svgRef||ownSvg,scroll=useRef<HTMLDivElement>(null),live=useRef(graph);live.current=graph;
+  const drag=useRef<{id:string;x:number;y:number;startX:number;startY:number}|null>(null),pan=useRef<{x:number;y:number;left:number;top:number}|null>(null);
+  const [zoom,setZoom]=useState(1),marker=`flow-arrow-${useId().replace(/:/g,'')}`;
+  const minX=Math.min(0,...graph.nodes.map(n=>n.x-30)),minY=Math.min(0,...graph.nodes.map(n=>n.y-30));
+  const width=Math.max(800,...graph.nodes.map(n=>n.x+220))-minX,height=Math.max(420,...graph.nodes.map(n=>n.y+130))-minY;
+  function point(x:number,y:number){const p=svg.current?.createSVGPoint(),m=svg.current?.getScreenCTM();if(!p||!m)return null;p.x=x;p.y=y;return p.matrixTransform(m.inverse())}
+  function move(id:string,x:number,y:number,commit:boolean){const next={...live.current,nodes:live.current.nodes.map(n=>n.id===id?{...n,x:Math.max(-9000,Math.min(9000,x)),y:Math.max(-9000,Math.min(9000,y))}:n)};live.current=next;onChange(next,commit)}
+  function finish(){if(drag.current){drag.current=null;onChange(live.current,true)}pan.current=null}
+  return <div className="flow-canvas-editor"><div className="button-row flow-zoom"><button type="button" onClick={()=>setZoom(z=>Math.max(.4,+(z-.2).toFixed(1)))} disabled={zoom<=.4} aria-label="Zoom out">−</button><output aria-label="Canvas zoom">{Math.round(zoom*100)}%</output><button type="button" onClick={()=>setZoom(z=>Math.min(2,+(z+.2).toFixed(1)))} disabled={zoom>=2} aria-label="Zoom in">+</button><button type="button" onClick={()=>{setZoom(1);scroll.current?.scrollTo({top:0,left:0})}}>Reset view</button></div>
+    <div className="flow-canvas-scroll" ref={scroll} tabIndex={0} role="region" aria-label="Scrollable flow canvas">
+      <svg ref={svg} width={width*zoom} height={height*zoom} viewBox={`${minX} ${minY} ${width} ${height}`} aria-label="Editable diagram" onPointerDown={e=>{if(e.button!==0)return;pan.current={x:e.clientX,y:e.clientY,left:scroll.current?.scrollLeft||0,top:scroll.current?.scrollTop||0};e.currentTarget.setPointerCapture(e.pointerId)}} onPointerMove={e=>{const d=drag.current;if(d){const p=point(e.clientX,e.clientY);if(p)move(d.id,d.x+p.x-d.startX,d.y+p.y-d.startY,false)}else if(pan.current&&scroll.current){scroll.current.scrollLeft=pan.current.left-(e.clientX-pan.current.x);scroll.current.scrollTop=pan.current.top-(e.clientY-pan.current.y)}}} onPointerUp={finish} onPointerCancel={finish} onLostPointerCapture={finish}>
+        <defs><marker id={marker} markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="currentColor"/></marker></defs>
+        {graph.edges.map((e,i)=>{const a=graph.nodes.find(n=>n.id===e.from),b=graph.nodes.find(n=>n.id===e.to);if(!a||!b)return null;const x1=a.x+160,y1=a.y+34,x2=b.x,y2=b.y+34;return <g key={e.id||i} className="flow-edge"><path d={a.id===b.id?`M${x1} ${y1} c70 -100 -230 -100 -160 0`:`M${x1} ${y1} C${x1+45} ${y1} ${x2-45} ${y2} ${x2} ${y2}`} markerEnd={`url(#${marker})`}/><text x={(x1+x2)/2} y={(y1+y2)/2-10} textAnchor="middle">{(e.label||e.condition||'').slice(0,32)}</text><title>{e.label} {e.condition}</title></g>})}
+        {graph.nodes.map(n=><g key={n.id} transform={`translate(${n.x},${n.y})`} className={`flow-node ${selected===n.id?'selected-node':''} ${failed===n.id?'failed-node':''}`} tabIndex={0} role="button" aria-label={`${n.label}. Use arrow keys to move.`} aria-pressed={selected===n.id} onFocus={()=>onSelect(n.id)} onKeyDown={e=>{const delta:Record<string,[number,number]>={ArrowLeft:[-20,0],ArrowRight:[20,0],ArrowUp:[0,-20],ArrowDown:[0,20]};if(delta[e.key]){e.preventDefault();move(n.id,n.x+delta[e.key][0],n.y+delta[e.key][1],true)}}} onPointerDown={e=>{if(e.button!==0)return;e.preventDefault();e.stopPropagation();const p=point(e.clientX,e.clientY);if(!p)return;onSelect(n.id);drag.current={id:n.id,x:n.x,y:n.y,startX:p.x,startY:p.y};svg.current?.setPointerCapture(e.pointerId)}}>
+          {n.type==='decision'?<path className="node-shape" d="M80 -8 L168 34 L80 76 L-8 34 Z"/>:<rect className="node-shape" width="160" height="68" rx={n.type==='start'||n.type==='end'?32:10}/>}
+          <text x="80" y="28" textAnchor="middle">{n.label.slice(0,22)}</text><text className="flow-node-type" x="80" y="48" textAnchor="middle">{n.type||'component'}</text><title>{n.label}</title>
+        </g>)}
+      </svg>
+    </div><small>Drag nodes; drag empty space or scroll to pan. Tab to a node and use arrow keys. Connections describe your plan, not executed behavior.</small>
+  </div>;
+}

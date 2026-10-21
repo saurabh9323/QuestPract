@@ -9,14 +9,17 @@ import {attemptConfidence} from '@/lib/playground/ai';
 import type {LabModule,LabRun} from '@/lib/playground/types';
 import TracePlayer from './TracePlayer';
 import PlaygroundAI from './PlaygroundAI';
+import LearningDataPanel from '../learning/LearningDataPanel';
 
 export default function ModulePlayground(){
   const params=useRouteQuery();
   const id=playgroundModules.find(m=>m.id===params.get('module'))?.id||playgroundModules[0].id;
   return <section className="module-playground">
     <div className="pg-heading"><span className="pg-badge">MODULE PLAYGROUND · PHASE 1</span><h2>Edit it. Run it. See each step.</h2><p>Real JavaScript execution in an isolated worker. Five small DSA labs, one trace player.</p></div>
+    <a className="primary" href="/flows/">Build my own flowchart or system design →</a>
     <label className="pg-module-select">Choose a module<select value={id} onChange={e=>updateRouteQuery({module:e.target.value})}>{playgroundModules.map(m=><option key={m.id} value={m.id}>{m.title}</option>)}</select></label>
     <Lab key={id} module={validateModule(playgroundModules.find(m=>m.id===id)!)}/>
+    <LearningDataPanel/>
   </section>;
 }
 function Lab({module}:{module:LabModule}){
