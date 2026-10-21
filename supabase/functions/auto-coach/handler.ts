@@ -9,6 +9,18 @@ type Runtime = {
   fetch: typeof fetch;
 };
 const references: [RegExp, string][] = [
+ [/daily discovery: react/i, "https://react.dev/blog"],
+ [/daily discovery: next/i, "https://nextjs.org/blog"],
+ [/daily discovery: javascript/i, "https://developer.mozilla.org/en-US/docs/Web/JavaScript"],
+ [/daily discovery: node/i, "https://nodejs.org/en/blog"],
+ [/daily discovery: postgresql/i, "https://www.postgresql.org/docs/release/"],
+ [/daily discovery: mongodb/i, "https://www.mongodb.com/docs/manual/release-notes/"],
+ [/daily discovery: dsa/i, "https://algs4.cs.princeton.edu/home/"],
+ [/daily discovery: python/i, "https://docs.python.org/3/whatsnew/"],
+ [/daily discovery: dotnet/i, "https://learn.microsoft.com/en-us/dotnet/core/whats-new/"],
+ [/daily discovery: aws/i, "https://aws.amazon.com/new/"],
+ [/daily discovery: docker/i, "https://docs.docker.com/engine/release-notes/"],
+ [/daily discovery: system design/i, "https://aws.amazon.com/builders-library/"],
   [
     /map|two.?sum/,
     "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
@@ -28,6 +40,7 @@ const references: [RegExp, string][] = [
   ],
   [/python|django|flask/, "https://docs.python.org/3/tutorial/classes.html"],
 ];
+export function officialReference(topic:string){return references.find(([rx])=>rx.test(topic.toLowerCase()))?.[1]}
 async function boundedText(response: Pick<Response, "body">, limit: number) {
   if (!response.body) throw new Error("Empty response");
   const reader = response.body.getReader(),
@@ -198,9 +211,7 @@ export async function handleCoachRequest(
     // Never fetch client/model-provided URLs, redirects, private addresses or arbitrary search results.
     const doc =
       body.research === true
-        ? references.find(([rx]) =>
-            rx.test(`${input.title} ${input.topic}`.toLowerCase()),
-          )?.[1]
+        ? officialReference(`${input.title} ${input.topic}`)
         : undefined;
     if (doc)
       try {
