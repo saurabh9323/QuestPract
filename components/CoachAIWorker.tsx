@@ -2,6 +2,7 @@
 import {useEffect,useRef,useState} from 'react';
 import type {SupabaseClient} from '@supabase/supabase-js';
 import type {Progress} from '@/lib/progress';
+import {coachErrorMessage} from '@/lib/coach-errors';
 import {readCoachPack} from '@/lib/coach-contract';
 type Owner={url:string;userId:string};
 export default function CoachAIWorker({p,client,owner,publicKey,update}:{p:Progress;client:SupabaseClient|null;owner:Owner;publicKey:string;update:(id:string,fields:Record<string,string>,owner:Owner)=>void}){
@@ -27,7 +28,7 @@ export default function CoachAIWorker({p,client,owner,publicKey,update}:{p:Progr
     const ai=readCoachPack(JSON.stringify(result.pack));
     if(!ai||ai.mode!=='gemini'||ai.lesson.id!==id||JSON.stringify(ai.input)!==JSON.stringify(pack.input))throw new Error('The AI response did not match this submission.');
     if(mounted.current)update(id,{aiPack:JSON.stringify(ai),cloudStatus:'complete',cloudError:''},owner);
-   }catch(e){if(mounted.current)update(id,{cloudStatus:'failed',cloudError:e instanceof Error?e.message.slice(0,1000):'AI request failed. Use the built-in lesson.'},owner)}
+   }catch(e){if(mounted.current)update(id,{cloudStatus:'failed',cloudError:coachErrorMessage(e,window.location.origin)},owner)}
    finally{clearTimeout(timeout);active.current=false;if(mounted.current)setCycle(n=>n+1)}
   })();
  },[p,client,owner,publicKey,update,cycle]);

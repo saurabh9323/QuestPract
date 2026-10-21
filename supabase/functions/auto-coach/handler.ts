@@ -66,7 +66,7 @@ export async function handleCoachRequest(
   r: Runtime,
 ): Promise<Response> {
   const origin = req.headers.get("origin") || "",
-    allowed = (r.env("COACH_ALLOWED_ORIGINS") || "")
+    allowed = [r.env("COACH_ALLOWED_ORIGINS"), r.env("COACH_DEV_ORIGINS")].filter(Boolean).join(",")
       .split(",")
       .map((x) => x.trim())
       .filter(Boolean);
