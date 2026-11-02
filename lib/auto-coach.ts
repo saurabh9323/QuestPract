@@ -58,7 +58,7 @@ export function createLocalPack(input:CoachInput,now=new Date()):CoachPack{
 }
 export function addCoachPack(p:Progress,input:CoachInput,now=new Date()):Progress{
  const key=coachKey(input);if(p.studio?.[key])return p;
- if(Object.keys(p.studio||{}).length>=1900||Object.keys(p.studio||{}).filter(k=>k.startsWith('auto-pack-')).length>=COACH_LIMIT)return p;
+ if(Object.keys(p.studio||{}).length>=1900||Object.keys(p.studio||{}).filter(k=>k.startsWith('auto-pack-')&&p.studio?.[k].fields.loginRevision!=='yes').length>=COACH_LIMIT)return p;
  const pack=JSON.stringify(createLocalPack(input,now));if(!readCoachPack(pack))return p;
  const ai=p.studio?.[COACH_SETTINGS]?.fields.aiAuto==='yes';
  return {...p,studio:{...p.studio,[key]:{fields:{type:'auto-pack',pack,cloudStatus:ai?'pending':'off',requestId:ai?crypto.randomUUID():'',research:p.studio?.[COACH_SETTINGS]?.fields.research==='yes'?'yes':'no'},attempts:[],updatedAt:now.toISOString()}}};

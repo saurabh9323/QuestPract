@@ -10,7 +10,7 @@ import CoachAIControls,{CoachAISettings} from './CoachAIControls';
 import Pagination from './Pagination';
 
 export function CoachShelf({p}:{p:Progress}){
- const packs=Object.entries(p.studio||{}).filter(([id,r])=>id.startsWith('auto-pack-')&&readCoachPack(r.fields.pack));
+ const packs=Object.entries(p.studio||{}).filter(([id,r])=>id.startsWith('auto-pack-')&&r.fields.loginRevision!=='yes'&&readCoachPack(r.fields.pack));
  const last=packs.sort((a,b)=>b[1].updatedAt.localeCompare(a[1].updatedAt))[0];
  return <section className="card auto-coach-shelf"><div><span className="eyebrow">MADE FROM YOUR SUBMISSIONS</span><h3>Your personal practice shelf</h3><p>{packs.length?`${packs.length} saved follow-ups with examples, cartoons and recall practice.`:'Submit an answer and get a free follow-up exercise with a cartoon or guided explanation.'}</p></div><div className="button-row"><a className="primary" href={last?`/auto-coach/?pack=${last[0]}`:'/auto-coach/'} onClick={e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();navigateWorkspace(last?`/auto-coach/?pack=${last[0]}`:'/auto-coach/')}}>{last?'Open latest story':'Explore Auto coach'} <ArrowRight size={16}/></a><small>Built-in engine · no AI key</small></div></section>;
 }
@@ -19,7 +19,7 @@ export default function AutoCoach({commit}:{commit:(p:Progress)=>void}){
  const {p,get,patch,submit,notice}=useStudio(),query=useRouteQuery(),selected=query.get('pack'),search=query.get('search')||'',dueOnly=query.get('due')==='1';
  const [past,setPast]=useState('');
  const work=useMemo(()=>submittedWork(p),[p]);
- const packs=Object.entries(p.studio||{}).filter(([id])=>id.startsWith('auto-pack-')).map(([id,r])=>({id,record:r,pack:readCoachPack(r.fields.pack)})).filter(x=>!!x.pack).sort((a,b)=>b.pack!.createdAt.localeCompare(a.pack!.createdAt));
+ const packs=Object.entries(p.studio||{}).filter(([id,r])=>id.startsWith('auto-pack-')&&r.fields.loginRevision!=='yes').map(([id,r])=>({id,record:r,pack:readCoachPack(r.fields.pack)})).filter(x=>!!x.pack).sort((a,b)=>b.pack!.createdAt.localeCompare(a.pack!.createdAt));
  const current=packs.find(x=>x.id===selected),settings=get(COACH_SETTINGS).fields;
  const due=(id:string,defaultDue:string)=>get(`auto-recall-${id.slice(10)}`).fields.due||defaultDue;
  const filtered=packs.filter(x=>(!dueOnly||due(x.id,x.pack!.due)<=dateKey())&&`${x.pack!.input.title} ${x.pack!.input.topic}`.toLowerCase().includes(search.toLowerCase()));

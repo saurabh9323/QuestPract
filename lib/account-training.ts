@@ -6,6 +6,7 @@ import {CONFIG_KEY,GUEST_KEY,type Connection,connect,readCloud,writeCloud,readCl
 import {localGet,saveCheckpoint} from './local-db';
 import {accountKey,hasWork,mergeProgress,type LocalCheckpoint,type RecoveryCopy} from './recovery';
 import {autoCoachAfterSubmission,preserveCoachArtifacts} from './auto-coach';
+import {prepareLoginRevision} from './repair-lab/adaptive';
 
 function savedStatus(at?:string){return at&&Number.isFinite(Date.parse(at))?`Saved to Supabase · ${new Date(at).toLocaleString()}`:'Saved to Supabase';}
 const DEFAULT_CONNECTION:Connection={url:process.env.NEXT_PUBLIC_SUPABASE_URL||'https://xavuhmunsmiknusfskwr.supabase.co',key:process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY||'sb_publishable_szXgHTFOwnAIhCdemtwhDg_Ewpj4yX-'};
@@ -54,6 +55,12 @@ export function useTraining(){
   if(!loaded.current||cacheKey.current!==accountKey(owner.url,owner.userId)||!id.startsWith('auto-pack-'))return;
   const old=current.current.studio?.[id];if(!old)return;
   const at=new Date().toISOString();commit({...current.current,updatedAt:at,studio:{...current.current.studio,[id]:{...old,fields:{...old.fields,...fields},updatedAt:at}}});
+ },[commit]);
+ const prepareRevision=useCallback((owner:{url:string;userId:string})=>{
+  // Read the latest loaded account, never a render-time snapshot or another user's data.
+  if(!loaded.current||blocked.current||cacheKey.current!==accountKey(owner.url,owner.userId))return;
+  try{const next=prepareLoginRevision(current.current);if(next!==current.current){validateProgress(next);commit(next);}}
+  catch{setNotice('Your saved course is safe. Personal revision could not be prepared; use the built-in quiz.');}
  },[commit]);
  useEffect(()=>{try{const raw=localStorage.getItem(CONFIG_KEY);setConfig(raw?JSON.parse(raw):DEFAULT_CONNECTION);}catch{setConfig(DEFAULT_CONNECTION);}setReady(true);},[]);
  useEffect(()=>{
@@ -115,5 +122,5 @@ export function useTraining(){
   catch(e){if(gen===generation.current)setError(e instanceof Error?e.message:'Load failed.');}finally{if(gen===generation.current)setBusy(false);}
  };
  const retry=()=>{blocked.current=false;setError('');if(!loaded.current)setConfig(c=>c?{...c}:c);else void drain();};
- return {progress,commit,patchCoach,ready,dataReady,user,config,sync,error,notice,setNotice,busy,configure,signIn,signUpPassword,signInPassword,signOut,retry,reload,client:client.current,recoveries,recoveryNote,refreshRecovery,restoreRecovery,importGuest:async()=>{try{const old=await guest();if(!hasWork(old)){setNotice('No previous guest work exists in this browser.');return;}commit(mergeProgress(current.current,old));}catch(e){setNotice(e instanceof Error?e.message:'Guest progress could not be imported.');}}};
+ return {progress,commit,patchCoach,prepareRevision,ready,dataReady,user,config,sync,error,notice,setNotice,busy,configure,signIn,signUpPassword,signInPassword,signOut,retry,reload,client:client.current,recoveries,recoveryNote,refreshRecovery,restoreRecovery,importGuest:async()=>{try{const old=await guest();if(!hasWork(old)){setNotice('No previous guest work exists in this browser.');return;}commit(mergeProgress(current.current,old));}catch(e){setNotice(e instanceof Error?e.message:'Guest progress could not be imported.');}}};
 }
