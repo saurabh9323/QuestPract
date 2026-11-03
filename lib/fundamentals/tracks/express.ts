@@ -122,7 +122,7 @@ export const express: FundamentalTrack = {
       'All statements in a database transaction must use the same checked-out connection.',
       'Independent pool.query calls may land on different database sessions.',
       'PostgreSQL example; balances and transfer rules are validated separately.',
-      `const client = await pool.connect();\ntry {\n  await client.query('BEGIN');\n  await client.query('UPDATE accounts SET balance = balance - $1 WHERE id = $2', [10, 1]);\n  await client.query('UPDATE accounts SET balance = balance + $1 WHERE id = $2', [10, 2]);\n  await client.query('COMMIT');\n} catch (error) {\n  await client.query('ROLLBACK');\n  throw error;\n} finally {\n  client.release();\n}`, 
+      `const client = await pool.connect();\ntry {\n  await client.query('BEGIN');\n  await client.query('UPDATE accounts SET balance = balance - $1 WHERE id = $2', [10, 1]);\n  await client.query('UPDATE accounts SET balance = balance + $1 WHERE id = $2', [10, 2]);\n  await client.query('COMMIT');\n} catch (error) {\n  await client.query('ROLLBACK');\n  throw error;\n} finally {\n  client.release();\n}`,
       'Both updates commit together; failures trigger rollback and connection release.',
       'The borrowed connection holds transaction state until commit or rollback.',
       'Leaking a checked-out connection eventually exhausts the pool and stalls requests.',
