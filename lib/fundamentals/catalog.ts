@@ -1,0 +1,20 @@
+// Lightweight route metadata: keep curriculum bodies out of route generation.
+export const fundamentalCatalog = [
+  {id:'javascript',name:'JavaScript',kind:'Language'},
+  {id:'react',name:'React',kind:'UI library'},
+  {id:'vite',name:'Vite',kind:'Build tool'},
+  {id:'nextjs',name:'Next.js',kind:'Framework'},
+  {id:'cpp',name:'C++',kind:'Language'},
+  {id:'java',name:'Java',kind:'Language'},
+  {id:'csharp',name:'C#',kind:'Language'},
+  {id:'dotnet',name:'.NET',kind:'Runtime'},
+  {id:'python',name:'Python',kind:'Language'},
+  {id:'flask',name:'Flask',kind:'Framework'},
+  {id:'fastapi',name:'FastAPI',kind:'Framework'},
+  {id:'django',name:'Django',kind:'Framework'},
+  {id:'express',name:'Express',kind:'Framework'},
+  {id:'nodejs',name:'Node.js',kind:'Runtime'},
+  {id:'bun',name:'Bun',kind:'Runtime'},
+  {id:'sql',name:'SQL',kind:'Data systems'},
+  {id:'nosql',name:'NoSQL',kind:'Data systems'},
+] as const;

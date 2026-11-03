@@ -1,6 +1,8 @@
+import {frontendInterviewQuestions,frontendPackSlug} from './frontend-interview';
+import type {InterviewDepth} from './interview-depth';
 import {expandedInterview} from './interview-expanded';
 import dotnet from './interview-dotnet.json';
-export type InterviewQuestion={id:string;group:string;question:string;answer:string;example:string;mistake:string};
+export type InterviewQuestion={id:string;group:string;question:string;answer:string;example:string;mistake:string;depth?:InterviewDepth};
 export type WorkedExample={title:string;code:string;explanation:string;followUp:string};
 type Entry=[string,string,string,string];
 const bank:Record<string,Entry[]>={
@@ -89,6 +91,7 @@ dsa:[
  ['How do I remember a solution in an interview?','Reconstruct the invariant rather than reciting code: what information must remain true after each step? Start with brute force, then identify repeated work.','For Two Sum: before processing i, the map contains earlier values and their indices. Test duplicates, no match, negatives and minimal input.','Do not state complexity without explaining how many times each element is processed.'],
 ]};
 export function materialQuestions(slug:string):InterviewQuestion[]{
+ if(slug===frontendPackSlug)return frontendInterviewQuestions;
  if(slug==='dotnet')return dotnet.questions;
  const result=[...(bank[slug]||[]),...(expandedInterview[slug]||[])].map(([question,answer,example,mistake],i)=>({id:`${slug}-${String(i+1).padStart(2,'0')}`,group:'Core interview revision',question,answer,example,mistake}));
  // Present the foundations first without changing saved question IDs.

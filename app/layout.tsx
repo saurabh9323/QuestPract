@@ -31,6 +31,7 @@ import './playground.css';
 import './flow-builder.css';
 import './repair-lab.css';
 import './inside-app.css';
+import './fundamentals.css';
 export const metadata: Metadata = { title: 'Quest90 — Your developer comeback', description: '90 days of practical full-stack quests, DSA, system design and interview practice.', icons: {icon:'/favicon.svg'} };
 export default function RootLayout({children}: Readonly<{children:React.ReactNode}>) { return <html lang="en"><body>{children}</body></html>; }
 

@@ -3,13 +3,14 @@ import {useEffect,useMemo,useRef,useState} from 'react';
 import {Command,Search,X,Focus,Orbit,ArrowUpRight,Pause,Play} from 'lucide-react';
 import {chapters,quests} from '@/lib/curriculum';
 import {questionBank} from '@/lib/bank';
+import {fundamentalCatalog} from '@/lib/fundamentals/catalog';
 import {interviewTopics} from '@/lib/interview-topics';
 import {workspacePaths,workspaceUrl,type WorkspaceView} from '@/lib/workspace-routes';
 import {navigateWorkspace} from '@/lib/workspace-location';
 import {scheduledDay,type Progress} from '@/lib/progress';
 
-const names:Record<WorkspaceView,string>={insideApp:'Inside a Real App',repairLab:'Repair & Recall',discovery:'Discovery inbox',patternLab:'DSA Pattern Lab',sqlGame:'SQL expedition',flows:'Flow & system design',playground:'Module Playground',dojo:'Dojo',materials:'Interview materials',autoCoach:'Auto coach',dashboard:'Today',challenges:'My challenges',studio:'Practice studio',commute:'Commute library',cartoons:'Cartoon classroom',visual:'Visual lab',profile:'My profile',timeline:'DSA learning path',planner:'My schedule',bank:'Question bank',theory:'Theory studio',brain:'Daily brainstorm',interview:'Mock interview',analytics:'Analytics',oops:'OOP studio',journey:'Course journey',quest:'Daily quest',recall:'Recall room',library:'Skill library',tasks:'Tasks and notes',settings:'Settings',communication:'Communication coach'};
-const shortcuts:Partial<Record<WorkspaceView,WorkspaceView[]>>={commute:['visual','bank','recall'],bank:['visual','studio','recall'],materials:['interview','communication','recall'],visual:['bank','commute','challenges'],analytics:['planner','recall','journey'],communication:['interview','materials','quest'],oops:['visual','materials','studio'],quest:['commute','bank','communication'],cartoons:['commute','visual','bank']};
+const names:Record<WorkspaceView,string>={fundamentals:'Language fundamentals',insideApp:'Inside a Real App',repairLab:'Repair & Recall',discovery:'Discovery inbox',patternLab:'DSA Pattern Lab',sqlGame:'SQL expedition',flows:'Flow & system design',playground:'Module Playground',dojo:'Dojo',materials:'Interview materials',autoCoach:'Auto coach',dashboard:'Today',challenges:'My challenges',studio:'Practice studio',commute:'Commute library',cartoons:'Cartoon classroom',visual:'Visual lab',profile:'My profile',timeline:'DSA learning path',planner:'My schedule',bank:'Question bank',theory:'Theory studio',brain:'Daily brainstorm',interview:'Mock interview',analytics:'Analytics',oops:'OOP studio',journey:'Course journey',quest:'Daily quest',recall:'Recall room',library:'Skill library',tasks:'Tasks and notes',settings:'Settings',communication:'Communication coach'};
+const shortcuts:Partial<Record<WorkspaceView,WorkspaceView[]>>={fundamentals:['commute','materials','interview'],commute:['visual','bank','recall'],bank:['visual','studio','recall'],materials:['interview','communication','recall'],visual:['bank','commute','challenges'],analytics:['planner','recall','journey'],communication:['interview','materials','quest'],oops:['visual','materials','studio'],quest:['commute','bank','communication'],cartoons:['commute','visual','bank']};
 export default function LearningCockpit({p,view,focus,onFocus}:{p:Progress;view:WorkspaceView;focus:boolean;onFocus:()=>void}){
  const dialog=useRef<HTMLDialogElement>(null),input=useRef<HTMLInputElement>(null),trigger=useRef<HTMLButtonElement>(null);
  const [query,setQuery]=useState(''),[map,setMap]=useState(false),[motion,setMotion]=useState(false),[chapter,setChapter]=useState(1);
@@ -20,6 +21,7 @@ export default function LearningCockpit({p,view,focus,onFocus}:{p:Progress;view:
  const toggleMotion=()=>{setMotion(!motion);try{localStorage.setItem('quest90-cockpit-motion',!motion?'on':'off')}catch{}};
  const entries=useMemo(()=>[
   ...Object.keys(workspacePaths).map(v=>({label:names[v as WorkspaceView],kind:'Page',path:workspaceUrl(v as WorkspaceView,current),keywords:''})),
+  ...fundamentalCatalog.map(t=>({label:`${t.name} fundamentals`,kind:'Fundamentals',path:`/fundamentals/${t.id}/`,keywords:t.kind+' runtime compilation threads core interview'})),
   ...interviewTopics.map(t=>({label:`${t.name} interview guide`,kind:'Interview',path:`/interview-materials/${t.slug}/`,keywords:t.summary})),
   ...quests.map(q=>({label:`Day ${q.day} · ${q.title}`,kind:'Course',path:workspaceUrl('quest',q.day),keywords:q.mission})),
   ...questionBank.map(q=>({label:q.title,kind:q.kind,path:`/questions/?question=${encodeURIComponent(q.id)}`,keywords:q.topic}))

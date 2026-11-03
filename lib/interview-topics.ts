@@ -1,4 +1,5 @@
 export const interviewTopics = [
+ {slug:'frontend-3plus',name:'Frontend · 3+ years',summary:'15 scenario questions: rendering, performance, architecture, browser behavior and security'},
  {slug:'mern',name:'MERN full stack',summary:'Explain yourself, your architecture, MongoDB, Express and end-to-end features'},
  {slug:'dotnet',name:'.NET',summary:'C#, OOP, ASP.NET Core, EF Core and production scenarios'},
  {slug:'nodejs',name:'Node.js',summary:'Event loop, APIs, streams, failures and backend ownership'},
