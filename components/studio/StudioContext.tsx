@@ -6,13 +6,13 @@ import {blankStudio,type StudioRecord} from '@/lib/studio-state';
 import {changeLearning} from '@/lib/learning/persistence';
 import type {LearningDocument} from '@/lib/learning/types';
 type LearningChange={save?:LearningDocument[];remove?:string[]};
-type API={p:Progress;notice:(s:string)=>void;get:(id:string)=>StudioRecord;patch:(id:string,fields:Record<string,string>)=>void;submit:(id:string,outcome?:string,hints?:number)=>boolean;learning:(change:LearningChange)=>boolean;openDay:(day:number)=>void;practice:(id:string)=>void;read:(id?:string)=>void;userKey:string};
+type API={p:Progress;notice:(s:string)=>void;get:(id:string)=>StudioRecord;patch:(id:string,fields:Record<string,string>)=>boolean;submit:(id:string,outcome?:string,hints?:number)=>boolean;learning:(change:LearningChange)=>boolean;openDay:(day:number)=>void;practice:(id:string)=>void;read:(id?:string)=>void;userKey:string};
 const Context=createContext<API|null>(null);
 export function StudioProvider({p,commit,children,...rest}:Omit<API,'get'|'patch'|'submit'|'learning'> & {commit:(p:Progress)=>void;children:ReactNode}){
  const current=useRef(p);current.current=p;
  function get(id:string){return current.current.studio?.[id]||blankStudio()}
  function write(id:string,r:StudioRecord){const next={...current.current,updatedAt:new Date().toISOString(),studio:{...current.current.studio,[id]:r}};try{validateProgress(next)}catch(error){rest.notice(error instanceof Error?error.message:'This change could not be saved.');return false}current.current=next;commit(next);return true}
- function patch(id:string,fields:Record<string,string>){const old=get(id);write(id,{...old,fields:{...old.fields,...fields},updatedAt:new Date().toISOString()})}
+ function patch(id:string,fields:Record<string,string>){const old=get(id);return write(id,{...old,fields:{...old.fields,...fields},updatedAt:new Date().toISOString()})}
  function learning(change:LearningChange){try{const next={...current.current,updatedAt:new Date().toISOString(),studio:changeLearning(current.current.studio||{},change)};validateProgress(next);current.current=next;commit(next);return true}catch(e){rest.notice(e instanceof Error?e.message:'Unable to save learning data.');return false}}
  function submit(id:string,outcome='Self-reviewed',hints=0){const old=get(id);if(!Object.values(old.fields).some(x=>x.trim())){rest.notice('Add your work first.');return false}if(old.attempts.length>=200){rest.notice('This exercise has 200 saved attempts. Export your work before adding more.');return false}const at=new Date().toISOString();if(!write(id,{...old,updatedAt:at,attempts:[...old.attempts,{id:crypto.randomUUID(),at,fields:{...old.fields},outcome,hints}]}))return false;rest.notice('Attempt recorded. Check the account save status.');return true}
  return <Context.Provider value={{p,...rest,get,patch,submit,learning}}>{children}</Context.Provider>;
