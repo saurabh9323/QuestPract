@@ -1,7 +1,8 @@
-import {parseDesign, type Design, type Mode} from './workspace-design';
+import {freshDesign,parseDesign, type Design, type Mode} from './workspace-design';
 
 type Fields = Record<string,string>;
 export type LayoutSnapshot = {id:string; name:string; design:Design; mode:Mode};
+export const defaultId='quest90Default';
 export const personalId='personalLayout';
 export const maxLayouts=12;
 const slots=Array.from({length:maxLayouts},(_,index)=>'layoutSlot'+(index+1));
@@ -19,12 +20,16 @@ function encode(snapshot:LayoutSnapshot) {
 }
 
 export function layoutLibrary(fields:Fields,mode:Mode) {
-  const personal=readSlot(fields,personalId)??{
-    id:personalId,name:'My workspace',design:parseDesign(fields.design),mode,
-  };
-  const items=[personal,...slots.flatMap(id=>readSlot(fields,id)??[])];
-  const active=items.find(item=>item.id===fields.appliedLayout)??personal;
-  return {items,personal,active};
+  // The built-in layout inherits Quest90's original theme in either display mode.
+  const original:LayoutSnapshot={id:defaultId,name:'Default layout',design:freshDesign(),mode};
+  const legacy=fields.appliedLayout && fields.appliedLayout!==personalId
+    ? freshDesign():parseDesign(fields.design);
+  const personal=readSlot(fields,personalId)??{id:personalId,name:'My workspace',design:legacy,mode};
+  const hasPersonal=JSON.stringify(personal.design)!==JSON.stringify(original.design);
+  const named=slots.flatMap(id=>readSlot(fields,id)??[]);
+  const items=[original,...(hasPersonal?[personal]:[]),...named];
+  const active=items.find(item=>item.id===fields.appliedLayout)??(hasPersonal?personal:original);
+  return {items,personal,active,namedCount:named.length};
 }
 
 // Each snapshot gets its own bounded Studio field so a large palette cannot crowd out other layouts.
@@ -47,6 +52,6 @@ export function applyLayout(fields:Fields,mode:Mode,id:string) {
 
 export function savePersonal(design:Design,mode:Mode):Fields {
   const normalized=parseDesign(JSON.stringify(design));
-  return {design:JSON.stringify(normalized),appliedLayout:personalId,
+  return {design:JSON.stringify(normalized),appliedLayout:JSON.stringify(normalized)===JSON.stringify(freshDesign())?defaultId:personalId,
     [personalId]:encode({id:personalId,name:'My workspace',design:normalized,mode})};
 }

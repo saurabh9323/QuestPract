@@ -1,7 +1,7 @@
 'use client';
 
 import {useState, type FormEvent} from 'react';
-import {applyLayout,layoutLibrary,maxLayouts,personalId,saveCopy} from '@/lib/layout-library';
+import {applyLayout,defaultId,layoutLibrary,maxLayouts,personalId,saveCopy} from '@/lib/layout-library';
 import {defaults,designRecord,palette,parseDesign,type Design,type Mode} from '@/lib/workspace-design';
 import {useStudio} from './studio/StudioContext';
 
@@ -20,7 +20,7 @@ export default function SavedWorkspaceLayouts({draft,currentMode,previewMode,dir
   const [status,setStatus]=useState('');
   const [removing,setRemoving]=useState('');
   const fields=get(designRecord).fields;
-  const {items,active}=layoutLibrary(fields,currentMode);
+  const {items,active,namedCount}=layoutLibrary(fields,currentMode);
 
   function save(event:FormEvent) {
     event.preventDefault();
@@ -48,13 +48,13 @@ export default function SavedWorkspaceLayouts({draft,currentMode,previewMode,dir
   return <section className="card designer-library" aria-labelledby="layout-library-title">
     <span className="eyebrow">LAYOUT LIBRARY</span>
     <h2 id="layout-library-title">My layouts</h2>
-    <p>Currently using <strong>{active.name}</strong> in {currentMode} mode. Keep up to {maxLayouts} named copies alongside your personal workspace.</p>
+    <p>Currently using <strong>{active.name}</strong> in {currentMode} mode. Default layout restores the original green Quest90 design in your current light or dark mode. You can save up to {maxLayouts} named alternatives.</p>
     <form onSubmit={save} className="layout-copy-form">
       <label>Save a copy of<select value={source} onChange={e=>setSource(e.target.value as typeof source)}>
         <option value="current">Currently applied workspace</option><option value="preview">Studio preview</option>
       </select></label>
       <label>Layout name<input required maxLength={40} value={name} placeholder="e.g. Evening interview prep" onChange={e=>setName(e.target.value)}/></label>
-      <button className="primary" disabled={!name.trim()||items.length-1>=maxLayouts}>Save named copy</button>
+      <button className="primary" disabled={!name.trim()||namedCount>=maxLayouts}>Save named copy</button>
     </form>
     {dirty&&<p>To apply these edits as a separate layout, save a named copy of the Studio preview. Discard or save your edits before switching to a different design.</p>}
     <ul className="layout-library-grid">{items.map(item=>{
@@ -69,7 +69,7 @@ export default function SavedWorkspaceLayouts({draft,currentMode,previewMode,dir
         {isActive&&<strong className="layout-applied">Currently applied</strong>}
         <div className="button-row">
           <button className="secondary" disabled={(dirty&&!matchesDraft)||(!dirty&&isActive&&item.mode===currentMode)} onClick={()=>apply(item.id)}>Apply layout</button>
-          {item.id!==personalId&&!isActive&&removing!==item.id&&<button className="text-btn" onClick={()=>setRemoving(item.id)}>Remove</button>}
+          {item.id!==defaultId&&item.id!==personalId&&!isActive&&removing!==item.id&&<button className="text-btn" onClick={()=>setRemoving(item.id)}>Remove</button>}
           {removing===item.id&&!isActive&&<><button className="text-btn" onClick={()=>{
             if(patch(designRecord,{[item.id]:''})) {setRemoving('');setStatus('Removed “'+item.name+'”.');}
           }}>Confirm removal</button><button className="text-btn" onClick={()=>setRemoving('')}>Cancel</button></>}
