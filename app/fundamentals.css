@@ -264,3 +264,4 @@
 @media(prefers-reduced-motion:reduce) {
   .language-fundamentals *, .language-fundamentals *::before, .language-fundamentals *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }.fh-track-card:hover,.ft-concept-tile:hover { transform: none; }
 }
+.language-fundamentals :is(.fh-hero,.ft-hero) { height: auto; }
