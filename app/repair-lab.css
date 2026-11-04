@@ -20,3 +20,13 @@
 @media(max-width:480px){.repair-mode{grid-template-columns:1fr}.repair-panel,.repair-hero,.repair-module-card{padding:16px}.repair-question-map{grid-template-columns:1fr 1fr}.repair-actions>*{max-width:100%}.repair-choice{align-items:flex-start;padding:12px;flex-wrap:wrap}.repair-field textarea.pg-editor{font-size:13px}.repair-metrics strong{font-size:21px}}
 
 .repair-login-banner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:24px;margin:20px 0;border:1px solid var(--line);border-left:4px solid var(--accent,#6b8d4e);border-radius:14px;background:var(--surface);color:var(--ink)}.repair-login-banner small{display:block;font-size:10px;letter-spacing:.12em;margin-bottom:8px;color:var(--muted)}.repair-login-banner strong{font-size:23px}.repair-login-banner p{line-height:1.6;color:var(--muted);margin-bottom:0}@media(max-width:800px){.repair-mode{grid-template-columns:1fr}.repair-login-banner{padding:16px}}
+
+.counter-lab { display: grid; gap: 16px; min-width: 0; }
+.counter-lab .repair-panel { min-width: 0; }
+.counter-inputs { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,220px),1fr)); gap: 14px; margin-block: 18px; }
+.counter-inputs label { display: grid; gap: 6px; }
+.counter-output { padding: 14px; background: var(--surface-raised); color: var(--ink); border-radius: 10px; margin-top: 14px; overflow-wrap: anywhere; }
+.counter-lab fieldset { border: 1px solid var(--line); margin: 12px 0; min-width: 0; border-radius: 8px; }
+.counter-candidate { display: grid; gap: 8px; padding: 10px; }
+.counter-candidate code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.counter-lab pre { overflow-x: auto; }
