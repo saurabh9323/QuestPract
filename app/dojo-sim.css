@@ -1,0 +1,14 @@
+.dojo-lab-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0}
+.dojo-lab label{display:grid;gap:8px;font-size:14px;line-height:1.6}
+.dojo-lab input,.dojo-lab select{min-width:0;width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.dojo-lab .dojo-predict{max-width:580px;margin-bottom:20px}
+.dojo-lab-result{border-top:1px solid var(--line);margin-top:24px;padding-top:20px}
+.dojo-lab-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}
+.dojo-lab-metrics>div{padding:18px;background:var(--surface-raised);border:1px solid var(--line);border-radius:12px;display:grid;gap:8px}
+.dojo-lab-metrics b{font-size:22px;overflow-wrap:anywhere}.dojo-lab-metrics span{font-size:13px}
+.dojo-model-trace{list-style:none;padding:0;display:grid;gap:12px}
+.dojo-model-trace li{display:flex;align-items:flex-start;gap:14px;padding:16px;border:1px solid var(--line);border-radius:12px;line-height:1.7;background:var(--surface)}
+.dojo-model-trace li.is-current{border-color:var(--accent);box-shadow:inset 4px 0 var(--accent);background:var(--surface-raised)}
+.dojo-model-trace button{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.dojo-lab details article{padding:16px 0;border-bottom:1px solid var(--line)}.dojo-lab dd{margin:4px 0 14px}.dojo-active-step{font-size:14px;color:var(--muted)}
+@media(max-width:900px){.dojo-lab-inputs{grid-template-columns:1fr}.dojo-model-trace li{padding:12px;gap:10px}}
