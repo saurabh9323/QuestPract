@@ -3,6 +3,8 @@
 import {useEffect, useRef, useState} from 'react';
 import {ArrowRight, BookOpen, Check, Copy as CopyIcon, GitBranch, Play, RotateCcw, Save, MessageCircle, Layers, ChevronRight} from 'lucide-react';
 import {oopLessons, oopCases, walletExamples} from '@/lib/oop';
+import {essentialForLesson} from '@/lib/oop-essentials';
+import {EssentialComparison, EssentialFocus, EssentialQuiz, EssentialsPath, InterviewModel, ObjectMessageTrace, type OopKnowledgeChecks} from '@/components/oop/EssentialTeaching';
 import {dateKey, dayDate, type Progress, type OopRecord, type OopAttempt} from '@/lib/progress';
 
 type Props = {p:Progress; commit:(p:Progress)=>void};
@@ -58,16 +60,87 @@ export default function OOPStudio({p,commit}:Props){
   const [showCriteria,setShowCriteria]=useState(false);
   const [seconds,setSeconds]=useState(90);
   const [running,setRunning]=useState(false);
+  const [knowledgeChecks,setKnowledgeChecks]=useState<OopKnowledgeChecks>({});
   const lesson=oopLessons.find(l=>l.id===lessonId)!;
+  const essential=essentialForLesson(lessonId);
   const study=oopCases.find(c=>c.id===caseId)!;
   const attempted=oopLessons.filter(l=>p.oop?.[l.id]?.attempts.length).length;
   const independent=oopLessons.filter(l=>p.oop?.[l.id]?.attempts.at(-1)?.confidence==='independent').length;
   const due=oopLessons.filter(l=>p.oop?.[l.id]?.reviewDue&&p.oop[l.id].reviewDue!<=dateKey());
+  const tabs=[{id:'learn',label:'Learn & build',icon:BookOpen},{id:'lab',label:'Object simulator',icon:Play},{id:'design',label:'Design challenges',icon:Layers},{id:'interview',label:'Explain in English',icon:MessageCircle}];
   useEffect(()=>{if(!running)return;const timer=setInterval(()=>setSeconds(s=>Math.max(0,s-1)),1000);return()=>clearInterval(timer);},[running]);
   useEffect(()=>{if(seconds===0)setRunning(false);},[seconds]);
   useEffect(()=>{setRunning(false);setSeconds(90);setShowCriteria(false);},[lessonId,tab]);
   const matching=oopLessons.filter(l=>`${l.title} ${l.explanation} ${l.group}`.toLowerCase().includes(search.toLowerCase()));
-  return <section className="oop-workbench"><div className="card oop-heading"><div><span className="eyebrow">OOP LEARNING STUDIO</span><h2>From objects to interview-ready designs</h2><p>Learn one concept, see its behavior, build it, then explain it in your own words.</p></div><GitBranch size={34}/></div><div className="oop-metrics"><div><strong>{attempted}/{oopLessons.length}</strong><span>lessons attempted</span></div><div><strong>{independent}</strong><span>independent · self-assessed</span></div><button disabled={!due.length} onClick={()=>{setLessonId(due[0].id);setTab('learn');setSearch('');}}><strong>{due.length}</strong><span>reviews due · open next</span></button><div><strong>{oopCases.length}</strong><span>real design challenges</span></div></div><div className="oop-tabs" role="tablist" aria-label="OOP learning modes">{[{id:'learn',label:'Learn & build',icon:BookOpen},{id:'lab',label:'Object simulator',icon:Play},{id:'design',label:'Design challenges',icon:Layers},{id:'interview',label:'Explain in English',icon:MessageCircle}].map(t=><button key={t.id} id={`oop-tab-${t.id}`} role="tab" aria-selected={tab===t.id} aria-controls="oop-panel" onClick={()=>setTab(t.id)}><t.icon size={17}/>{t.label}</button>)}</div><div id="oop-panel" role="tabpanel" aria-labelledby={`oop-tab-${tab}`}>
-    {tab==='lab'?<WalletLab/>:tab==='design'?<><div className="oop-case-picker">{oopCases.map(c=><button className={c.id===caseId?'selected':''} key={c.id} aria-pressed={c.id===caseId} onClick={()=>setCaseId(c.id)}>{c.title}</button>)}</div><section className="card"><span className="eyebrow">LOW-LEVEL DESIGN + SYSTEM BOUNDARIES</span><h2>{study.title}</h2><p>{study.prompt}</p><Flow key={study.id} nodes={study.nodes} steps={study.steps}/><h3>Build it step by step</h3><ol>{study.steps.map(s=><li key={s}>{s}</li>)}</ol><details><summary>Reveal design hints</summary><ul>{study.hints.map(h=><li key={h}>{h}</li>)}</ul></details><h3>What your design should prove</h3><ul>{study.checks.map(c=><li key={c}>{c}</li>)}</ul></section><AnswerWorkspace key={study.id} id={study.id} title={study.title} prompt={study.prompt} rubric={study.checks.join('; ')} p={p} commit={commit}/></>:<div className="oop-learning-layout"><section className="card oop-lesson-nav"><label className="field-label">Find a concept<input type="search" value={search} onChange={e=>setSearch(e.target.value)} placeholder="SOLID, strategy, objects…"/></label>{['Foundations','SOLID','Patterns'].map(group=><div key={group}><h3>{group}</h3>{matching.filter(l=>l.group===group).map(l=><button key={l.id} className={l.id===lessonId?'selected':''} aria-pressed={l.id===lessonId} onClick={()=>setLessonId(l.id)}><span>{l.title}</span>{p.oop?.[l.id]?.attempts.length?<Check size={15} aria-label="Attempt saved"/>:<ChevronRight size={15}/>}</button>)}</div>)}{matching.length===0&&<p>No matching concept. Try another keyword.</p>}</section><div className="oop-lesson-body"><section className="card"><span className="eyebrow">{lesson.group} · {oopLessons.findIndex(l=>l.id===lessonId)+1} OF {oopLessons.length}</span><h2>{lesson.title}</h2>{tab==='learn'?<><p>{lesson.explanation}</p><div className="oop-analogy"><strong>Picture it</strong><p>{lesson.analogy}</p></div><Flow key={lesson.id} nodes={lesson.flow}/><Code text={lesson.code} label="Worked TypeScript example"/><div className="oop-feedback"><strong>Expected behavior</strong><p>{lesson.output}</p></div><h3>Your build mission</h3><p>{lesson.mission}</p>{lesson.hints.map((hint,i)=><details key={lesson.id+i}><summary>Reveal hint {i+1}</summary><p>{hint}</p></details>)}<h3>Proof checklist</h3><ul>{lesson.checks.map(c=><li key={c}>{c}</li>)}</ul><div className="oop-pitfall"><strong>Common interview trap</strong><p>{lesson.pitfall}</p></div></>:<><p className="oop-interview-question">{lesson.question}</p><div className="oop-timer"><strong role="timer" aria-label={`${seconds} seconds remaining`}>{Math.floor(seconds/60)}:{String(seconds%60).padStart(2,'0')}</strong><button className="primary" onClick={()=>{if(seconds===0)setSeconds(90);setRunning(!running)}}>{running?'Pause':'Start 90-second answer'}</button><button className="secondary" onClick={()=>{setRunning(false);setSeconds(90)}}><RotateCcw size={16}/>Reset</button></div>{seconds===0&&<p role="status">Time is up. Write what you said, then make it more concise.</p>}<h3>A clear speaking structure</h3><ol><li><b>Define:</b> “The concept means…”</li><li><b>Example:</b> “In a checkout service, I would…”</li><li><b>Tradeoff:</b> “This helps when… but adds…”</li><li><b>Check understanding:</b> “Would you like me to explain the implementation?”</li></ol><button className="secondary" aria-expanded={showCriteria} onClick={()=>setShowCriteria(!showCriteria)}>{showCriteria?'Hide':'Show'} reviewer checklist</button>{showCriteria&&<p className="oop-feedback">{lesson.rubric}</p>}<p>Optional people practice: ask a willing teammate or friend for two minutes, explain this concept, then ask them what was unclear. Write their feedback below. No microphone recording is required.</p></>}</section><AnswerWorkspace key={lesson.id} id={lesson.id} title={lesson.title} prompt={`${lesson.mission}\nInterview: ${lesson.question}`} rubric={`${lesson.rubric}\n${lesson.checks.join('; ')}`} p={p} commit={commit}/><div className="oop-next"><button className="secondary" onClick={()=>{const index=oopLessons.findIndex(l=>l.id===lessonId);setLessonId(oopLessons[(index+1)%oopLessons.length].id)}}>Next concept <ArrowRight size={16}/></button></div></div></div>}
-  </div></section>;
+  function selectEssential(id:string){setLessonId(id);setSearch('');}
+  return <section className="oop-workbench">
+    <div className="card oop-heading"><div><span className="eyebrow">OOP LEARNING STUDIO</span><h2>Understand objects. Make better design choices.</h2><p>Learn the rule, compare concrete designs, trace the behavior and explain the tradeoff in your own words.</p></div><GitBranch size={34}/></div>
+    <div className="oop-metrics">
+      <div><strong>{attempted}/{oopLessons.length}</strong><span>lessons attempted</span></div>
+      <div><strong>{independent}</strong><span>independent · self-assessed</span></div>
+      <button disabled={!due.length} onClick={()=>{setLessonId(due[0].id);setTab('learn');setSearch('');}}><strong>{due.length}</strong><span>reviews due · open next</span></button>
+      <div><strong>{oopCases.length}</strong><span>real design challenges</span></div>
+    </div>
+    <div className="oop-tabs" role="tablist" aria-label="OOP learning modes">{tabs.map((t,index)=><button key={t.id} id={`oop-tab-${t.id}`} role="tab" tabIndex={tab===t.id?0:-1} aria-selected={tab===t.id} aria-controls="oop-panel" onClick={()=>setTab(t.id)} onKeyDown={event=>{
+      let next:number|undefined;
+      if(event.key==='ArrowRight')next=(index+1)%tabs.length;
+      if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;
+      if(event.key==='Home')next=0;
+      if(event.key==='End')next=tabs.length-1;
+      if(next!==undefined){event.preventDefault();setTab(tabs[next].id);document.getElementById(`oop-tab-${tabs[next].id}`)?.focus();}
+    }}><t.icon size={17}/>{t.label}</button>)}</div>
+    <div id="oop-panel" role="tabpanel" aria-labelledby={`oop-tab-${tab}`}>
+      {tab==='lab'?<>
+        <section className="card oop-lab-walkthrough"><ObjectMessageTrace/></section>
+        <WalletLab/>
+      </>:tab==='design'?<>
+        <div className="oop-case-picker">{oopCases.map(c=><button className={c.id===caseId?'selected':''} key={c.id} aria-pressed={c.id===caseId} onClick={()=>setCaseId(c.id)}>{c.title}</button>)}</div>
+        <section className="card"><span className="eyebrow">LOW-LEVEL DESIGN + SYSTEM BOUNDARIES</span><h2>{study.title}</h2><p>{study.prompt}</p><Flow key={study.id} nodes={study.nodes} steps={study.steps}/><h3>Build it step by step</h3><ol>{study.steps.map(s=><li key={s}>{s}</li>)}</ol><details><summary>Reveal design hints</summary><ul>{study.hints.map(h=><li key={h}>{h}</li>)}</ul></details><h3>What your design should prove</h3><ul>{study.checks.map(c=><li key={c}>{c}</li>)}</ul></section>
+        <AnswerWorkspace key={study.id} id={study.id} title={study.title} prompt={study.prompt} rubric={study.checks.join('; ')} p={p} commit={commit}/>
+      </>:<>
+        <EssentialsPath selected={lessonId} checks={knowledgeChecks} onSelect={selectEssential}/>
+        <div className="oop-learning-layout">
+          <section className="card oop-lesson-nav" aria-label="OOP concept navigation">
+            <label className="field-label">Find a concept<input type="search" value={search} onChange={e=>setSearch(e.target.value)} placeholder="SOLID, strategy, objects…"/></label>
+            {['Foundations','SOLID','Patterns'].map(group=><div key={group}><h3>{group}</h3>{matching.filter(l=>l.group===group).map(l=><button key={l.id} className={l.id===lessonId?'selected':''} aria-pressed={l.id===lessonId} onClick={()=>setLessonId(l.id)}><span>{l.title}</span>{p.oop?.[l.id]?.attempts.length?<Check size={15} aria-label="Attempt saved"/>:<ChevronRight size={15}/>}</button>)}</div>)}
+            {matching.length===0&&<p>No matching concept. Try another keyword.</p>}
+          </section>
+          <div className="oop-lesson-body">
+            <section className="card">
+              <span className="eyebrow">{lesson.group} · {oopLessons.findIndex(l=>l.id===lessonId)+1} OF {oopLessons.length}</span>
+              <h2>{lesson.title}</h2>
+              {tab==='learn'?<>
+                <p>{lesson.explanation}</p>
+                {essential&&<EssentialFocus essential={essential}/>}
+                <div className="oop-analogy"><strong>Picture it</strong><p>{lesson.analogy}</p></div>
+                {essential&&<EssentialComparison essential={essential}/>}
+                {['encapsulation','polymorphism','composition'].includes(lesson.id)?<ObjectMessageTrace key={lesson.id} initialScenario={lesson.id==='encapsulation'?'withdraw-success':'price-rule'}/>:<Flow key={lesson.id} nodes={lesson.flow}/>}
+                <Code text={lesson.code} label="Worked TypeScript example · illustrative, not executed"/>
+                <div className="oop-feedback"><strong>Expected behavior</strong><p>{lesson.output}</p></div>
+                {essential&&<EssentialQuiz key={lesson.id} essential={essential} checkedChoice={knowledgeChecks[lesson.id]} onCheck={choice=>setKnowledgeChecks(current=>({...current,[lesson.id]:choice}))}/>}
+                <h3>Your build mission</h3><p>{lesson.mission}</p>
+                {lesson.hints.map((hint,i)=><details key={lesson.id+i}><summary>Reveal hint {i+1}</summary><p>{hint}</p></details>)}
+                <h3>Proof checklist</h3><ul>{lesson.checks.map(c=><li key={c}>{c}</li>)}</ul>
+                <div className="oop-pitfall"><strong>Common interview trap</strong><p>{lesson.pitfall}</p></div>
+                {essential&&<InterviewModel essential={essential}/>}
+                <button type="button" className="secondary" onClick={()=>{setTab('interview');document.getElementById('oop-tab-interview')?.focus();}}><MessageCircle size={16}/>Practice explaining this concept</button>
+              </>:<>
+                <p className="oop-interview-question">{lesson.question}</p>
+                {essential&&<EssentialFocus essential={essential}/>}
+                <div className="oop-timer"><strong role="timer" aria-label={`${seconds} seconds remaining`}>{Math.floor(seconds/60)}:{String(seconds%60).padStart(2,'0')}</strong><button className="primary" onClick={()=>{if(seconds===0)setSeconds(90);setRunning(!running)}}>{running?'Pause':'Start 90-second answer'}</button><button className="secondary" onClick={()=>{setRunning(false);setSeconds(90)}}><RotateCcw size={16}/>Reset</button></div>
+                {seconds===0&&<p role="status">Time is up. Write what you said, then make it more concise.</p>}
+                <h3>A clear speaking structure</h3><ol><li><b>Define:</b> “The concept means…”</li><li><b>Example:</b> “In a checkout service, I would…”</li><li><b>Tradeoff:</b> “This helps when… but adds…”</li><li><b>Check understanding:</b> “Would you like me to explain the implementation?”</li></ol>
+                {essential&&<InterviewModel essential={essential}/>}
+                <button className="secondary" aria-expanded={showCriteria} onClick={()=>setShowCriteria(!showCriteria)}>{showCriteria?'Hide':'Show'} reviewer checklist</button>
+                {showCriteria&&<p className="oop-feedback">{lesson.rubric}</p>}
+                <p>Optional people practice: ask a willing teammate or friend for two minutes, explain this concept, then ask them what was unclear. Write their feedback below. No microphone recording is required.</p>
+              </>}
+            </section>
+            <AnswerWorkspace key={lesson.id} id={lesson.id} title={lesson.title} prompt={`${lesson.mission}\nInterview: ${lesson.question}`} rubric={`${lesson.rubric}\n${lesson.checks.join('; ')}`} p={p} commit={commit}/>
+            <div className="oop-next"><button className="secondary" onClick={()=>{const index=oopLessons.findIndex(l=>l.id===lessonId);setLessonId(oopLessons[(index+1)%oopLessons.length].id)}}>Next concept <ArrowRight size={16}/></button></div>
+          </div>
+        </div>
+      </>}
+    </div>
+  </section>;
 }
