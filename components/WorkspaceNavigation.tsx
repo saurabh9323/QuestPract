@@ -1,20 +1,19 @@
 'use client';
-import {workspaceUrl} from '@/lib/workspace-routes';
+import {useState,type MouseEvent} from 'react';
+import {workspaceUrl,type WorkspaceView} from '@/lib/workspace-routes';
+import {navigationCatalog,searchModules} from '@/lib/navigation/catalog';
 import {BookOpen,ChartNoAxesCombined,Code2,Sun,UserRound,ChevronRight} from 'lucide-react';
-
-export const workspaceGroups = [
-  {name:'Today',icon:Sun,items:[['dashboard','Overview'],['quest','Daily quest'],['planner','My schedule'],['tasks','Tasks & notes']]},
-  {name:'Learn',icon:BookOpen,items:[['fundamentals','Language fundamentals'],['discovery','Discovery inbox'],['patternLab','DSA Pattern Lab'],['materials','Interview materials'],['commute','Commute library'],['cartoons','Cartoon classroom'],['visual','Visual lab'],['theory','Theory studio'],['oops','OOP studio'],['library','Skill library']]},
-  {name:'Practice',icon:Code2,items:[['insideApp','Inside a Real App'],['repairLab','Repair & Recall'],['playground','Module Playground'],['flows','Flow & system design'],['sqlGame','SQL expedition'],['dojo','Dojo'],['studio','Practice studio'],['autoCoach','Auto coach'],['challenges','My challenges'],['bank','Question bank'],['brain','Daily brainstorm'],['interview','Mock interview'],['communication','Communication coach']]},
-  {name:'Progress',icon:ChartNoAxesCombined,items:[['journey','90-day calendar'],['timeline','DSA learning path'],['analytics','Analytics'],['recall','Recall room']]},
-  {name:'Profile',icon:UserRound,items:[['profile','My profile'],['designer','Workspace studio'],['settings','Settings & data']]},
-] as const;
-export type WorkspaceView = typeof workspaceGroups[number]['items'][number][0];
-
+const icons=[Sun,BookOpen,Code2,ChartNoAxesCombined,UserRound];
+export const workspaceGroups=navigationCatalog.map((g,i)=>({...g,icon:icons[i],items:g.sections.flatMap(s=>s.items.map(([id,label])=>[id,label] as const))}));
+export type {WorkspaceView};
 export default function WorkspaceNavigation({view,go,due,day=1}:{view:WorkspaceView;go:(view:WorkspaceView)=>void;due:number;day?:number}){
-  const active = workspaceGroups.find(g=>g.items.some(([id])=>id===view)) || workspaceGroups[0];
-  return <nav className="workspace-navigation" aria-label="Workspace navigation">
-    <div className="navigation-groups">{workspaceGroups.map(g=><a href={workspaceUrl(g.items[0][0],day)} key={g.name} className={g===active?'active':''} aria-expanded={g===active} aria-controls="navigation-children" onClick={e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();go(g.items[0][0])}}><g.icon size={19}/><span>{g.name}</span><ChevronRight size={14}/></a>)}</div>
-    <div className="navigation-children" id="navigation-children"><span className="navigation-caption">{active.name}</span>{active.items.map(([id,label])=><a href={workspaceUrl(id,day)} key={id} className={view===id?'active':''} aria-current={view===id?'page':undefined} onClick={e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();go(id)}}><span>{label}</span>{id==='recall'&&due>0&&<span className="nav-count">{due}</span>}</a>)}</div>
-  </nav>;
+ const [query,setQuery]=useState('');
+ const active=workspaceGroups.find(g=>g.items.some(([id])=>id===view))||workspaceGroups[0];
+ function follow(e:MouseEvent<HTMLAnchorElement>,id:WorkspaceView){if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();setQuery('');go(id)}
+ return <nav className="workspace-navigation" aria-label="Workspace navigation">
+ <label className="module-search">Find a module<input type="search" placeholder="SQL, interview, generics…" value={query} onChange={e=>setQuery(e.target.value)}/></label>
+ {query.trim()?<div className="module-results"><span role="status">{searchModules(query).length} matching modules</span>{searchModules(query).map(item=><a key={item.id} href={workspaceUrl(item.id,day)} onClick={e=>follow(e,item.id)}><strong>{item.label}</strong><small>{item.group} · {item.description}</small></a>)}{!searchModules(query).length&&<p>Try “code”, “design” or “reading”.</p>}<button type="button" onClick={()=>setQuery('')}>Clear search</button></div>:<>
+ <div className="navigation-groups">{workspaceGroups.map(g=><a href={workspaceUrl(g.items[0][0],day)} key={g.name} className={g===active?'active':''} onClick={e=>follow(e,g.items[0][0])}><g.icon size={19}/><span>{g.name}</span><ChevronRight size={14}/></a>)}</div>
+ <div className="navigation-children" id="navigation-children"><p className="module-group-description">{active.description}</p>{active.sections.map(section=><details className="module-nav-section" key={view+section.title} open={section.items.some(([id])=>id===view)}><summary>{section.title}</summary>{section.items.map(([id,label,description])=><a href={workspaceUrl(id,day)} key={id} title={description} className={view===id?'active':''} aria-current={view===id?'page':undefined} onClick={e=>follow(e,id)}><span>{label}</span>{id==='recall'&&due>0&&<span className="nav-count">{due}</span>}</a>)}</details>)}</div></>}
+ </nav>;
 }

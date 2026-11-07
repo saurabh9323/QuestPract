@@ -5,6 +5,7 @@ import {ArrowRight, Code2, Layers, Orbit} from 'lucide-react';
 import {useStudio} from './studio/StudioContext';
 import SavedWorkspaceLayouts from './SavedWorkspaceLayouts';
 import {savePersonal} from '@/lib/layout-library';
+import {navigationThemeGroup} from '@/lib/navigation/catalog';
 import {workspaceGroups} from './WorkspaceNavigation';
 import {navigateWorkspace} from '@/lib/workspace-location';
 import {
@@ -53,7 +54,7 @@ export default function WorkspaceDesigner({night,onMode}:{night:boolean;onMode:(
   const [scope,setScope]=useState<Scope>('Portal');
   const parent=workspaceGroups.find(group=>group.items.some(([id])=>id===scope));
   const pageLabel=parent?.items.find(([id])=>id===scope)?.[1];
-  const resolved={...defaults[mode],...palette(draft,mode,parent?.name||scope,parent?scope:undefined)};
+  const resolved={...defaults[mode],...palette(draft,mode,parent?navigationThemeGroup(scope as import('@/lib/workspace-routes').WorkspaceView):scope,parent?scope:undefined)};
   const custom=draft[mode][scope] || {};
   const dirty=JSON.stringify(draft)!==JSON.stringify(parseDesign(saved));
   function updateColor(key:ColorKey,value?:string) {
