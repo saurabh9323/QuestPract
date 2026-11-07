@@ -19,6 +19,7 @@ export default function CommonFoundations() {
   const choices = [{value: left, set: setLeft}, {value: right, set: setRight}];
   return <div className="fundamentals-common">
     <div className="fc-heading"><span className="eyebrow">LEARN ONCE · COMPARE CAREFULLY</span><h2>Different stacks.<br/><em>Connected ideas.</em></h2><p>Bring what you already know to your next language. Compare the execution models, then practise explaining what changes.</p></div>
+    <section className="card"><span className="eyebrow">BEGIN WITH THE BUILDING BLOCKS</span><h3>Constructors, generics and reliable retries</h3><p>Watch ten beginner concepts step by step, compare values before and after, and try an order-retry simulation.</p><a className="secondary" href="/oop/?mode=basics" onClick={event=>follow(event,'/oop/?mode=basics')}>Open animated basics <ArrowUpRight size={15}/></a></section>
     <section className="card fc-comparison" aria-label="Compare execution models">
       <div className="fc-comparison-heading"><GitCompareArrows size={23}/><div><h3>Put two technologies side by side</h3><p>Similar names can describe different behavior. Name the runtime and the boundary.</p></div></div>
       <div className="fundamentals-compare">{choices.map(({value, set}, index) => {

@@ -6,6 +6,7 @@ import './lab.css';
 import './planner.css';
 import './course.css';
 import './oop.css';
+import './oop-foundations.css';
 import './theme.css';
 import './visual.css';
 import './scenario-lab.css';

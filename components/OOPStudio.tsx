@@ -4,6 +4,8 @@ import {useEffect, useRef, useState} from 'react';
 import {ArrowRight, BookOpen, Check, Copy as CopyIcon, GitBranch, Play, RotateCcw, Save, MessageCircle, Layers, ChevronRight} from 'lucide-react';
 import {oopLessons, oopCases, walletExamples} from '@/lib/oop';
 import {essentialForLesson} from '@/lib/oop-essentials';
+import FoundationsPath from '@/components/oop/FoundationsPath';
+import {navigateWorkspace,useRouteQuery} from '@/lib/workspace-location';
 import {EssentialComparison, EssentialFocus, EssentialQuiz, EssentialsPath, InterviewModel, ObjectMessageTrace, type OopKnowledgeChecks} from '@/components/oop/EssentialTeaching';
 import {dateKey, dayDate, type Progress, type OopRecord, type OopAttempt} from '@/lib/progress';
 
@@ -53,7 +55,10 @@ function WalletLab(){
 }
 
 export default function OOPStudio({p,commit}:Props){
-  const [tab,setTab]=useState('learn');
+  const routeQuery=useRouteQuery();
+  const requestedMode=routeQuery.get('mode')||(routeQuery.has('foundation')?'basics':'learn');
+  const tab=['basics','learn','lab','design','interview'].includes(requestedMode)?requestedMode:'learn';
+  function setTab(mode:string){const next=new URLSearchParams(window.location.search);next.set('mode',mode);navigateWorkspace('/oop/?'+next.toString());}
   const [lessonId,setLessonId]=useState(oopLessons[0].id);
   const [caseId,setCaseId]=useState(oopCases[0].id);
   const [search,setSearch]=useState('');
@@ -67,7 +72,7 @@ export default function OOPStudio({p,commit}:Props){
   const attempted=oopLessons.filter(l=>p.oop?.[l.id]?.attempts.length).length;
   const independent=oopLessons.filter(l=>p.oop?.[l.id]?.attempts.at(-1)?.confidence==='independent').length;
   const due=oopLessons.filter(l=>p.oop?.[l.id]?.reviewDue&&p.oop[l.id].reviewDue!<=dateKey());
-  const tabs=[{id:'learn',label:'Learn & build',icon:BookOpen},{id:'lab',label:'Object simulator',icon:Play},{id:'design',label:'Design challenges',icon:Layers},{id:'interview',label:'Explain in English',icon:MessageCircle}];
+  const tabs=[{id:'basics',label:'Start here · basics',icon:BookOpen},{id:'learn',label:'Learn & build',icon:BookOpen},{id:'lab',label:'Object simulator',icon:Play},{id:'design',label:'Design challenges',icon:Layers},{id:'interview',label:'Explain in English',icon:MessageCircle}];
   useEffect(()=>{if(!running)return;const timer=setInterval(()=>setSeconds(s=>Math.max(0,s-1)),1000);return()=>clearInterval(timer);},[running]);
   useEffect(()=>{if(seconds===0)setRunning(false);},[seconds]);
   useEffect(()=>{setRunning(false);setSeconds(90);setShowCriteria(false);},[lessonId,tab]);
@@ -75,6 +80,7 @@ export default function OOPStudio({p,commit}:Props){
   function selectEssential(id:string){setLessonId(id);setSearch('');}
   return <section className="oop-workbench">
     <div className="card oop-heading"><div><span className="eyebrow">OOP LEARNING STUDIO</span><h2>Understand objects. Make better design choices.</h2><p>Learn the rule, compare concrete designs, trace the behavior and explain the tradeoff in your own words.</p></div><GitBranch size={34}/></div>
+    {tab!=='basics'&&<div className="foundation-entry"><div><strong>New to constructors or generics?</strong><p>Start with ten base topics, animated examples and an order-retry lab for idempotency.</p></div><button type="button" className="primary" onClick={()=>{setTab('basics');document.getElementById('oop-tab-basics')?.focus();}}>Explore the basics <ArrowRight size={16}/></button></div>}
     <div className="oop-metrics">
       <div><strong>{attempted}/{oopLessons.length}</strong><span>lessons attempted</span></div>
       <div><strong>{independent}</strong><span>independent · self-assessed</span></div>
@@ -90,7 +96,7 @@ export default function OOPStudio({p,commit}:Props){
       if(next!==undefined){event.preventDefault();setTab(tabs[next].id);document.getElementById(`oop-tab-${tabs[next].id}`)?.focus();}
     }}><t.icon size={17}/>{t.label}</button>)}</div>
     <div id="oop-panel" role="tabpanel" aria-labelledby={`oop-tab-${tab}`}>
-      {tab==='lab'?<>
+      {tab==='basics'?<FoundationsPath p={p} renderAnswer={lesson=><AnswerWorkspace key={'basics-'+lesson.id} id={'basics-'+lesson.id} title={lesson.title} prompt={`Explain ${lesson.title} in your own words. Include a real-life example, trace one state change, and name a limitation.\n${lesson.question.prompt}`} rubric={lesson.takeaway+' '+lesson.pitfall} p={p} commit={commit}/>}/>:tab==='lab'?<>
         <section className="card oop-lab-walkthrough"><ObjectMessageTrace/></section>
         <WalletLab/>
       </>:tab==='design'?<>
