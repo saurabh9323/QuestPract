@@ -7,6 +7,7 @@ import {navigateWorkspace,useRouteQuery} from '@/lib/workspace-location';
 import type {Progress} from '@/lib/progress';
 import FoundationPlayer from './FoundationPlayer';
 import IdempotencyLab from './IdempotencyLab';
+import MemoryPractice from './MemoryPractice';
 
 function FoundationCheck({lesson}:{lesson:FoundationLesson}){
   const [choice,setChoice]=useState(''),[checked,setChecked]=useState(false);
@@ -20,7 +21,7 @@ function FoundationCheck({lesson}:{lesson:FoundationLesson}){
   </section>;
 }
 
-export default function FoundationsPath({p,renderAnswer}:{p:Progress;renderAnswer:(lesson:FoundationLesson)=>ReactNode}){
+export default function FoundationsPath({p,commit,renderAnswer}:{p:Progress;commit?:(p:Progress)=>void;renderAnswer:(lesson:FoundationLesson)=>ReactNode}){
   const query=useRouteQuery();
   const current=foundationLessons.find(lesson=>lesson.id===query.get('foundation'))||foundationLessons[0];
   const index=foundationLessons.indexOf(current);
@@ -57,6 +58,7 @@ export default function FoundationsPath({p,renderAnswer}:{p:Progress;renderAnswe
           <details><summary>How to answer in an interview</summary><p>{current.interviewAnswer}</p><p>Now try: define it in one sentence → give the example → explain one limitation.</p></details>
           <details><summary>Read the official references</summary><ul>{current.sources.map(source=><li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label} ↗<span className="foundation-sr"> (opens in a new tab)</span></a></li>)}</ul></details>
         </article>
+        {commit&&<MemoryPractice key={current.id} lesson={current} p={p} commit={commit}/>}
         {renderAnswer(current)}
         <nav className="foundation-pagination" aria-label="Beginner lesson pages"><button type="button" className="secondary" disabled={index===0} onClick={()=>choose(foundationLessons[index-1].id)}><ArrowLeft size={16}/>Previous topic</button><span>{index+1} / {foundationLessons.length}</span><button type="button" className="primary" disabled={index===foundationLessons.length-1} onClick={()=>choose(foundationLessons[index+1].id)}>Next topic<ArrowRight size={16}/></button></nav>
       </div>

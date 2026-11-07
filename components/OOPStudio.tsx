@@ -96,7 +96,7 @@ export default function OOPStudio({p,commit}:Props){
       if(next!==undefined){event.preventDefault();setTab(tabs[next].id);document.getElementById(`oop-tab-${tabs[next].id}`)?.focus();}
     }}><t.icon size={17}/>{t.label}</button>)}</div>
     <div id="oop-panel" role="tabpanel" aria-labelledby={`oop-tab-${tab}`}>
-      {tab==='basics'?<FoundationsPath p={p} renderAnswer={lesson=><AnswerWorkspace key={'basics-'+lesson.id} id={'basics-'+lesson.id} title={lesson.title} prompt={`Explain ${lesson.title} in your own words. Include a real-life example, trace one state change, and name a limitation.\n${lesson.question.prompt}`} rubric={lesson.takeaway+' '+lesson.pitfall} p={p} commit={commit}/>}/>:tab==='lab'?<>
+      {tab==='basics'?<FoundationsPath p={p} commit={commit} renderAnswer={lesson=><AnswerWorkspace key={'basics-'+lesson.id} id={'basics-'+lesson.id} title={lesson.title} prompt={`Explain ${lesson.title} in your own words. Include a real-life example, trace one state change, and name a limitation.\n${lesson.question.prompt}`} rubric={lesson.takeaway+' '+lesson.pitfall} p={p} commit={commit}/>}/>:tab==='lab'?<>
         <section className="card oop-lab-walkthrough"><ObjectMessageTrace/></section>
         <WalletLab/>
       </>:tab==='design'?<>
