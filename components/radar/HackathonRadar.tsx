@@ -5,6 +5,7 @@ import {topOpportunities,deadlineCountdown,checklistFor} from '@/lib/radar/logic
 import type {Opportunity,TrackingStatus} from '@/lib/radar/types';
 import {acknowledgeRadarTracking,ensureRadarCapacity,radarRecordId,radarTrackingFields,readRadarTracking,trackingStatuses,type RadarTracking} from '@/lib/radar/tracking';
 import {useStudio} from '../studio/StudioContext';
+import {appendEvent,wipWarning} from '@/lib/career/logic';
 import '@/app/radar.css';
 
 const labels:Record<TrackingStatus,string>={new:'New',interested:'Interested',registered:'Registered',building:'Building',submitted:'Submitted',skipped:'Skipped'};
@@ -18,6 +19,12 @@ export default function HackathonRadar(){
   const [online,setOnline]=useState(true),[now,setNow]=useState<Date|null>(null),[refresh,setRefresh]=useState(0);
   const [messages,setMessages]=useState<Record<string,string>>({}),[busy,setBusy]=useState<string[]>([]);
   const requests=useRef(new Map<string,AbortController>()),mounted=useRef(false),progress=useRef(p);progress.current=p;
+  const [wip,setWip]=useState<{op:Opportunity;status:TrackingStatus;message:string}|null>(null);
+  function move(op:Opportunity,status:TrackingStatus,override=false){
+    const key=radarRecordId(namespace,op.id),check=wipWarning(progress.current.studio||{},'hackathon',key,status,new Date());
+    if(check.exceeded&&!override){setWip({op,status,message:`This would make ${check.projected} active hackathons; your limit is ${check.limit}. Finish one first, or override.`});return}
+    setWip(null);const saved=save(op,{status},true);if(saved)void send(saved);
+  }
   useEffect(()=>{
     mounted.current=true;
     const network=()=>setOnline(navigator.onLine);
@@ -48,7 +55,8 @@ export default function HackathonRadar(){
       const state=read(op.id);key=state.key;
       ensureRadarCapacity(progress.current.studio||{},key);
       const revision=remoteChange?crypto.randomUUID():state.entry?.revision||crypto.randomUUID();
-      const fields=radarTrackingFields(get(key).fields,namespace,op.id,change,revision,remoteChange?true:undefined);
+      const fields:Record<string,string>=radarTrackingFields(get(key).fields,namespace,op.id,change,revision,remoteChange?true:undefined);
+      if(change.status)fields.careerHistory=appendEvent(get(key).fields,change.status,new Date());
       if(!patch(key,fields)){message(key,'Tracking could not be saved. Check the account save message.');return null}
       message(key,remoteChange?'Saved in progress; waiting to send to '+(client.mode==='mock'?'the demo adapter.':'the Radar API.'):'Checklist updated in progress.');
       return readRadarTracking(fields,namespace,op.id);
@@ -80,6 +88,7 @@ export default function HackathonRadar(){
     {loading&&!items&&<p role="status">Finding opportunities…</p>}
     {!loading&&items?.length===0&&<p>No opportunities are available in this feed yet. Check again later.</p>}
     {!loading&&!items&&!error&&!online&&<p>Connect to the internet to load the Radar feed.</p>}
+    {wip&&<div role="alert"><p>{wip.message}</p><button className="primary" onClick={()=>move(wip.op,wip.status,true)}>Override and save anyway</button><button className="secondary" onClick={()=>setWip(null)}>Cancel change</button></div>}
     <div className="radar-list">{top.map(op=>{
       let entry:RadarTracking|null=null,key='',recordError='';
       try{const saved=read(op.id);entry=saved.entry;key=saved.key}catch(e){recordError=e instanceof Error?e.message:'Saved tracking is unreadable.'}
@@ -93,7 +102,7 @@ export default function HackathonRadar(){
         {(op.startsAt||op.endsAt)&&<small>Event: {op.startsAt?new Date(op.startsAt).toLocaleString():'Start not supplied'}{op.endsAt?' → '+new Date(op.endsAt).toLocaleString():''}</small>}
         <div className="radar-tags">{op.tags.map(tag=><span key={tag}>{tag}</span>)}</div>
         {recordError?<p role="alert" className="radar-notice">{recordError} Use Settings → Export progress to keep a backup.</p>:<>
-          <div className="radar-statuses" role="group" aria-label={'Tracking status for '+op.title}>{trackingStatuses.map(s=><button className="secondary" key={s} disabled={waiting} aria-pressed={status===s} onClick={()=>{const saved=save(op,{status:s},true);if(saved)void send(saved)}}>{labels[s]}</button>)}</div>
+          <div className="radar-statuses" role="group" aria-label={'Tracking status for '+op.title}>{trackingStatuses.map(s=><button className="secondary" key={s} disabled={waiting} aria-pressed={status===s} onClick={()=>move(op,s)}>{labels[s]}</button>)}</div>
           {status==='interested'&&<div className="radar-checklist"><h4>Your deadline plan</h4><p>Rule-based plan anchored to the registration deadline. Confirm the separate project-submission cutoff on the event page.</p>
             {checklist.length?<ul>{checklist.map(task=><li key={task.id}><label><input type="checkbox" checked={entry?.checked.includes(task.id)||false} onChange={e=>{const current=read(op.id).entry?.checked||[];save(op,{checked:e.target.checked?[...new Set([...current,task.id])]:current.filter(t=>t!==task.id)},false)}}/><span><strong>{timing[task.id]} · {task.label}</strong><small>{new Date(task.at).toLocaleString()} · {task.status==='closed'?'Deadline passed':task.status==='due'?'Due now':'Upcoming'}</small></span></label></li>)}</ul>:<p>A valid registration deadline is needed to schedule this checklist.</p>}
           </div>}

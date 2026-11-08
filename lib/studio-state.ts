@@ -1,3 +1,4 @@
+import {validateCareerRecord} from './career/logic';
 export type StudioAttempt={id:string;at:string;fields:Record<string,string>;outcome:string;hints:number};
 export type StudioRecord={fields:Record<string,string>;attempts:StudioAttempt[];updatedAt:string};
 export type StudioState=Record<string,StudioRecord>;
@@ -5,8 +6,10 @@ export const blankStudio=():StudioRecord=>({fields:{},attempts:[],updatedAt:''})
 function fields(value:unknown){return !!value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length<=60&&Object.entries(value).every(([k,v])=>/^[a-zA-Z0-9_-]{1,60}$/.test(k)&&typeof v==='string'&&v.length<=40000)}
 export function validateStudio(value:unknown){
  if(!value||typeof value!=='object'||Array.isArray(value)||Object.keys(value).length>2000)throw new Error('Invalid studio data.');
+ if(Object.keys(value).filter(id=>id.startsWith('career-review-')).length>104||Object.keys(value).filter(id=>id.startsWith('career-os-')).length>100)throw new Error('Career storage limit reached. Export your history.');
  for(const [id,r] of Object.entries(value as StudioState)){
   if(!/^[a-z0-9-]{1,120}$/.test(id)||!r||!fields(r.fields)||typeof r.updatedAt!=='string'||!Number.isFinite(Date.parse(r.updatedAt))||!Array.isArray(r.attempts)||r.attempts.length>200)throw new Error('Invalid studio record.');
+  validateCareerRecord(id,r);
   const seen=new Set<string>();for(const a of r.attempts){if(!a||typeof a.id!=='string'||!a.id||a.id.length>120||seen.has(a.id)||typeof a.at!=='string'||!Number.isFinite(Date.parse(a.at))||!fields(a.fields)||typeof a.outcome!=='string'||a.outcome.length>2000||!Number.isInteger(a.hints)||a.hints<0||a.hints>100)throw new Error('Invalid studio attempt.');seen.add(a.id)}
  }
 }
@@ -29,6 +32,7 @@ export function mergeStudio(a:StudioState={},b:StudioState={}):StudioState{
  const result={...a,...b};
  for(const [id,old] of Object.entries(a)){
   const current=b[id];if(!current)continue;
+  if(id.startsWith('career-review-')){result[id]=[old,current].sort((x,y)=>x.updatedAt.localeCompare(y.updatedAt)||JSON.stringify(x).localeCompare(JSON.stringify(y)))[0];continue;}
   // Learning deletion markers are irreversible for this ID. Never recover
   // deleted content as an attempt when reconciling a stale device.
   if(id.startsWith('learning-')&&(old.fields.deleted==='yes'||current.fields.deleted==='yes')){
