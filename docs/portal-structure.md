@@ -15,8 +15,8 @@ Interview materials now sit alongside mock interviews and communication practice
 ## Code boundaries
 
 - `lib/workspace-routes.ts`: stable route slugs, parsing and static export paths. Never rename a route simply to rename a navigation label.
-- `lib/navigation/catalog.ts`: module names, descriptions, groups, ordering and search. Every workspace route appears exactly once. This is the shared catalog for sidebar navigation, breadcrumbs, command search and the portal guide.
-- `components/WorkspaceNavigation.tsx`: navigation interaction and group icons; re-exports the existing group API for appearance settings.
+- `lib/navigation/catalog.ts`: module names, descriptions, groups, ordering, legacy-name aliases and search. Every workspace route appears exactly once. This is the shared catalog for sidebar navigation, page headings, breadcrumbs, command search, appearance settings and the portal guide. Course-day headings retain their specific quest title.
+- `components/WorkspaceNavigation.tsx`: navigation interaction and group icons. Group data lives in the catalog; settings no longer import the sidebar component to access it.
 - `components/navigation/ModuleGuide.tsx`: the expandable portal directory inside the learning toolbar.
 - `app/navigation.css`: scoped directory and navigation styles, including narrow-screen wrapping.
 - `components/QuestWorkspace.tsx`: existing route composition and account state. Feature implementations remain in their own components; this change does not move persistence logic.

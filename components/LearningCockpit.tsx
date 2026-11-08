@@ -1,13 +1,13 @@
 'use client';
 import ModuleGuide from './navigation/ModuleGuide';
-import {navigationLabels} from '@/lib/navigation/catalog';
+import {navigationLabels,navigationEntries} from '@/lib/navigation/catalog';
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {Command,Search,X,Focus,Orbit,ArrowUpRight,Pause,Play} from 'lucide-react';
 import {chapters,quests} from '@/lib/curriculum';
 import {questionBank} from '@/lib/bank';
 import {fundamentalCatalog} from '@/lib/fundamentals/catalog';
 import {interviewTopics} from '@/lib/interview-topics';
-import {workspacePaths,workspaceUrl,type WorkspaceView} from '@/lib/workspace-routes';
+import {workspaceUrl,type WorkspaceView} from '@/lib/workspace-routes';
 import {navigateWorkspace} from '@/lib/workspace-location';
 import {scheduledDay,type Progress} from '@/lib/progress';
 
@@ -22,7 +22,7 @@ export default function LearningCockpit({p,view,focus,onFocus}:{p:Progress;view:
  useEffect(()=>{try{setMotion(localStorage.getItem('quest90-cockpit-motion')==='on'&&!matchMedia('(prefers-reduced-motion: reduce)').matches)}catch{};const handler=(e:KeyboardEvent)=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();if(dialog.current?.open)dialog.current.close();else{setQuery('');dialog.current?.showModal();input.current?.focus();}}};window.addEventListener('keydown',handler);return()=>window.removeEventListener('keydown',handler)},[]);
  const toggleMotion=()=>{setMotion(!motion);try{localStorage.setItem('quest90-cockpit-motion',!motion?'on':'off')}catch{}};
  const entries=useMemo(()=>[
-  ...Object.keys(workspacePaths).map(v=>({label:names[v as WorkspaceView],kind:'Page',path:workspaceUrl(v as WorkspaceView,current),keywords:''})),
+  ...navigationEntries.map(e=>({label:e.label,kind:e.group+' · '+e.section,path:workspaceUrl(e.id,current),keywords:e.description+' '+e.keywords})),
   ...fundamentalCatalog.map(t=>({label:`${t.name} fundamentals`,kind:'Fundamentals',path:`/fundamentals/${t.id}/`,keywords:t.kind+' runtime compilation threads core interview'})),
   ...interviewTopics.map(t=>({label:`${t.name} interview guide`,kind:'Interview',path:`/interview-materials/${t.slug}/`,keywords:t.summary})),
   ...quests.map(q=>({label:`Day ${q.day} · ${q.title}`,kind:'Course',path:workspaceUrl('quest',q.day),keywords:q.mission})),

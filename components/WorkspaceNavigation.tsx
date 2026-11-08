@@ -1,10 +1,10 @@
 'use client';
 import {useState,type MouseEvent} from 'react';
 import {workspaceUrl,type WorkspaceView} from '@/lib/workspace-routes';
-import {navigationCatalog,searchModules} from '@/lib/navigation/catalog';
+import {navigationGroups,searchModules} from '@/lib/navigation/catalog';
 import {BookOpen,ChartNoAxesCombined,Code2,Sun,UserRound,ChevronRight} from 'lucide-react';
-const icons=[Sun,BookOpen,Code2,ChartNoAxesCombined,UserRound];
-export const workspaceGroups=navigationCatalog.map((g,i)=>({...g,icon:icons[i],items:g.sections.flatMap(s=>s.items.map(([id,label])=>[id,label] as const))}));
+const icons={Today:Sun,Learn:BookOpen,Practice:Code2,Progress:ChartNoAxesCombined,Profile:UserRound};
+export const workspaceGroups=navigationGroups.map(g=>({...g,icon:icons[g.name]}));
 export type {WorkspaceView};
 export default function WorkspaceNavigation({view,go,due,day=1}:{view:WorkspaceView;go:(view:WorkspaceView)=>void;due:number;day?:number}){
  const [query,setQuery]=useState('');

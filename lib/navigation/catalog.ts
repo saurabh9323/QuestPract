@@ -14,9 +14,21 @@ export const navigationCatalog:readonly {name:'Today'|'Learn'|'Practice'|'Progre
  {name:'Progress',description:'Review evidence of practice and decide what to revisit.',sections:[{title:'Review and reflect',items:[['recall','Recall room','Revisit due reviews without looking at answers'],['analytics','Learning analytics','Inspect your saved activity and study time'],['journey','90-day calendar','See your course completion by day'],['timeline','DSA learning path','Follow the scheduled coding progression']]}]},
  {name:'Profile',description:'Manage your account, appearance and saved data.',sections:[{title:'Your workspace',items:[['profile','My profile','Goals and account identity'],['designer','Appearance & layouts','Choose colors and saved layouts'],['settings','Settings & data','Sync, backup, import and account settings']]}]}
 ];
-export const navigationEntries=navigationCatalog.flatMap(group=>group.sections.flatMap(section=>section.items.map(([id,label,description])=>({id,label,description,group:group.name,section:section.title}))));
+const aliases:Partial<Record<WorkspaceView,string>>={
+ dashboard:'mission control overview',planner:'my schedule manage my schedule',
+ oops:'OOP studio concept studio object oriented programming',
+ commute:'commute library reading',theory:'theory studio',library:'skill library',
+ cartoons:'cartoon classroom',playground:'module playground',
+ autoCoach:'auto coach',designer:'workspace studio customization colours colors',
+ analytics:'analytics dashboard',bank:'practice bank questions',
+ journey:'course journey roadmap',timeline:'90 day timeline',
+ materials:'interview preparation revision',interview:'ChatGPT interview',
+};
+export const navigationEntries=navigationCatalog.flatMap(group=>group.sections.flatMap(section=>section.items.map(([id,label,description])=>({id,label,description,group:group.name,section:section.title,keywords:aliases[id]||''}))));
+export const navigationByView=Object.fromEntries(navigationEntries.map(e=>[e.id,e])) as Record<WorkspaceView,typeof navigationEntries[number]>;
+export const navigationGroups=navigationCatalog.map(g=>({...g,items:g.sections.flatMap(s=>s.items.map(([id,label])=>[id,label] as const))}));
 export const navigationLabels=Object.fromEntries(navigationEntries.map(e=>[e.id,e.label])) as Record<WorkspaceView,string>;
-export function searchModules(query:string){const words=query.trim().toLowerCase().split(/\s+/);return navigationEntries.filter(e=>words.every(w=>(e.label+' '+e.description+' '+e.group+' '+e.id).toLowerCase().includes(w)));}
+export function searchModules(query:string){const words=query.trim().toLowerCase().split(/\s+/);return navigationEntries.filter(e=>words.every(w=>(e.label+' '+e.description+' '+e.group+' '+e.id+' '+e.keywords).toLowerCase().includes(w)));}
 // Keep previously saved Learn colors on the moved interview-materials page.
 export function navigationThemeGroup(view:WorkspaceView){return view==='materials'?'Learn':navigationEntries.find(e=>e.id===view)?.group||'Portal';}
 

@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
-import {navigationEntries,navigationThemeGroup,searchModules} from '../lib/navigation/catalog';
+import {navigationEntries,navigationThemeGroup,searchModules,navigationGroups} from '../lib/navigation/catalog';
 import {workspacePaths,workspaceUrl,parseWorkspacePath} from '../lib/workspace-routes';
 import WorkspaceNavigation from '../components/WorkspaceNavigation';
 test('navigation catalog owns every route once and preserves existing URLs',()=>{
@@ -26,5 +26,17 @@ test('sidebar exposes nested sections, active page and real current-day links',(
 test('saved theme inheritance stays compatible for moved modules',()=>{
  assert.equal(navigationThemeGroup('materials'),'Learn');
  assert.equal(navigationThemeGroup('playground'),'Practice');
+});
+
+test('old module names still find their renamed destinations',()=>{
+ for(const [query,id] of [['OOP studio','oops'],['commute library','commute'],['module playground','playground'],['auto coach','autoCoach'],['workspace studio','designer'],['ChatGPT interview','interview']]){
+  assert.ok(searchModules(query).some(e=>e.id===id),query);
+ }
+});
+
+test('appearance settings enumerate all pages without importing sidebar UI',()=>{
+ const ids=navigationGroups.flatMap(g=>g.items.map(([id])=>id));
+ assert.equal(new Set(ids).size,ids.length);
+ assert.deepEqual([...ids].sort(),Object.keys(workspacePaths).sort());
 });
 

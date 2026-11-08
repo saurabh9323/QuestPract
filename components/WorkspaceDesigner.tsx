@@ -5,8 +5,8 @@ import {ArrowRight, Code2, Layers, Orbit} from 'lucide-react';
 import {useStudio} from './studio/StudioContext';
 import SavedWorkspaceLayouts from './SavedWorkspaceLayouts';
 import {savePersonal} from '@/lib/layout-library';
-import {navigationThemeGroup} from '@/lib/navigation/catalog';
-import {workspaceGroups} from './WorkspaceNavigation';
+import {navigationThemeGroup,navigationGroups as workspaceGroups} from '@/lib/navigation/catalog';
+
 import {navigateWorkspace} from '@/lib/workspace-location';
 import {
   colorNames, contrast, defaults, designRecord, foreground, freshDesign, layouts, marks, palette,
