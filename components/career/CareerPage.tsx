@@ -2,6 +2,7 @@
 import {useEffect,useState} from 'react';
 import {useStudio} from '../studio/StudioContext';
 import {active,careerItems,limits,staleOpenSource} from '@/lib/career/logic';
+import {latestReviewPriority} from '@/lib/career/review';
 import {navigateWorkspace,useRouteQuery} from '@/lib/workspace-location';
 import CareerTracker,{WeeklyReview} from './CareerTracker';
 import HackathonRadar from '../radar/HackathonRadar';
@@ -12,8 +13,8 @@ export function CareerSummary(){
  useEffect(()=>{setNow(new Date());const t=setInterval(()=>setNow(new Date()),60000);return()=>clearInterval(t)},[]);
  const os=careerItems(p.studio,'opensource'),hacks=careerItems(p.studio,'hackathon'),budget=limits(p.studio);
  const osActive=os.filter(i=>active('opensource',i.status)).length,hackActive=hacks.filter(i=>active('hackathon',i.status)).length;
- const stale=now?os.filter(i=>staleOpenSource(i.record,now)).length:null;
- return <section className="card career-summary"><span className="eyebrow">CAREER TRACKER</span><h2>Keep your outside projects manageable</h2><div className="career-summary-grid"><p><strong>{osActive} / {budget.opensource}</strong><span>active contributions</span>{osActive>budget.opensource&&<small>Above your soft limit</small>}</p><p><strong>{hackActive} / {budget.hackathon}</strong><span>active hackathons</span>{hackActive>budget.hackathon&&<small>Above your soft limit</small>}</p><p><strong>{stale??'—'}</strong><span>contributions need a decision</span></p></div><div className="button-row">{careerTabs.map(tab=><a className="secondary" key={tab.id} href={'/career/?tab='+tab.id} onClick={e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();navigateWorkspace('/career/?tab='+tab.id);window.scrollTo(0,0)}}>{tab.label}</a>)}</div></section>;
+ const stale=now?os.filter(i=>staleOpenSource(i.record,now)).length:null,priority=latestReviewPriority(p.studio);
+ return <section className="card career-summary"><span className="eyebrow">CAREER TRACKER</span><h2>Keep your outside projects manageable</h2><div className="career-summary-grid"><p><strong>{osActive} / {budget.opensource}</strong><span>active contributions</span>{osActive>budget.opensource&&<small>Above your soft limit</small>}</p><p><strong>{hackActive} / {budget.hackathon}</strong><span>active hackathons</span>{hackActive>budget.hackathon&&<small>Above your soft limit</small>}</p><p><strong>{stale??'—'}</strong><span>contributions need a decision</span></p></div>{priority&&<aside className="career-saved-priority"><span className="eyebrow">YOUR LATEST SAVED PRIORITY</span><p>{priority.priority}</p><small>From your review of the week starting {priority.weekStart}. This does not change your quest schedule.</small></aside>}<div className="button-row">{careerTabs.map(tab=><a className="secondary" key={tab.id} href={'/career/?tab='+tab.id} onClick={e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();navigateWorkspace('/career/?tab='+tab.id);window.scrollTo(0,0)}}>{tab.label}</a>)}</div></section>;
 }
 export default function CareerPage(){
  const query=useRouteQuery(),tab=careerTabs.find(t=>t.id===query.get('tab'))?.id||'opensource';

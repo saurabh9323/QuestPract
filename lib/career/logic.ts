@@ -6,6 +6,7 @@ export const osStatuses=['new','commented','working','pr_open','changes_requeste
 export type CareerKind='opensource'|'hackathon';
 export type Event={at:string;from:string;to:string};
 export const careerSettings='career-settings';
+export function careerDraftId(weekStart:string){return 'career-draft-'+weekStart}
 export function limits(studio:StudioState={}){const f=studio[careerSettings]?.fields;const read=(v:string|undefined,fallback:number)=>v!==undefined&&/^\d+$/.test(v)&&Number(v)<=20?Number(v):fallback;return {opensource:read(f?.opensource,2),hackathon:read(f?.hackathon,1)}}
 export function active(kind:CareerKind,status:string){return (kind==='opensource'?['commented','working','pr_open','changes_requested']:['registered','building']).includes(status)}
 export function careerItems(studio:StudioState={},kind:CareerKind){return Object.entries(studio).filter(([id,r])=>kind==='opensource'?id.startsWith('career-os-'):id.startsWith('radar-')&&r.fields.schemaVersion==='1').map(([id,r])=>({id,status:r.fields.status,updatedAt:r.updatedAt,title:r.fields.title||r.fields.opportunityId||id,record:r}))}
@@ -31,6 +32,12 @@ export function weekSummary(p:Progress,now:Date){
 }
 export function validateCareerRecord(id:string,r:StudioRecord){
  if(id===careerSettings){for(const k of ['opensource','hackathon'])if(r.fields[k]!==undefined&&(!/^\d+$/.test(r.fields[k])||Number(r.fields[k])>20))throw new Error('Career limits must be 0–20.');return}
+ if(id==='career-draft'||id.startsWith('career-draft-')){
+ const weekStart=r.fields.weekStart,date=new Date(weekStart+'T00:00:00Z');
+ if(r.fields.schemaVersion!=='1'||r.attempts.length||!/^\d{4}-\d{2}-\d{2}$/.test(weekStart)||!Number.isFinite(date.getTime())||date.toISOString().slice(0,10)!==weekStart||date.getUTCDay()!==1||id!==careerDraftId(weekStart))throw new Error('Invalid weekly review draft.');
+ for(const k of ['shipped','stuck','priority'])if((r.fields[k]||'').length>2000)throw new Error('Review draft responses must be 0–2000 characters.');
+ return;
+ }
  if(id.startsWith('career-os-')){
  if(r.fields.url!==undefined)contributionUrl(r.fields.url);
  if(r.fields.schemaVersion!=='1'||!r.fields.title?.trim()||r.fields.title.length>200||!osStatuses.includes(r.fields.status as typeof osStatuses[number])||(r.fields.notes||'').length>2000)throw new Error('Invalid career item.');

@@ -1,6 +1,6 @@
 # Daily consistency and Career Tracker
 
-Today shows a daily commitment card (opt in; no fixed study hour), a compact Career Tracker summary and the existing Hackathon Radar. The full tracker is at `/career/`, under Progress → Career Tracker. Shareable sections are `/career/?tab=opensource`, `/career/?tab=hackathons` and `/career/?tab=review`. Unknown tab values select contributions. Switching sections keeps unsaved review text mounted; leaving the page does not save a draft automatically. Past reviews show readable counts, five per page. Career WIP settings are also available under Settings & data. Existing records are reused without migration or copying.
+Today shows a daily commitment card (opt in; no fixed study hour), a compact Career Tracker summary and the existing Hackathon Radar. The full tracker is at `/career/`, under Progress → Career Tracker. Shareable sections are `/career/?tab=opensource`, `/career/?tab=hackathons` and `/career/?tab=review`. Unknown tab values select contributions. Review answers save as you type into a separate weekly draft, so section changes and return visits reuse the same draft. Check the account sync indicator for remote persistence. Past reviews show readable counts, five per page. Career WIP settings are also available under Settings & data. Existing records are reused without migration or copying.
 
 ## Daily commitment
 
@@ -21,8 +21,18 @@ Optional contribution URLs accept HTTPS without embedded credentials, up to 2,04
 
 ## Weekly snapshots
 
-Monday–Sunday in India time, through the supplied `now`. DSA counts saved `solvedAt`, quests count `completedAt`, and career counts distinct items with status events in the window. Hackathon progression means a forward status transition. Old career activity with no dated event is not inferred. These measures describe saved activity, not externally verified merges or registrations.
+Select the current week or last completed week (`/career/?tab=review&week=previous`). Weeks run Monday–Sunday in India time. The current week stops at the supplied `now`; the previous week stops just before the following Monday. Expand each metric to see the dated items behind it. Merged contributions also appear in moved contributions; categories should not be summed. DSA counts saved `solvedAt`, quests count `completedAt`, and career counts distinct items with status events in the window. Hackathon progression means a forward status transition. Old career activity with no dated event is not inferred. These measures describe saved activity, not externally verified merges or registrations.
 
 `career-review-*` holds an immutable summary, three responses (up to 2,000 characters each), creation time and schemaVersion 1. Maximum 104 snapshots. There is no edit/delete UI. Studio writes refuse updates to an existing review ID; merging conflicting same-ID snapshots deterministically preserves the earliest saved version without creating draft attempts. Snapshot IDs are random, so separate reviews of the same week are retained.
 
 Progress/export format remains version 1: these are validated additive Studio records, so no root schema migration is required. Unknown career-record schema versions are rejected instead of silently rewritten. Existing progress and Radar records are unchanged. Unit tests cover WIP boundaries, stale boundaries, India week/day boundaries, summaries, export/import and merge behavior with explicit dates.
+
+### Review drafts and the next priority
+
+`career-draft-YYYY-MM-DD` stores one mutable draft per Monday in India time. Schema version 1 requires an exact calendar Monday matching the ID, allows blank/partial responses up to 2,000 characters each, and disallows attempts. Drafts have a separate 104-record cap. Cross-device conflicts use the newest timestamp with deterministic tie resolution, not additional attempts. Draft fields are not included in activity counts and never mark work complete.
+
+Submitting creates a new immutable `career-review-*` snapshot with counts recalculated at submission. The draft is retained for follow-up work; changing it cannot edit an earlier snapshot. The current and previous weeks are editable in the review selector; older drafts remain in backups. No progress version change or migration is needed for these additive records.
+
+Today and the Career Tracker show the priority from the latest valid submitted review, chosen by its immutable creation time. Draft priorities are excluded. The source week is shown so older plans are recognizable; the priority does not reschedule quests automatically.
+
+Tests use explicit dates for India midnight, week/year boundaries, unique evidence counts, draft validation, backup round-trips, deterministic merges and snapshot preservation. Authenticated browser interactions and live Supabase round-trips were not verified for this update.
