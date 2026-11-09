@@ -1,6 +1,7 @@
 import type {Progress} from '../progress';
 import type {StudioRecord,StudioState} from '../studio-state';
 import {indiaDay,shiftDay} from '../consistency/logic';
+import {contributionUrl} from './links';
 export const osStatuses=['new','commented','working','pr_open','changes_requested','merged','dropped'] as const;
 export type CareerKind='opensource'|'hackathon';
 export type Event={at:string;from:string;to:string};
@@ -31,6 +32,7 @@ export function weekSummary(p:Progress,now:Date){
 export function validateCareerRecord(id:string,r:StudioRecord){
  if(id===careerSettings){for(const k of ['opensource','hackathon'])if(r.fields[k]!==undefined&&(!/^\d+$/.test(r.fields[k])||Number(r.fields[k])>20))throw new Error('Career limits must be 0–20.');return}
  if(id.startsWith('career-os-')){
+ if(r.fields.url!==undefined)contributionUrl(r.fields.url);
  if(r.fields.schemaVersion!=='1'||!r.fields.title?.trim()||r.fields.title.length>200||!osStatuses.includes(r.fields.status as typeof osStatuses[number])||(r.fields.notes||'').length>2000)throw new Error('Invalid career item.');
  let events:unknown;try{events=JSON.parse(r.fields.careerHistory||'[]')}catch{throw new Error('Invalid career history.')}
  if(!Array.isArray(events)||events.length>200||history(r.fields).length!==events.length||events.some(e=>!osStatuses.includes(e.from)||!osStatuses.includes(e.to)))throw new Error('Invalid career history.');

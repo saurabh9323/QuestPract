@@ -10,6 +10,10 @@ Today shows a daily commitment card (opt in; no fixed study hour), a compact Car
 
 ## Career records and limits
 
+Contribution lists support title/notes/link search (`q`), exact status (`status`), stale-only (`stale=1`) and ten-item pagination (`page`). Filters reset the page; invalid or oversized pages clamp to an available page. Sort order is most recently updated, with stable ID tie-breaking. These URL parameters remain local navigation state and do not change saved records.
+
+Optional contribution URLs accept HTTPS without embedded credentials, up to 2,048 characters. Existing items without URLs are valid. A saved link opens only when clicked; the portal does not fetch repository content or verify the contribution. Each card shows its recorded status history, newest first, in India time. Editing another item's status no longer clears an unsaved new-contribution title.
+
 - `career-os-*`: up to 100 open-source contributions; title (200 characters), notes (2,000), status, and up to 200 timestamped status transitions.
 - `career-settings`: open-source default 2, hackathon default 1; configurable 0–20. Warnings calculate projected active work, excluding the item being moved. Overrides are explicit UI actions, not automatic bypasses. Terminal transitions release capacity.
 - Radar retains its existing identity and API contract. An optional `careerHistory` field records local status changes for weekly review. Its existing records without this field still load. API acknowledgments and notes are not counted as status transitions.
