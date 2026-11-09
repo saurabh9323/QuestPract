@@ -1,6 +1,6 @@
 # Daily consistency and Career Tracker
 
-Today shows a daily commitment card (opt in; no fixed study hour), followed by the Career Tracker and the existing Hackathon Radar. Career WIP settings are also available under Settings & data.
+Today shows a daily commitment card (opt in; no fixed study hour), a compact Career Tracker summary and the existing Hackathon Radar. The full tracker is at `/career/`, under Progress → Career Tracker. Shareable sections are `/career/?tab=opensource`, `/career/?tab=hackathons` and `/career/?tab=review`. Unknown tab values select contributions. Switching sections keeps unsaved review text mounted; leaving the page does not save a draft automatically. Past reviews show readable counts, five per page. Career WIP settings are also available under Settings & data. Existing records are reused without migration or copying.
 
 ## Daily commitment
 
