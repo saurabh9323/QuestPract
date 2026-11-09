@@ -1,5 +1,7 @@
 'use client';
-import Dojo from './Dojo';
+import dynamic from 'next/dynamic';
+import ModuleLoading from './navigation/ModuleLoading';
+
 import {CareerSettings} from './career/CareerTracker';
 import CareerPage,{CareerSummary} from './career/CareerPage';
 import ConsistencyCoach from './consistency/ConsistencyCoach';
@@ -7,27 +9,20 @@ import HackathonRadar from './radar/HackathonRadar';
 import WorkspaceDesigner, {BrandMark, LearningPathCard} from './WorkspaceDesigner';
 import {navigationLabels,navigationThemeGroup,navigationByView} from '@/lib/navigation/catalog';
 import {designRecord, designStyle, palette, parseDesign} from '@/lib/workspace-design';
-import LanguageFundamentals from './fundamentals/LanguageFundamentals';
-import RepairLab from './repair-lab/RepairLab';
-import InsideApp from './inside-app/InsideApp';
+
 import LoginRevisionCheck,{LoginRevisionBanner} from './repair-lab/LoginRevisionCheck';
-import ModulePlayground from './playground/ModulePlayground';
-import DiscoveryInbox from './learning/DiscoveryInbox';
-import DsaPatternLab from './learning/DsaPatternLab';
-import SqlGame from './learning/SqlGame';
-import FlowBuilder from './learning/FlowBuilder';
+
 import DashboardTaskBoard from './DashboardTaskBoard';
 import LearningCockpit from './LearningCockpit';
 import FloatingTutor from './FloatingTutor';
-import InterviewMaterials from './InterviewMaterials';
-import CartoonClassroom from './CartoonClassroom';
+
 import AutoCoach,{CoachShelf} from './AutoCoach';
 import CoachAIWorker from './CoachAIWorker';
 import {useEffect,useRef,useState} from 'react';
 import {parseWorkspacePath,workspaceUrl,type WorkspaceView as View} from '@/lib/workspace-routes';
 import {useWorkspaceLocation,navigateWorkspace} from '@/lib/workspace-location';
 import ProgressOverview from '@/components/ProgressOverview';
-import CommunicationPractice from '@/components/CommunicationPractice';
+
 import {ArrowUpRight,ArrowRight,ArrowLeft,LayoutDashboard,Map,BookOpen,Brain,Check,CheckCircle2,ChevronRight,Code2,Copy,Download,Flame,Layers,ListTodo,Plus,Search,Settings,ShieldCheck,Sparkles,Target,Timer,Trash2,Upload,X,Cloud,FileText,ExternalLink,CalendarDays,LockKeyhole,MessageCircleQuestion,BarChart3,Boxes,Moon,Sun} from 'lucide-react';
 import {chapters,quests,curriculumVersion} from '@/lib/curriculum';
 import {useTraining} from '@/lib/use-training';
@@ -40,24 +35,40 @@ import {TrainingLab,DailyPlan} from '@/components/TrainingLab';
 import {Screenshots} from '@/components/Screenshots';
 import {MediaBackup} from '@/components/MediaBackup';
 import {SmartCoach,AnalyticsDashboard} from '@/components/Insights';
-import OOPStudio from '@/components/OOPStudio';
-import MyProfile from '@/components/MyProfile';
-import VisualLab from '@/components/VisualLab';
-import CommuteLibrary from '@/components/CommuteLibrary';
-import GrowthStudio from '@/components/GrowthStudio';
+
 import StartHere from '@/components/StartHere';
 import TodayFocus from '@/components/TodayFocus';
-import ProgressChallenges from '@/components/ProgressChallenges';
+
 import {StudioProvider} from '@/components/studio/StudioContext';
 import WorkspaceNavigation from '@/components/WorkspaceNavigation';
 import StudyWorkspace from '@/components/StudyWorkspace';
 import DailyAnswers from '@/components/DailyAnswers';
 import DailyPractice from '@/components/DailyPractice';
-import JourneyCalendar from '@/components/JourneyCalendar';
+
 import AccountMenu,{accountName,accountInitial} from '@/components/AccountMenu';
 import {mergeProgress} from '@/lib/recovery';
 import {QuestGuide} from '@/components/QuestGuide';
 import {questionBank,theory} from '@/lib/bank';
+
+const Dojo = dynamic(() => import('./Dojo'), {loading: ModuleLoading});
+const LanguageFundamentals = dynamic(() => import('./fundamentals/LanguageFundamentals'), {loading: ModuleLoading});
+const RepairLab = dynamic(() => import('./repair-lab/RepairLab'), {loading: ModuleLoading});
+const InsideApp = dynamic(() => import('./inside-app/InsideApp'), {loading: ModuleLoading});
+const ModulePlayground = dynamic(() => import('./playground/ModulePlayground'), {loading: ModuleLoading});
+const DiscoveryInbox = dynamic(() => import('./learning/DiscoveryInbox'), {loading: ModuleLoading});
+const DsaPatternLab = dynamic(() => import('./learning/DsaPatternLab'), {loading: ModuleLoading});
+const SqlGame = dynamic(() => import('./learning/SqlGame'), {loading: ModuleLoading});
+const FlowBuilder = dynamic(() => import('./learning/FlowBuilder'), {loading: ModuleLoading});
+const InterviewMaterials = dynamic(() => import('./InterviewMaterials'), {loading: ModuleLoading});
+const CartoonClassroom = dynamic(() => import('./CartoonClassroom'), {loading: ModuleLoading});
+const CommunicationPractice = dynamic(() => import('@/components/CommunicationPractice'), {loading: ModuleLoading});
+const OOPStudio = dynamic(() => import('@/components/OOPStudio'), {loading: ModuleLoading});
+const MyProfile = dynamic(() => import('@/components/MyProfile'), {loading: ModuleLoading});
+const VisualLab = dynamic(() => import('@/components/VisualLab'), {loading: ModuleLoading});
+const CommuteLibrary = dynamic(() => import('@/components/CommuteLibrary'), {loading: ModuleLoading});
+const GrowthStudio = dynamic(() => import('@/components/GrowthStudio'), {loading: ModuleLoading});
+const ProgressChallenges = dynamic(() => import('@/components/ProgressChallenges'), {loading: ModuleLoading});
+const JourneyCalendar = dynamic(() => import('@/components/JourneyCalendar'), {loading: ModuleLoading});
 
 const fmt=(s?:string)=>s?new Date(s).toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'Not started';
 const nice=(s:string)=>new Date(s+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'});

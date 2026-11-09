@@ -28,7 +28,8 @@ export default function LearningCockpit({p,view,focus,onFocus}:{p:Progress;view:
   ...quests.map(q=>({label:`Day ${q.day} · ${q.title}`,kind:'Course',path:workspaceUrl('quest',q.day),keywords:q.mission})),
   ...questionBank.map(q=>({label:q.title,kind:q.kind,path:`/questions/?question=${encodeURIComponent(q.id)}`,keywords:q.topic}))
  ],[current]);
- const words=query.trim().toLowerCase().split(/\s+/).filter(Boolean),matches=entries.filter(e=>words.every(w=>`${e.label} ${e.kind} ${e.keywords}`.toLowerCase().includes(w))),results=matches.slice(0,30);
+ const searchIndex=useMemo(()=>entries.map(entry=>({...entry,searchText:`${entry.label} ${entry.kind} ${entry.keywords}`.toLowerCase()})),[entries]);
+ const matches=useMemo(()=>{const words=query.trim().toLowerCase().split(/\s+/).filter(Boolean);return searchIndex.filter(entry=>words.every(word=>entry.searchText.includes(word)))},[query,searchIndex]),results=matches.slice(0,30);
  const visit=(path:string)=>{close();navigateWorkspace(path);window.scrollTo({top:0,behavior:'instant'});};
  const c=chapters.find(c=>c.id===chapter)||chapters[0],chapterQuests=quests.filter(q=>q.chapter===c.id),done=chapterQuests.filter(q=>p.days[q.day]?.completedAt).length;
  return <section className={`learning-cockpit ${motion?'cockpit-motion':''}`} aria-label="Learning cockpit">
